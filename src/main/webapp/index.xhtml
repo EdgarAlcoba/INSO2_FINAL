@@ -5,14 +5,20 @@
       xmlns:p="http://primefaces.org/ui">
     <h:head>
         <title>Inicio</title>
+        <h:outputStylesheet library="css" name="index.css" />
     </h:head>
     <h:body>
+        <video id="background-video" autoplay="true" loop="true" muted="true">
+            <source src="#{resource['assets/HomeBackground.mp4']}" type="video/mp4"/>
+            Your browser does not support the video tag.
+        </video>
         <h:form>
             <p:panel header="Aerolínea">
                 <h:panelGrid columns="1" cellpadding="5">
                     <h:outputText value="Bienvenido a nuestra aerolínea" style="font-size:20px;"/>
                     <p:commandButton value="Go to Login" action="webAccess/login" />
                     <p:commandButton value="Go to Register" action="webAccess/register" />
+                    <p:commandButton value="Go to Admin" action="administratorPages/home" />
                 </h:panelGrid>
             </p:panel>
         </h:form>

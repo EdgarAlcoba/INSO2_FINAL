@@ -5,24 +5,25 @@
       xmlns:p="http://primefaces.org/ui">
     <h:head>
         <title>Inicio de sesión</title>
+        <h:outputStylesheet library="css" name="login.css" />
     </h:head>
     <h:body>
-        <h:form>
+        <h:form styleClass="center-box">
             <p:panel header="Iniciar sesión">
                 <h:panelGrid columns="2" cellpadding="5">
                     <h:outputLabel for="email" value="Correo:" />
-                    <p:inputText id="email" value="#{loginBean.email}" required="true"/>
+                    <p:inputText id="email" value="#{loginBean.email}" placeholder="ejemplo@dominio.es" required="true"/>
 
-                    <h:outputLabel for="password" value="Contraseña" />
+                    <h:outputLabel for="password" value="Contraseña:" />
                     <p:password id="password" value="#{loginBean.password}" required="true"/>
-
-                    <h:outputLabel />
-                    <p:commandButton value="Login" action="#{loginBean.login}" update="messages"/>
-                    
+                </h:panelGrid>
+                <h:panelGrid columns="2" cellpadding="5">
                     <label>¿No tienes una cuenta?</label>
                     <p:commandLink action="register" value="Regístrate" />
-                    
                 </h:panelGrid>
+                <br/>
+                <p:commandButton style="width: 100%" value="Login" action="#{loginBean.login}" update="messages"/>
+
             </p:panel>
             <p:messages id="messages" showDetail="true" />
         </h:form>

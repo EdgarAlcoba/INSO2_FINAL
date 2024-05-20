@@ -2,26 +2,44 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>Registro</title>
+        <h:outputStylesheet library="css" name="register.css" />
     </h:head>
     <h:body>
-        <h:form>
-            <p:panel header="Registro">
+        <h:form styleClass="center-box">
+            <p:panel header="Registro" styleClass="prueba">
                 <h:panelGrid columns="2" cellpadding="5">
-                   <h:outputLabel for="email" value="Correo:" />
+                    <h:outputLabel for="email" value="Correo:" />
                     <p:inputText id="email" value="#{registerBean.email}" required="true"/>
+
+                    <h:outputLabel for="name" value="Nombre:" />
+                    <p:inputText id="name" value="#{registerBean.name}" required="true"/>
+
+                    <h:outputLabel for="surname" value="Apellidos:" />
+                    <p:inputText id="surname" value="#{registerBean.surname}" required="true"/>
+
+                    <h:outputLabel for="date" value="Día de nacimiento:" />
+                    <p:calendar id="date" value="#{registerBean.date}" pattern="dd-MM-yyyy" navigator="true" />
+
+                    <h:outputLabel for="gender" value="Sexo:" />
+                    <p:selectOneMenu style="width: 100%" id="gender" value="#{registerBean.gender}">
+                        <f:selectItem itemLabel="Seleccione" itemValue="" />
+                        <f:selectItem itemLabel="Male" itemValue="Male" />
+                        <f:selectItem itemLabel="Female" itemValue="Female" />
+                    </p:selectOneMenu>
 
                     <h:outputLabel for="password" value="Contraseña:" />
                     <p:password id="password" value="#{registerBean.password}" required="true"/>
-                    
-                    <h:outputLabel for="confirmPassword" value="Repita la contraseña" />
+
+                    <h:outputLabel for="confirmPassword" value="Repita la contraseña:" />
                     <p:password id="confirmPassword" value="#{registerBean.confirmPassword}" required="true"/>
 
                     <h:outputLabel />
-                    <p:commandButton value="Register" action="#{registerBean.register}" update="messages"/>
                 </h:panelGrid>
+                <p:commandButton style="width: 100%" value="Confirmar datos" action="#{registerBean.register}" update="messages"/>
             </p:panel>
             <p:messages id="messages" showDetail="true" />
         </h:form>

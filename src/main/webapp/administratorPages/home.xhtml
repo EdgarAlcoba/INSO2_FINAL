@@ -2,20 +2,40 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+
+      xmlns:f="http://xmlns.jcp.org/jsf/core">      
     <h:head>
         <title>Facelet Title</title>
     </h:head>
     <h:body>
+
         <h:form>
-            <p:panel header="Admin home">
-                TODO Menu, navegación.
-                <h:panelGrid columns="2" cellpadding="5">
-                    <h:outputLabel for="email" value="Correo:" />
-                    <p:inputText id="searchTF" value="#{homeBean.searchTF}" required="true"/>
-                    <h:outputLabel />
-                    <p:commandButton value="searchBtn" action="#{homeBean.searchBtn}" update="messages"/>
-                </h:panelGrid>
+            <p:menubar>
+                <p:menuitem value="Usuarios" icon="pi pi-fw pi-users"/>
+
+                <p:divider layout="vertical"/>
+
+                <p:menuitem value="Flota" icon="pi pi-fw pi-send"/>
+
+                <p:divider layout="vertical"/>
+
+                <p:menuitem value="Historial de ventas" icon="pi pi-fw pi-history"/>
+
+            </p:menubar>
+
+
+
+            <p:panel header="Usuarios">
+                <h:outputLabel for="Usuario" value="Usuario:" />
+                <span class="ui-input-icon-left">
+                    <i class="pi pi-search" />
+                    
+                    <p:inputText id="searchTF" value="#{homeBean.searchTF}" required="true" placeholder="Buscar"/>
+                </span>
+                <h:outputLabel />
+                <p:commandButton icon="pi pi-search" action="#{homeBean.searchBtn}" update="messages"/>
+
             </p:panel>
             <p:messages id="messages" showDetail="true" />
         </h:form>

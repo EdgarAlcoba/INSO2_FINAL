@@ -22,11 +22,10 @@
                     <p:inputText id="surname" value="#{registerBean.surname}" required="true"/>
 
                     <h:outputLabel for="date" value="Día de nacimiento:" />
-                    <p:calendar id="date" value="#{registerBean.date}" pattern="dd-MM-yyyy" navigator="true" />
+                    <p:calendar id="date" value="#{registerBean.date}" pattern="dd / MM / yyyy" navigator="true" />
 
                     <h:outputLabel for="gender" value="Sexo:" />
                     <p:selectOneMenu style="width: 100%" id="gender" value="#{registerBean.gender}">
-                        <f:selectItem itemLabel="Seleccione" itemValue="" />
                         <f:selectItem itemLabel="Male" itemValue="Male" />
                         <f:selectItem itemLabel="Female" itemValue="Female" />
                     </p:selectOneMenu>

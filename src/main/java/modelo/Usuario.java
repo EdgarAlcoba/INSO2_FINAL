@@ -8,6 +8,7 @@ package modelo;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
+import javax.enterprise.inject.Default;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -49,7 +50,7 @@ public class Usuario implements Serializable {
     private String contrasena;
     
     @Column(name = "ROL")
-    private String rol;
+    private String rol = "CLIENTE";
 
     public int getIdUsuario() {
         return idUsuario;

@@ -10,6 +10,7 @@ import java.util.Map;
 @ApplicationScoped
 public class PasswordUtil {
 
+    @Inject
     private Pbkdf2PasswordHash passwordHash;
 
     @PostConstruct

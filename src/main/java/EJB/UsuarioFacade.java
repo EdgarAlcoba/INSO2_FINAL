@@ -12,6 +12,11 @@ import javax.persistence.TypedQuery;
 
 import modelo.Usuario;
 
+import java.util.List;
+import java.util.logging.Level;
+
+import static com.sun.xml.internal.ws.spi.db.BindingContextFactory.LOGGER;
+
 /**
  *
  * @author v2510
@@ -22,6 +27,8 @@ public class UsuarioFacade extends AbstractFacade<Usuario> implements UsuarioFac
     @PersistenceContext(unitName = "AerolineaPU")
     private EntityManager em;
 
+    private PasswordUtil passwordUtil;
+
     @Override
     protected EntityManager getEntityManager() {
         return em;
@@ -31,21 +38,36 @@ public class UsuarioFacade extends AbstractFacade<Usuario> implements UsuarioFac
         super(Usuario.class);
     }
 
+    /**
+     * Iniciar sesión
+     * @param email Correo del usuario
+     * @param password Contraseña del usuario en texto claro
+     * @return El usuario si login ok o null en caso de no existir o que haya un error
+     */
     @Override
-    public boolean login(String email, String password) {
+    public Usuario login(String email, String password) {
         try {
-            // Create a TypedQuery to find a Usuarios entity where CORREO = email and CONTRASENA = password
             TypedQuery<Usuario> query = em.createQuery(
             "SELECT u FROM Usuario u WHERE u.correo = :email AND u.contrasena = :password", Usuario.class);
             query.setParameter("email", email);
             query.setParameter("password", password);
 
-            // Try to get a single result. If a result is found, return true
-            Usuario user = query.getSingleResult();
-            return user != null;
+            List<Usuario> users = query.getResultList();
+
+            if (users.isEmpty()) {
+                return null;
+            }
+
+            Usuario user = users.get(0);
+
+            if (passwordUtil.checkPassword(password, user.getContrasena())) {
+                return user;
+            }
+
+            return null;
         } catch (Exception e) {
-            // If no result is found, getSingleResult() will throw an exception, and we catch it to return false
-            return false;
+            System.out.println("Hubo un error en el login: " + e.getMessage());
+            return null;
         }
     }
 }

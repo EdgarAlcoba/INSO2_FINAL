@@ -26,6 +26,7 @@ import javax.persistence.TemporalType;
 public class Usuario implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID")
     private int idUsuario;
 
     @Column(name = "NOMBRE")

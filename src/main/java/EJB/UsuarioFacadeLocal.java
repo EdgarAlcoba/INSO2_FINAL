@@ -30,6 +30,6 @@ public interface UsuarioFacadeLocal {
 
     int count();
 
-    public boolean login(String email, String password);
+    public Usuario login(String email, String password);
     
 }

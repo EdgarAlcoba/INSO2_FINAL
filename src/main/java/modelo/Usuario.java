@@ -1,14 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package modelo;
 
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
-import javax.enterprise.inject.Default;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -18,17 +12,12 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-/**
- *
- * @author edgar
- */
 @Entity
 @Table(name="Usuarios")
 public class Usuario implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID")
-    private int idUsuario;
+    private int id;
 
     @Column(name = "NOMBRE")
     private String nombre;
@@ -52,12 +41,12 @@ public class Usuario implements Serializable {
     @Column(name = "ROL")
     private String rol = "CLIENTE";
 
-    public int getIdUsuario() {
-        return idUsuario;
+    public int getId() {
+        return id;
     }
 
-    public void setIdUsuario(int idUsuario) {
-        this.idUsuario = idUsuario;
+    public void setId(int idUsuario) {
+        this.id = idUsuario;
     }
 
     public String getNombre() {
@@ -119,7 +108,7 @@ public class Usuario implements Serializable {
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 37 * hash + this.idUsuario;
+        hash = 37 * hash + this.id;
         hash = 37 * hash + Objects.hashCode(this.nombre);
         hash = 37 * hash + Objects.hashCode(this.apellidos);
         hash = 37 * hash + Objects.hashCode(this.correo);
@@ -142,7 +131,7 @@ public class Usuario implements Serializable {
             return false;
         }
         final Usuario other = (Usuario) obj;
-        if (this.idUsuario != other.idUsuario) {
+        if (this.id != other.id) {
             return false;
         }
         if (this.sexo != other.sexo) {
@@ -163,10 +152,7 @@ public class Usuario implements Serializable {
         if (!Objects.equals(this.rol, other.rol)) {
             return false;
         }
-        if (!Objects.equals(this.fechaNacimiento, other.fechaNacimiento)) {
-            return false;
-        }
-        return true;
+        return Objects.equals(this.fechaNacimiento, other.fechaNacimiento);
     }
     
 }

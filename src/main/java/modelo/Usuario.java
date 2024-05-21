@@ -23,7 +23,7 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Table(name="Usuarios")
-public class Usuarios implements Serializable {
+public class Usuario implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idUsuario;
@@ -139,7 +139,7 @@ public class Usuarios implements Serializable {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final Usuarios other = (Usuarios) obj;
+        final Usuario other = (Usuario) obj;
         if (this.idUsuario != other.idUsuario) {
             return false;
         }

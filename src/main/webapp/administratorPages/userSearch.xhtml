@@ -1,0 +1,22 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+    <p:panel style="width: 100%" header="Control de usuarios">
+        <h:panelGrid columns="3" cellspacing="5" style="width: 100%; padding: 0 !important; margin: 0 !important">
+            <h:outputLabel style="width: 100%" for="searchUser" value="Buscar usuarios:" />
+            <h:outputLabel >
+                <span style="width: 100%" class="ui-input-icon-left">
+                    <i class="pi pi-search" />
+                    <p:inputText style="width: 100%" id="searchTF" value="#{homeBean.searchTF}" required="true" placeholder="Buscar"/>
+                </span>
+            </h:outputLabel>
+            <p:commandButton style="width: 100%; min-width: 30px" icon="pi pi-search" action="#{homeBean.searchBtn}" update="messages"/>
+        </h:panelGrid>
+        <!-- La siguiente línea es solo para facilitar el desarrollo -->
+        <p:panel style="width: 100%" header="Usuarios encontrados">
+            <ui:include src="#{'/administratorPages/userItem.xhtml'}" />
+        </p:panel>
+    </p:panel>
+    <p:messages id="messages" showDetail="true" />
+</ui:composition>

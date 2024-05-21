@@ -5,8 +5,12 @@
  */
 package controlador;
 
+import EJB.UsuarioFacadeLocal;
+import javax.ejb.EJB;
+
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import modelo.Usuario;
 
 /**
  *
@@ -14,8 +18,12 @@ import javax.faces.bean.RequestScoped;
  */
 @ManagedBean
 @RequestScoped
-public class LoginBean {
-    private String email = "";
+public class LoginBean  {
+    private String email;
+    private String password ;
+    
+    @EJB
+    private UsuarioFacadeLocal UFL;
 
     public String getEmail() {
         return email;
@@ -32,12 +40,10 @@ public class LoginBean {
     public void setPassword(String password) {
         this.password = password;
     }
-    private String password = "";
-    
-    
+ 
     public void login(){
-        //TODO logica del login
-        System.out.println("Login");
+        Usuario login = UFL.loginUser(email, password);
+        System.out.print(login);
     }
     
 }

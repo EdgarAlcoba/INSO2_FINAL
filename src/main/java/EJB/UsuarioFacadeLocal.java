@@ -20,6 +20,8 @@ public interface UsuarioFacadeLocal {
 
     void edit(Usuario usuario);
 
+    void editPassword(Usuario user, String newPassword);
+
     void remove(Usuario usuario);
 
     Usuario find(Object id);
@@ -32,6 +34,6 @@ public interface UsuarioFacadeLocal {
 
     public Usuario loginUser(String email, String password);
 
-    public Usuario register(Usuario user);
+    public int register(Usuario user);
     
 }

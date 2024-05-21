@@ -46,9 +46,8 @@ public class UsuarioFacade extends AbstractFacade<Usuario> implements UsuarioFac
     public Usuario loginUser(String email, String password) {
         try {
             TypedQuery<Usuario> query = em.createQuery(
-            "SELECT u FROM Usuario u WHERE u.correo = :email AND u.contrasena = :password", Usuario.class);
+            "SELECT u FROM Usuario u WHERE u.correo = :email", Usuario.class);
             query.setParameter("email", email);
-            query.setParameter("password", password);
 
             List<Usuario> users = query.getResultList();
 

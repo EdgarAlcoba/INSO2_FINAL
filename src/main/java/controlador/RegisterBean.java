@@ -95,7 +95,7 @@ public class RegisterBean {
                 context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, name, text));
                 break;
             case 3:
-                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, name, text));
+                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, name, text));
                 break;
         }
         

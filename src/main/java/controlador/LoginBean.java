@@ -7,9 +7,11 @@ package controlador;
 
 import EJB.UsuarioFacadeLocal;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.context.FacesContext;
 import modelo.Usuario;
 
 /**
@@ -41,9 +43,31 @@ public class LoginBean  {
         this.password = password;
     }
  
-    public void login(){
+    public String login(){
         Usuario login = UFL.loginUser(email, password);
-        System.out.print(login);
+        if(login == null){
+            showAlert(" Error al iniciar sesión:", "El usuario o la contraseña introducidos no son válidos");
+            return "";
+        }else{
+                    switch (login.getRol()){
+            case "Client":
+                //TODO logica navegacion a pagina de cliente
+                break;
+            case "Manager":
+                //TODO logica navegacion a pagina de manager
+                break;
+            case "Admin" :
+                return "/administratorPages/home";
+            }
+        }   
+        //TODO provisional return 
+        return null;
     }
     
-}
+     private void showAlert(String name, String text) {
+        System.out.println(">Llega aqui");
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, name, text));
+        }
+        
+    }

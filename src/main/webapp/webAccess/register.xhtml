@@ -13,28 +13,28 @@
             <p:panel header="Registro" styleClass="prueba">
                 <h:panelGrid columns="2" cellpadding="5">
                     <h:outputLabel for="email" value="Correo:" />
-                    <p:inputText id="email" value="#{registerBean.email}" required="true"/>
+                    <p:inputText id="email" value="#{registerBean.user.email}" required="true"/>
 
                     <h:outputLabel for="name" value="Nombre:" />
-                    <p:inputText id="name" value="#{registerBean.name}" required="true"/>
+                    <p:inputText id="name" value="#{registerBean.user.name}" required="true"/>
 
                     <h:outputLabel for="surname" value="Apellidos:" />
-                    <p:inputText id="surname" value="#{registerBean.surname}" required="true"/>
+                    <p:inputText id="surname" value="#{registerBean.user.surname}" required="true"/>
 
                     <h:outputLabel for="date" value="Día de nacimiento:" />
-                    <p:calendar id="date" value="#{registerBean.date}" pattern="dd / MM / yyyy" navigator="true" />
+                    <p:calendar id="date" value="#{registerBean.user.date}" pattern="dd / MM / yyyy" navigator="true" />
 
                     <h:outputLabel for="gender" value="Sexo:" />
-                    <p:selectOneMenu style="width: 100%" id="gender" value="#{registerBean.gender}">
-                        <f:selectItem itemLabel="Male" itemValue="Male" />
-                        <f:selectItem itemLabel="Female" itemValue="Female" />
+                    <p:selectOneMenu style="width: 100%" id="gender" value="#{registerBean.user.gender}">
+                        <f:selectItem itemLabel="Hombre" itemValue="Male" />
+                        <f:selectItem itemLabel="Mujer" itemValue="Female" />
                     </p:selectOneMenu>
 
                     <h:outputLabel for="password" value="Contraseña:" />
-                    <p:password id="password" value="#{registerBean.password}" required="true"/>
+                    <p:password id="password" value="#{registerBean.user.password}" required="true"/>
 
                     <h:outputLabel for="confirmPassword" value="Repita la contraseña:" />
-                    <p:password id="confirmPassword" value="#{registerBean.confirmPassword}" required="true"/>
+                    <p:password id="confirmPassword" value="#{registerBean.user.confirmPassword}" required="true"/>
 
                     <h:outputLabel />
                 </h:panelGrid>

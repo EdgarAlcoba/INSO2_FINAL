@@ -6,6 +6,7 @@
 package EJB;
 
 import javax.ejb.Stateless;
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
@@ -13,9 +14,6 @@ import javax.persistence.TypedQuery;
 import modelo.Usuario;
 
 import java.util.List;
-import java.util.logging.Level;
-
-import static com.sun.xml.internal.ws.spi.db.BindingContextFactory.LOGGER;
 
 /**
  *
@@ -27,6 +25,7 @@ public class UsuarioFacade extends AbstractFacade<Usuario> implements UsuarioFac
     @PersistenceContext(unitName = "AerolineaPU")
     private EntityManager em;
 
+    @Inject
     private PasswordUtil passwordUtil;
 
     @Override
@@ -44,8 +43,7 @@ public class UsuarioFacade extends AbstractFacade<Usuario> implements UsuarioFac
      * @param password Contraseña del usuario en texto claro
      * @return El usuario si login ok o null en caso de no existir o que haya un error
      */
-    @Override
-    public Usuario login(String email, String password) {
+    public Usuario loginUser(String email, String password) {
         try {
             TypedQuery<Usuario> query = em.createQuery(
             "SELECT u FROM Usuario u WHERE u.correo = :email AND u.contrasena = :password", Usuario.class);
@@ -59,7 +57,6 @@ public class UsuarioFacade extends AbstractFacade<Usuario> implements UsuarioFac
             }
 
             Usuario user = users.get(0);
-
             if (passwordUtil.checkPassword(password, user.getContrasena())) {
                 return user;
             }
@@ -67,6 +64,23 @@ public class UsuarioFacade extends AbstractFacade<Usuario> implements UsuarioFac
             return null;
         } catch (Exception e) {
             System.out.println("Hubo un error en el login: " + e.getMessage());
+            return null;
+        }
+    }
+
+
+    /**
+     * Registrar un usuario
+     * @param usuario Usuario a registrar
+     * @return El usuario si register ok o null en caso de error
+     */
+    public Usuario register(Usuario usuario) {
+        try {
+            usuario.setContrasena(passwordUtil.hashPassword(usuario.getContrasena()));
+            create(usuario);
+            return usuario;
+        } catch (Exception e) {
+            System.out.println("Hubo un error creando el usuario: " + e.getMessage());
             return null;
         }
     }

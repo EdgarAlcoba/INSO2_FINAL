@@ -30,6 +30,8 @@ public interface UsuarioFacadeLocal {
 
     int count();
 
-    public Usuario login(String email, String password);
+    public Usuario loginUser(String email, String password);
+
+    public Usuario register(Usuario user);
     
 }

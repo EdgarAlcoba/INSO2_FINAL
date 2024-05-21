@@ -34,6 +34,6 @@ public interface UsuarioFacadeLocal {
 
     public Usuario loginUser(String email, String password);
 
-    public Usuario register(Usuario user);
+    public int register(Usuario user);
     
 }

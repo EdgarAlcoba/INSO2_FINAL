@@ -21,6 +21,9 @@ import java.util.List;
  */
 @Stateless
 public class UsuarioFacade extends AbstractFacade<Usuario> implements UsuarioFacadeLocal {
+    public final int REGISTER_OK = 0;
+    public final int REGISTER_FAIL_EMAIL_EXISTS = 1;
+    public final int REGISTER_FAIL_GENERIC = 2;
 
     @PersistenceContext(unitName = "AerolineaPU")
     private EntityManager em;
@@ -86,14 +89,24 @@ public class UsuarioFacade extends AbstractFacade<Usuario> implements UsuarioFac
      * @param usuario Usuario a registrar
      * @return El usuario si register ok o null en caso de error
      */
-    public Usuario register(Usuario usuario) {
+    public int register(Usuario usuario) {
         try {
             usuario.setContrasena(passwordUtil.hashPassword(usuario.getContrasena()));
+            TypedQuery<Usuario> query = em.createQuery(
+                    "SELECT u FROM Usuario u WHERE u.correo = :email", Usuario.class);
+            query.setParameter("email", usuario.getContrasena());
+
+            List<Usuario> users = query.getResultList();
+
+            if (!users.isEmpty()) {
+                return REGISTER_FAIL_EMAIL_EXISTS;
+            }
+
             create(usuario);
-            return usuario;
+            return REGISTER_OK;
         } catch (Exception e) {
             System.out.println("Hubo un error creando el usuario: " + e.getMessage());
-            return null;
+            return REGISTER_FAIL_GENERIC;
         }
     }
 }

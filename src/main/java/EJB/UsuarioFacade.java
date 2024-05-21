@@ -13,11 +13,7 @@ import javax.persistence.TypedQuery;
 
 import modelo.Usuario;
 
-import java.util.Date;
 import java.util.List;
-import java.util.logging.Level;
-
-import static com.sun.xml.internal.ws.spi.db.BindingContextFactory.LOGGER;
 
 /**
  *

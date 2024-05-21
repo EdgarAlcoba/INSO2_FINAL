@@ -38,6 +38,19 @@ public class UsuarioFacade extends AbstractFacade<Usuario> implements UsuarioFac
     }
 
     /**
+     * Editar contraseña
+     * @param user Usuario de la db
+     * @param newPassword Contraseña nueva
+     */
+    public void editPassword(Usuario user, String newPassword) {
+        String hashedNewPassword = passwordUtil.hashPassword(newPassword);
+        if (!user.getContrasena().equals(hashedNewPassword)) {
+            user.setContrasena(hashedNewPassword);
+        }
+        edit(user);
+    }
+
+    /**
      * Iniciar sesión
      * @param email Correo del usuario
      * @param password Contraseña del usuario en texto claro

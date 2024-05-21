@@ -20,6 +20,8 @@ public interface UsuarioFacadeLocal {
 
     void edit(Usuario usuario);
 
+    void editPassword(Usuario user, String newPassword);
+
     void remove(Usuario usuario);
 
     Usuario find(Object id);

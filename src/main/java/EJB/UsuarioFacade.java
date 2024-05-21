@@ -94,7 +94,7 @@ public class UsuarioFacade extends AbstractFacade<Usuario> implements UsuarioFac
             usuario.setContrasena(passwordUtil.hashPassword(usuario.getContrasena()));
             TypedQuery<Usuario> query = em.createQuery(
                     "SELECT u FROM Usuario u WHERE u.correo = :email", Usuario.class);
-            query.setParameter("email", usuario.getContrasena());
+            query.setParameter("email", usuario.getCorreo());
 
             List<Usuario> users = query.getResultList();
 

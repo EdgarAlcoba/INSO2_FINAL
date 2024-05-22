@@ -5,8 +5,12 @@
  */
 package ControllerAdmin;
 
+import java.io.IOException;
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.context.FacesContext;
+import modelo.Usuario;
 
 /**
  *
@@ -20,8 +24,19 @@ public class AdminHomeBean {
     public String getCurrentView() {
         return currentView;
     }
-
     
+    @PostConstruct
+    public void init(){
+        Usuario user = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
+        try{
+            if(user == null || !"Admin".equals(user.getRol())){
+                FacesContext.getCurrentInstance().getExternalContext().redirect("../webAccess/login.xhtml");
+            }
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+    
+}
     public void setView(String view){
         switch(view){
             case "fleet":

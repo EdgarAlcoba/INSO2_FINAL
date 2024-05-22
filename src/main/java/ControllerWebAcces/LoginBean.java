@@ -20,13 +20,22 @@ import modelo.Usuario;
  */
 @ManagedBean
 @RequestScoped
-public class LoginBean  {
+public class LoginBean {
     private String email;
     private String password ;
+    private Usuario user;
     
     @EJB
     private UsuarioFacadeLocal UFL;
 
+    public Usuario getUser() {
+        return user;
+    }
+
+    public void setUser(Usuario user) {
+        this.user = user;
+    }
+    
     public String getEmail() {
         return email;
     }
@@ -44,21 +53,22 @@ public class LoginBean  {
     }
  
     public String login(){
-        Usuario login = UFL.loginUser(email, password);
-        if(login == null){
+        this.user = UFL.loginUser(email, password);
+        if(this.user == null){
             showAlert(" Error al iniciar sesión:", "El usuario o la contraseña introducidos no son válidos");
             return "";
         }else{
-                    switch (login.getRol()){
-            case "Client":
-                //TODO logica navegacion a pagina de cliente
-                break;
-            case "Manager":
-                //TODO logica navegacion a pagina de manager
-                break;
-            case "Admin" :
-                return "/administratorPages/home";
-            }
+            FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("user", this.user);
+            switch (this.user.getRol()){
+                case "Client":
+                    //TODO logica navegacion a pagina de cliente
+                    break;
+                case "Manager":
+                    //TODO logica navegacion a pagina de manager
+                    break;
+                case "Admin" :
+                    return "/administratorPages/home?faces-redirect=true";
+                }
         }   
         //TODO provisional return 
         return null;

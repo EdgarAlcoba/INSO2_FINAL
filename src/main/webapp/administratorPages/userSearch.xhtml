@@ -8,10 +8,10 @@
             <h:outputLabel >
                 <span style="width: 100%" class="ui-input-icon-left">
                     <i class="pi pi-search" />
-                    <p:inputText style="width: 100%" id="searchTF" value="#{homeBean.searchTF}" required="true" placeholder="Buscar"/>
+                    <p:inputText style="width: 100%" id="searchTF" value="#{userSearchBean.searchTF}" required="true" placeholder="Buscar"/>
                 </span>
             </h:outputLabel>
-            <p:commandButton style="width: 100%; min-width: 30px" icon="pi pi-search" action="#{homeBean.searchBtn}" update="messages"/>
+            <p:commandButton style="width: 100%; min-width: 30px" icon="pi pi-search" action="#{userSearchBean.searchBtn}" update="messages"/>
         </h:panelGrid>
         <!-- La siguiente línea es solo para facilitar el desarrollo -->
         <p:panel style="width: 100%" header="Usuarios encontrados">

@@ -13,6 +13,7 @@ import javax.persistence.TypedQuery;
 
 import modelo.Usuario;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -108,5 +109,41 @@ public class UsuarioFacade extends AbstractFacade<Usuario> implements UsuarioFac
             System.out.println("Hubo un error creando el usuario: " + e.getMessage());
             return REGISTER_FAIL_GENERIC;
         }
+    }
+
+    /**
+     * Buscar usuarios,
+     * @param by Buscar por
+     * @param text Texto a buscar
+     * @return Lista de usuarios encontrados
+     */
+    private ArrayList<Usuario> searchBy(String by, String text) {
+        try {
+            TypedQuery<Usuario> query;
+
+            if (by.equals("email")) {
+                query = em.createQuery(
+                        "SELECT u FROM Usuario u WHERE u.correo LIKE :email", Usuario.class);
+                query.setParameter("email", text);
+            } else {
+                System.out.println("Search by " + by + " not supported");
+                return new ArrayList<>();
+            }
+
+            ArrayList<Usuario> users = (ArrayList<Usuario>) query.getResultList();
+            return users;
+        } catch (Exception e) {
+            System.out.println("Hubo un error buscando en usuarios: " + e.getMessage());
+            return new ArrayList<>();
+        }
+    }
+
+    /**
+     * Buscar usuarios por email
+     * @param email Texto a buscar
+     * @return Lista de usuarios encontrados
+     */
+    public ArrayList<Usuario> searchByEmail(String email) {
+        return searchBy("email", email);
     }
 }

@@ -5,6 +5,7 @@
  */
 package EJB;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Local;
 import modelo.Usuario;
@@ -35,5 +36,7 @@ public interface UsuarioFacadeLocal {
     public Usuario loginUser(String email, String password);
 
     public int register(Usuario user);
+
+    public ArrayList<Usuario> searchByEmail(String email);
     
 }

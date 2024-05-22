@@ -9,25 +9,20 @@
         <title>Facelet Title</title>
     </h:head>
     <h:body>
-
-        <h:form>
+        <h:form id="viewPanel">
             <p:menubar>
-                <p:menuitem value="Usuarios" icon="pi pi-fw pi-users" action="#{adminHomeBean.setView('userSearch')}"/>
+                <p:menuitem value="Usuarios" icon="pi pi-fw pi-users" action="#{adminHomeBean.setView('userSearch')}" update="viewPanel" />
 
                 <p:divider layout="vertical"/>
 
-                <p:menuitem value="Flota" icon="pi pi-fw pi-send" action="#{adminHomeBean.setView('fleet')}"/>
+                <p:menuitem value="Flota" icon="pi pi-fw pi-send" action="#{adminHomeBean.setView('fleet')}" update="viewPanel"/>
 
                 <p:divider layout="vertical"/>
 
-                <p:menuitem value="Historial de ventas" icon="pi pi-fw pi-history" action="#{adminHomeBean.setView('salesHistory')}"/>
-
+                <p:menuitem value="Historial de ventas" icon="pi pi-fw pi-history" action="#{adminHomeBean.setView('salesHistory')}" update="viewPanel"/>
             </p:menubar>
             <br/>
             <ui:include src="#{adminHomeBean.currentView}" />
-            <!-- La siguiente línea es solo para facilitar el desarrollo -->
-            <ui:include src="#{'/administratorPages/userSearch.xhtml'}" />
-            <!--<ui:include src="#{'/administratorPages/userItem.xhtml'}" />-->
         </h:form>
     </h:body>
 </html>

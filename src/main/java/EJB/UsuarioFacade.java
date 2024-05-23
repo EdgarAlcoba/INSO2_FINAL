@@ -65,11 +65,13 @@ public class UsuarioFacade extends AbstractFacade<Usuario> implements UsuarioFac
      */
     public Usuario loginUser(String email, String password) {
         try {
-            TypedQuery<Usuario> query = em.createQuery(
-            "SELECT u FROM Usuario u WHERE u.correo = :email", Usuario.class);
-            query.setParameter("email", email);
+            CriteriaBuilder cb = em.getCriteriaBuilder();
+            CriteriaQuery<Usuario> cq = cb.createQuery(Usuario.class);
+            Root<Usuario> usuarioRoot = cq.from(Usuario.class);
 
-            List<Usuario> users = query.getResultList();
+            cq.select(usuarioRoot).where(cb.equal(usuarioRoot.get("correo"), email));
+
+            List<Usuario> users = em.createQuery(cq).getResultList();
 
             if (users.isEmpty()) {
                 return null;
@@ -96,11 +98,14 @@ public class UsuarioFacade extends AbstractFacade<Usuario> implements UsuarioFac
     public int register(Usuario usuario) {
         try {
             usuario.setContrasena(passwordUtil.hashPassword(usuario.getContrasena()));
-            TypedQuery<Usuario> query = em.createQuery(
-                    "SELECT u FROM Usuario u WHERE u.correo = :email", Usuario.class);
-            query.setParameter("email", usuario.getCorreo());
 
-            List<Usuario> users = query.getResultList();
+            CriteriaBuilder cb = em.getCriteriaBuilder();
+            CriteriaQuery<Usuario> cq = cb.createQuery(Usuario.class);
+            Root<Usuario> usuarioRoot = cq.from(Usuario.class);
+
+            cq.select(usuarioRoot).where(cb.equal(usuarioRoot.get("correo"), usuario.getCorreo()));
+
+            List<Usuario> users = em.createQuery(cq).getResultList();
 
             if (!users.isEmpty()) {
                 return REGISTER_FAIL_EMAIL_EXISTS;

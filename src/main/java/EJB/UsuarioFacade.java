@@ -10,6 +10,9 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 
 import modelo.Usuario;
 
@@ -119,18 +122,19 @@ public class UsuarioFacade extends AbstractFacade<Usuario> implements UsuarioFac
      */
     private ArrayList<Usuario> searchBy(String by, String text) {
         try {
-            TypedQuery<Usuario> query;
+            CriteriaBuilder cb = em.getCriteriaBuilder();
+            CriteriaQuery<Usuario> cq;
 
             if (by.equals("email")) {
-                query = em.createQuery(
-                        "SELECT u FROM Usuario u WHERE u.correo LIKE :email", Usuario.class);
-                query.setParameter("email", text);
+                cq = cb.createQuery(Usuario.class);
+                Root<Usuario> user = cq.from(Usuario.class);
+                cq.select(user).where(cb.like(user.get("correo"), "%" + text + "%"));
             } else {
                 System.out.println("Search by " + by + " not supported");
                 return new ArrayList<>();
             }
 
-            return new ArrayList<>(query.getResultList());
+            return new ArrayList<>(em.createQuery(cq).getResultList());
         } catch (Exception e) {
             System.out.println("Hubo un error buscando en usuarios: " + e.getMessage());
             return new ArrayList<>();

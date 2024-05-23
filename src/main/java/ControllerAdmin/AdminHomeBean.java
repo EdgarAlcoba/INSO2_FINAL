@@ -8,7 +8,7 @@ package ControllerAdmin;
 import java.io.IOException;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import modelo.Usuario;
 
@@ -17,7 +17,7 @@ import modelo.Usuario;
  * @author extre
  */
 @ManagedBean
-@RequestScoped
+@ViewScoped
 public class AdminHomeBean {
     private String currentView = "" ;
 

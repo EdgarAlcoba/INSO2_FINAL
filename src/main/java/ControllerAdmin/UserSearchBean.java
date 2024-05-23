@@ -5,18 +5,26 @@
  */
 package ControllerAdmin;
 
-
+import java.util.ArrayList;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
+import javax.faces.bean.ViewScoped;
+import modelo.Usuario;
+import EJB.UsuarioFacadeLocal;
+import javax.ejb.EJB;
 
 /**
  *
  * @author extre
  */
 @ManagedBean
-@RequestScoped
+@ViewScoped
 public class UserSearchBean {
+
     private String searchTF;
+    private ArrayList<Usuario> searchResults;
+    
+    @EJB
+    private UsuarioFacadeLocal UFL;
 
     public String getSearchTF() {
         return searchTF;
@@ -25,10 +33,9 @@ public class UserSearchBean {
     public void setSearchTF(String searchTF) {
         this.searchTF = searchTF;
     }
-    
-    
-    
-    public void SearchBtn(){
-        
+
+    public void searchBtn() {
+        this.searchResults = UFL.searchByEmail(searchTF);
     }
+
 }

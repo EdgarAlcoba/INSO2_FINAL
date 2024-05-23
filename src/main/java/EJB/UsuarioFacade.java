@@ -130,8 +130,7 @@ public class UsuarioFacade extends AbstractFacade<Usuario> implements UsuarioFac
                 return new ArrayList<>();
             }
 
-            ArrayList<Usuario> users = (ArrayList<Usuario>) query.getResultList();
-            return users;
+            return new ArrayList<>(query.getResultList());
         } catch (Exception e) {
             System.out.println("Hubo un error buscando en usuarios: " + e.getMessage());
             return new ArrayList<>();
@@ -140,6 +139,7 @@ public class UsuarioFacade extends AbstractFacade<Usuario> implements UsuarioFac
 
     /**
      * Buscar usuarios por email
+     *
      * @param email Texto a buscar
      * @return Lista de usuarios encontrados
      */

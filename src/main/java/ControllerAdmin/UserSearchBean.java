@@ -7,17 +7,18 @@ package ControllerAdmin;
 
 import java.util.ArrayList;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.SessionScoped;
 import modelo.Usuario;
 import EJB.UsuarioFacadeLocal;
 import javax.ejb.EJB;
+import org.primefaces.PrimeFaces;
 
 /**
  *
  * @author extre
  */
-@ManagedBean
-@ViewScoped
+@ManagedBean (name = "userSearchBean")
+@SessionScoped
 public class UserSearchBean {
 
     private String searchTF;
@@ -25,7 +26,11 @@ public class UserSearchBean {
     
     @EJB
     private UsuarioFacadeLocal UFL;
-
+    
+    public ArrayList<Usuario> getSearchResults() {
+        return searchResults;
+    }
+    
     public String getSearchTF() {
         return searchTF;
     }
@@ -36,6 +41,7 @@ public class UserSearchBean {
 
     public void searchBtn() {
         this.searchResults = UFL.searchByEmail(searchTF);
+        PrimeFaces.current().executeScript("updateLista()");
     }
-
+      
 }

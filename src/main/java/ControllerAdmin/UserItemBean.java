@@ -6,32 +6,46 @@
 package ControllerAdmin;
 
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
+import javax.faces.bean.ViewScoped;
+import modelo.Usuario;
+import EJB.UsuarioFacadeLocal;
+import javax.ejb.EJB;
+import javax.faces.bean.ManagedProperty;
+import javax.faces.context.FacesContext;
+import javax.faces.context.PartialViewContext;
 
 /**
  *
  * @author extre
  */
-@ManagedBean
-@RequestScoped
+@ManagedBean (name = "userItemBean")
+@ViewScoped
 public class UserItemBean {
-    private String rol;
 
-    public String getRol() {
-        return rol;
+    @ManagedProperty(value = "#{userSearchBean}")
+    private UserSearchBean userSearchBean;
+    
+    @EJB
+    private UsuarioFacadeLocal UFL;
+
+    
+    public UserSearchBean getUserSearchBean() {
+        return userSearchBean;
     }
 
-    public void setRol(String rol) {
-        this.rol = rol;
+    public void setUserSearchBean(UserSearchBean userSearchBean) {
+        this.userSearchBean = userSearchBean;
+    }
+
+    public void delete(Usuario user){
+        this.UFL.remove(user);
+        userSearchBean.searchBtn();
+        FacesContext context = FacesContext.getCurrentInstance();
+        PartialViewContext partialViewContext = context.getPartialViewContext();
+        partialViewContext.getRenderIds().add("lista");
     }
     
-    
-    
-    public void delete(){
-        
-    }
-    
-    public void applyChanges(){
-        
+    public void applyChanges(Usuario user){
+        this.UFL.edit(user);
     }
 }

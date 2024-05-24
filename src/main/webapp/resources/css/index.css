@@ -14,22 +14,78 @@ and open the template in the editor.
     overflow: hidden;
 }
 
+.menu {
+    width: 100vw;
+    padding: 1rem;
+    background-color: #8067cb;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 0 20px rgba(0, 0, 0, .7);
+}
+
+.logo{
+    max-height: 20%;
+    max-width: 20%;
+}
+
+.buttonContainer{
+    width: 100%;
+    text-align: right;
+}
+
+.buttonContainer .ui-button,ui-widget {
+    height: 100% !important;
+    background-color: #7ec9e6 !important;
+    border-color: #7ec9e6 !important;
+}
+.buttonContainer .ui-button-text{
+    font-size: 1.2rem !important;
+    font-weight: bold;
+    color: #1f0a5e !important;
+}
+
 #background-video {
     position: fixed;
     top: 50%;
     left: 50%;
     width: 100%;
     height: 100%;
-    object-fit: cover;  /* Asegura que el vídeo cubra todo el área */
+    object-fit: cover;
     transform: translate(-50%, -50%);
-    z-index: -1;  /* Asegura que el vídeo esté en el fondo */
+    z-index: -1;
 }
 
 .center-box {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     height: 100%;
     width: 100%;
     box-sizing: border-box;
+}
+
+.welcome-label {
+    color: #000;
+    font-size: 6rem;
+    font-family: sans-serif;
+    font-weight: 700;
+    margin-top: 2rem;
+    margin-left: 1rem;
+    margin-right: 1rem;
+    margin-bottom: 60vh;
+    text-align: center;
+}
+
+.center-box .ui-button,ui-widget {
+    height: 100% !important;
+    background-color: #7ec9e6 !important;
+    border-color: #7ec9e6 !important;
+    box-shadow: 0 0 20px rgba(0, 0, 0, .7);
+}
+
+.center-box .ui-button-text{
+    font-size: 2rem !important;
+    font-weight: bold;
+    color: #1f0a5e !important;
 }

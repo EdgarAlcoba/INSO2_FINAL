@@ -20,12 +20,6 @@ public class ModeloAvion implements Serializable {
     private String nombre;
 
     /**
-     * A hasta F segun tabla FAA
-     */
-    @Column(name = "CATEGORIA")
-    private String categoria;
-
-    /**
      * En kg/h
      */
     @Column(name = "GASTO_COMBUSTIBLE")
@@ -36,6 +30,9 @@ public class ModeloAvion implements Serializable {
 
     @Column(name = "CAPACIDAD")
     private int capacidad;
+
+    @Column(name = "HEAVY")
+    private boolean heavy;
 
     public String getIcao() {
         return icao;
@@ -59,14 +56,6 @@ public class ModeloAvion implements Serializable {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
-    }
-
-    public String getCategoria() {
-        return categoria;
-    }
-
-    public void setCategoria(String categoria) {
-        this.categoria = categoria;
     }
 
     public double getGastoCombustible() {
@@ -93,16 +82,24 @@ public class ModeloAvion implements Serializable {
         this.capacidad = capacidad;
     }
 
+    public boolean isHeavy() {
+        return heavy;
+    }
+
+    public void setHeavy(boolean heavy) {
+        this.heavy = heavy;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ModeloAvion that = (ModeloAvion) o;
-        return Double.compare(gastoCombustible, that.gastoCombustible) == 0 && capacidad == that.capacidad && Objects.equals(icao, that.icao) && Objects.equals(iata, that.iata) && Objects.equals(nombre, that.nombre) && Objects.equals(categoria, that.categoria) && Objects.equals(precio, that.precio);
+        return Double.compare(gastoCombustible, that.gastoCombustible) == 0 && capacidad == that.capacidad && heavy == that.heavy && Objects.equals(icao, that.icao) && Objects.equals(iata, that.iata) && Objects.equals(nombre, that.nombre) && Objects.equals(precio, that.precio);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(icao, iata, nombre, categoria, gastoCombustible, precio, capacidad);
+        return Objects.hash(icao, iata, nombre, gastoCombustible, precio, capacidad, heavy);
     }
 }

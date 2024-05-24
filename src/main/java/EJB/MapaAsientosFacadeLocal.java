@@ -8,6 +8,7 @@ package EJB;
 import java.util.List;
 import javax.ejb.Local;
 import modelo.MapaAsientos;
+import modelo.ModeloAvion;
 
 /**
  *
@@ -29,5 +30,9 @@ public interface MapaAsientosFacadeLocal {
     List<MapaAsientos> findRange(int[] range);
 
     int count();
+
+    MapaAsientos getPremiumMap(ModeloAvion modeloAvion);
+    MapaAsientos getNormalMap(ModeloAvion modeloAvion);
+    MapaAsientos getEconomyMap(ModeloAvion modeloAvion);
     
 }

@@ -4,7 +4,7 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:panelGrid columns="4" cellspacing="5" style="width: 100%">
-        <h:outputLabel style="width: 100%" for="email" value="Correo" />
+        <h:outputLabel style="width: 100%" for="email" value="#{userItemBean.email}" />
         <p:selectOneMenu style="width: 100%" id="rol" value="#{userItemBean.rol}">
             <f:selectItem itemLabel="Cliente" itemValue="Client" />
             <f:selectItem itemLabel="Gestor" itemValue="Manager" />

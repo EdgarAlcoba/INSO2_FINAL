@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Gestión de aerolínea</title>
+        <style>
+        .full-width-calendar .ui-inputfield {
+            width: 100% !important;
+        }
+    </style>
+    </h:head>
+    <h:body>
+        <p:commandButton value="Crear viaje" onclick="PF('floatingDialog').show();" type="button" />
+
+        <p:dialog id="floatingDialog" header="Datos del vuelo" widgetVar="floatingDialog" modal="true" resizable="false" draggable="false" closable="true" closeOnEscape="true">
+            <h:panelGrid columns="2" cellspacing="5" style="width: 100%; padding: 0 !important; margin: 0 !important">
+                <h:outputLabel for="origin" value="Origen:" />
+                <p:inputText style="width: 100%" id="origin" value="#{managerHomeBean.origin}"/>
+                <h:outputLabel for="destination" value="Destino:" />
+                <p:inputText style="width: 100%" id="destination" value="#{managerHomeBean.destination}"/>
+                <h:outputLabel for="cost" value="Coste:" />
+                <p:inputText style="width: 100%" id="cost" value="#{managerHomeBean.cost}"/>
+                <h:outputLabel for="departure" value="Salida:" />
+                <p:calendar styleClass="full-width-calendar" id="dateTimeDeparture" value="#{managerHomeBean.dateTimeDeparture}" pattern="dd/MM/yyyy HH:mm" />
+                <h:outputLabel for="arrival" value="Llegada:" />
+                <p:calendar styleClass="full-width-calendar" id="dateTimeArrival" value="#{managerHomeBean.dateTimeArrival}" pattern="dd/MM/yyyy HH:mm" />
+            </h:panelGrid>
+            <br/>
+            <p:commandButton value="Añadir" action="#{managerHomeBean.createFlight()}" onclick="PF('floatingDialog').hide()" type="button" style="display:block; margin: 0 auto;width: 100%"/>
+        </p:dialog>
+    </h:body>
+</html>
+

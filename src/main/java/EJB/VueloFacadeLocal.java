@@ -5,6 +5,8 @@
  */
 package EJB;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.Local;
 import modelo.Vuelo;
@@ -29,5 +31,7 @@ public interface VueloFacadeLocal {
     List<Vuelo> findRange(int[] range);
 
     int count();
+
+    ArrayList<Vuelo> searchBetween(Date from, Date to);
     
 }

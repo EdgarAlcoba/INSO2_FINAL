@@ -10,6 +10,9 @@ import java.util.Objects;
 @Table(name="Vuelos")
 public class Vuelo implements Serializable {
     @Id
+    @GeneratedValue
+    private int id;
+
     @Column(name = "NUMERO")
     private String numero;
 
@@ -38,6 +41,14 @@ public class Vuelo implements Serializable {
 
     @Column(name = "PRECIO_MALETA")
     private BigDecimal precioMaleta;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getNumero() {
         return numero;
@@ -108,11 +119,11 @@ public class Vuelo implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Vuelo vuelo = (Vuelo) o;
-        return Double.compare(gastoCombustibleKg, vuelo.gastoCombustibleKg) == 0 && Objects.equals(numero, vuelo.numero) && Objects.equals(origen, vuelo.origen) && Objects.equals(destino, vuelo.destino) && Objects.equals(salida, vuelo.salida) && Objects.equals(llegada, vuelo.llegada) && Objects.equals(avion, vuelo.avion) && Objects.equals(precioMaleta, vuelo.precioMaleta);
+        return id == vuelo.id && Double.compare(gastoCombustibleKg, vuelo.gastoCombustibleKg) == 0 && Objects.equals(numero, vuelo.numero) && Objects.equals(origen, vuelo.origen) && Objects.equals(destino, vuelo.destino) && Objects.equals(salida, vuelo.salida) && Objects.equals(llegada, vuelo.llegada) && Objects.equals(avion, vuelo.avion) && Objects.equals(precioMaleta, vuelo.precioMaleta);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(numero, origen, destino, salida, llegada, gastoCombustibleKg, avion, precioMaleta);
+        return Objects.hash(id, numero, origen, destino, salida, llegada, gastoCombustibleKg, avion, precioMaleta);
     }
 }

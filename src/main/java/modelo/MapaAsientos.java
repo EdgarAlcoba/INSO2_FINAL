@@ -25,7 +25,7 @@ public class MapaAsientos implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "TIPO_AVION")
-    private TipoAvion tipoAvion;
+    private ModeloAvion modeloAvion;
 
     public int getId() {
         return id;
@@ -59,12 +59,12 @@ public class MapaAsientos implements Serializable {
         this.seccion3 = seccion3;
     }
 
-    public TipoAvion getTipoAvion() {
-        return tipoAvion;
+    public ModeloAvion getModeloAvion() {
+        return modeloAvion;
     }
 
-    public void setTipoAvion(TipoAvion tipoAvion) {
-        this.tipoAvion = tipoAvion;
+    public void setModeloAvion(ModeloAvion tipoAvion) {
+        this.modeloAvion = tipoAvion;
     }
 
     @Override
@@ -72,11 +72,11 @@ public class MapaAsientos implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         MapaAsientos that = (MapaAsientos) o;
-        return id == that.id && Objects.equals(seccion1, that.seccion1) && Objects.equals(seccion2, that.seccion2) && Objects.equals(seccion3, that.seccion3) && Objects.equals(tipoAvion, that.tipoAvion);
+        return id == that.id && Objects.equals(seccion1, that.seccion1) && Objects.equals(seccion2, that.seccion2) && Objects.equals(seccion3, that.seccion3) && Objects.equals(modeloAvion, that.modeloAvion);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, seccion1, seccion2, seccion3, tipoAvion);
+        return Objects.hash(id, seccion1, seccion2, seccion3, modeloAvion);
     }
 }

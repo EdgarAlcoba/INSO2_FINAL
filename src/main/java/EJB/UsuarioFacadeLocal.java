@@ -37,6 +37,12 @@ public interface UsuarioFacadeLocal {
 
     public int register(Usuario user);
 
+    /**
+     * Buscar usuarios por email
+     *
+     * @param email Texto a buscar
+     * @return Lista de usuarios encontrados
+     */
     public ArrayList<Usuario> searchByEmail(String email);
     
 }

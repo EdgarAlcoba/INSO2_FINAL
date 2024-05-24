@@ -120,7 +120,7 @@ public class UsuarioFacade extends AbstractFacade<Usuario> implements UsuarioFac
     }
 
     /**
-     * Buscar usuarios,
+     * Buscar
      * @param by Buscar por
      * @param text Texto a buscar
      * @return Lista de usuarios encontrados
@@ -146,12 +146,6 @@ public class UsuarioFacade extends AbstractFacade<Usuario> implements UsuarioFac
         }
     }
 
-    /**
-     * Buscar usuarios por email
-     *
-     * @param email Texto a buscar
-     * @return Lista de usuarios encontrados
-     */
     public ArrayList<Usuario> searchByEmail(String email) {
         return searchBy("email", email);
     }

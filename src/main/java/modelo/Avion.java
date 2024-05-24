@@ -22,6 +22,10 @@ public class Avion implements Serializable {
     @JoinColumn(name = "MODELO")
     private ModeloAvion modelo;
 
+    @ManyToOne
+    @JoinColumn(name = "MAPA_ASIENTOS")
+    private MapaAsientos mapaAsientos;
+
     public String getMsn() {
         return msn;
     }
@@ -54,16 +58,24 @@ public class Avion implements Serializable {
         this.modelo = modelo;
     }
 
+    public MapaAsientos getMapaAsientos() {
+        return mapaAsientos;
+    }
+
+    public void setMapaAsientos(MapaAsientos mapaAsientos) {
+        this.mapaAsientos = mapaAsientos;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Avion avion = (Avion) o;
-        return Objects.equals(msn, avion.msn) && Objects.equals(matricula, avion.matricula) && Objects.equals(precioCompra, avion.precioCompra) && Objects.equals(modelo, avion.modelo);
+        return Objects.equals(msn, avion.msn) && Objects.equals(matricula, avion.matricula) && Objects.equals(precioCompra, avion.precioCompra) && Objects.equals(modelo, avion.modelo) && Objects.equals(mapaAsientos, avion.mapaAsientos);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(msn, matricula, precioCompra, modelo);
+        return Objects.hash(msn, matricula, precioCompra, modelo, mapaAsientos);
     }
 }

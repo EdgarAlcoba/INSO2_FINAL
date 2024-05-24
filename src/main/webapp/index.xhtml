@@ -8,19 +8,21 @@
         <h:outputStylesheet library="css" name="index.css" />
     </h:head>
     <h:body>
-        <video id="background-video" autoplay="true" loop="true" muted="true">
-            <source src="#{resource['assets/HomeBackground.mp4']}" type="video/mp4"/>
-            Your browser does not support the video tag.
-        </video>
-        <h:form styleClass="center-box">
-            <p:panel header="Aerolínea">
-                <h:panelGrid columns="1" cellpadding="5">
-                    <h:outputText value="Bienvenido a nuestra aerolínea" style="font-size:20px;"/>
-                    <p:commandButton value="Go to Login" action="webAccess/login" />
-                    <p:commandButton value="Go to Register" action="webAccess/register" />
-                    <p:commandButton value="Go to Admin" action="administratorPages/home" />
-                </h:panelGrid>
-            </p:panel>
+        <h:form>
+            <div class="menu">
+                <h:graphicImage class="logo" value="#{resource['/assets/SkySurfersLogo.png']}"/>
+                <div class="buttonContainer">
+                    <p:commandButton styleClass="loginButton" value="Iniciar sesión" action="webAccess/login" />
+                </div>
+            </div>
+            <video id="background-video" autoplay="true" loop="true" muted="true">
+                <source src="#{resource['assets/HomeBackground.mp4']}" type="video/mp4"/>
+                Your browser does not support the video tag.
+            </video>
+            <div class="center-box">
+                <label class='welcome-label'>Bienvenido a nuestra aerolínea</label>
+                <p:commandButton value="Comenzar" action="webAccess/register" />
+            </div>
         </h:form>
     </h:body>
 </html>

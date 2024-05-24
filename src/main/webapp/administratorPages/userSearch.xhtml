@@ -13,15 +13,15 @@
             </h:outputLabel>
             <p:commandButton style="width: 100%; min-width: 30px" icon="pi pi-search" action="#{userSearchBean.searchBtn}" update="messages"/>
         </h:panelGrid>
-        <!-- La siguiente línea es solo para facilitar el desarrollo -->
-        <p:panel style="width: 100%" header="Usuarios encontrados">
-            <ui:repeat value="#{userSearchBean.searchResults}" var="email">
+        <p:panel id="foundUsersList" style="width: 100%" header="Usuarios encontrados">
+            <ui:repeat value="#{userSearchBean.searchResults}" var="user">
                 <ui:include src="#{'/administratorPages/userItem.xhtml'}">
-                    <ui:param name="userItemBean" value="#{email}" />
+                    <ui:param name="user" value="#{user}" />
                 </ui:include>
             </ui:repeat>
 
         </p:panel>
     </p:panel>
     <p:messages id="messages" showDetail="true" />
+    <p:remoteCommand name="updateList" update="foundUsersList"/>
 </ui:composition>

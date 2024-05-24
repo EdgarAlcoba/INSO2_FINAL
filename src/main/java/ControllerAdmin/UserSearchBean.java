@@ -41,7 +41,7 @@ public class UserSearchBean {
 
     public void searchBtn() {
         this.searchResults = UFL.searchByEmail(searchTF);
-        PrimeFaces.current().executeScript("updateLista()");
+        PrimeFaces.current().executeScript("updateList()");
     }
       
 }

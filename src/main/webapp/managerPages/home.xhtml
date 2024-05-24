@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>Gestión de aerolínea</title>
         <style>
@@ -44,17 +45,60 @@
                         <p:calendar styleClass="full-width-calendar" id="dateTimeTo" value="#{managerHomeBean.dateTimeTo}" pattern="dd/MM/yyyy HH:mm" />
                         <p:commandButton style="width: 100%; min-width: 30px" icon="pi pi-search" action="#{managerHomeBean.searchBtn}" update="messages"/>
                     </h:panelGrid>
-                    <!-- La siguiente línea es solo para facilitar el desarrollo -->
-                    <p:panel style="width: 100%" header="Vuelos encontrados">
-                        <!--<ui:repeat value="#{managerHomeBean.searchResults}" var="email">
-                            <ui:include src="#{'/administratorPages/userItem.xhtml'}">
-                                <ui:param name="userItemBean" value="#{email}" />
-                            </ui:include>
-                        </ui:repeat>-->
-                    </p:panel>
+
+                    <!-- Tabla de vuelos encontrados -->
+                    <p:dataTable id="flightsTable" var="table" value="#{managerHomeBean.foundFlights}" rowKey="#{managerHomeBean.flight.id}"
+                                 selection="#{managerHomeBean.selectedFlight}" selectionMode="single">
+                        <f:facet name="header">
+                            Vuelos encontrados:
+                        </f:facet>
+
+                        <p:column headerText="Origen">
+                            <h:outputText value="#{flight.origin}" />
+                        </p:column>
+                        <p:column headerText="Destino">
+                            <h:outputText value="#{flight.destination}" />
+                        </p:column>
+                        <p:column headerText="Salida">
+                            <h:outputText value="#{flight.departure}" />
+                        </p:column>
+                        <p:column headerText="Llegada">
+                            <h:outputText value="#{flight.arrival}" />
+                        </p:column>
+                        <p:column headerText="Avión">
+                            <h:outputText value="#{flight.plane}" />
+                        </p:column>
+                        <p:column headerText="Cost">
+                            <h:outputText value="#{flight.cost}" />
+                        </p:column>
+                    </p:dataTable>
+
+                    <p:contextMenu for="flightsTable">
+                        <p:menuitem value="Modify" update="modifyFlight" icon="pi pi-pencil"
+                                    oncomplete="PF('modifyFlightDialog').show()" actionListener="#{managerHomeBean.viewFlightDialog}"/>
+                    </p:contextMenu>
+
+                    <p:dialog header="Datos del vuelo" widgetVar="modifyFlightDialog" modal="true" showEffect="fade"
+                              hideEffect="fade" resizable="false">
+                        <h:panelGrid id="modifyFlight" columns="2" cellspacing="5" style="width: 100%; padding: 0 !important; margin: 0 !important">
+                            <h:outputLabel value="Origen:" />
+                            <p:inputText style="width: 100%" id="modifyOrigin" value="#{managerHomeBean.flight.origin}"/>
+                            <h:outputLabel value="Destino:" />
+                            <p:inputText style="width: 100%" id="modifyDestination" value="#{managerHomeBean.flight.destination}"/>
+                            <h:outputLabel value="Coste:" />
+                            <p:inputText style="width: 100%" id="modifyCost" value="#{managerHomeBean.flight.cost}"/>
+                            <h:outputLabel  value="Salida:" />
+                            <p:calendar styleClass="full-width-calendar" id="dateTimeDeparture" value="#{managerHomeBean.flight.dateTimeDeparture}" pattern="dd/MM/yyyy HH:mm" />
+                            <h:outputLabel value="Llegada:" />
+                            <p:calendar styleClass="full-width-calendar" id="dateTimeArrival" value="#{managerHomeBean.flight.dateTimeArrival}" pattern="dd/MM/yyyy HH:mm" />
+                        </h:panelGrid>
+                        <br/>
+                        <p:commandButton value="Aplicar cambios" action="#{managerHomeBean.modifyFlight()}" onclick="PF('modifyFlightDialog').hide()" type="button" style="display:block; margin: 0 auto;width: 100%"/>
+                    </p:dialog>
                 </div>
             </p:panel>
             <p:messages id="messages" showDetail="true" />
+            <p:remoteCommand name="updateTable" update="flightsTable"/>
         </h:form>
     </h:body>
 </html>

@@ -2,6 +2,7 @@ package modelo;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Objects;
 
@@ -17,15 +18,15 @@ public class Billete implements Serializable {
     private Date fechaCompra;
 
     @Column(name = "PRECIO")
-    private String apellidos;
-
-    @JoinColumn(name = "USUARIO")
-    @ManyToOne
-    private Usuario usuario;
+    private BigDecimal precio;
 
     @JoinColumn(name = "VUELO")
     @ManyToOne
     private Vuelo vuelo;
+
+    @JoinColumn(name = "PASAJERO")
+    @ManyToOne
+    private Pasajero pasajero;
 
     public int getId() {
         return id;
@@ -43,20 +44,12 @@ public class Billete implements Serializable {
         this.fechaCompra = fechaCompra;
     }
 
-    public String getApellidos() {
-        return apellidos;
+    public BigDecimal getPrecio() {
+        return precio;
     }
 
-    public void setApellidos(String apellidos) {
-        this.apellidos = apellidos;
-    }
-
-    public Usuario getUsuario() {
-        return usuario;
-    }
-
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
+    public void setPrecio(BigDecimal precio) {
+        this.precio = precio;
     }
 
     public Vuelo getVuelo() {
@@ -67,16 +60,24 @@ public class Billete implements Serializable {
         this.vuelo = vuelo;
     }
 
+    public Pasajero getPasajero() {
+        return pasajero;
+    }
+
+    public void setPasajero(Pasajero pasajero) {
+        this.pasajero = pasajero;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Billete billete = (Billete) o;
-        return id == billete.id && Objects.equals(fechaCompra, billete.fechaCompra) && Objects.equals(apellidos, billete.apellidos) && Objects.equals(usuario, billete.usuario) && Objects.equals(vuelo, billete.vuelo);
+        return id == billete.id && Objects.equals(fechaCompra, billete.fechaCompra) && Objects.equals(precio, billete.precio) && Objects.equals(vuelo, billete.vuelo) && Objects.equals(pasajero, billete.pasajero);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, fechaCompra, apellidos, usuario, vuelo);
+        return Objects.hash(id, fechaCompra, precio, vuelo, pasajero);
     }
 }

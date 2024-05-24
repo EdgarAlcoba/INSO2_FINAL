@@ -32,6 +32,9 @@ public class Usuario implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaNacimiento;
 
+    /**
+     * True si es caballero y false si es dama
+     */
     @Column(name = "SEXO")
     private boolean sexo;
     
@@ -39,7 +42,7 @@ public class Usuario implements Serializable {
     private String contrasena;
     
     @Column(name = "ROL")
-    private String rol = "CLIENTE";
+    private String rol = "Client";
 
     public int getId() {
         return id;
@@ -106,53 +109,15 @@ public class Usuario implements Serializable {
     }
 
     @Override
-    public int hashCode() {
-        int hash = 7;
-        hash = 37 * hash + this.id;
-        hash = 37 * hash + Objects.hashCode(this.nombre);
-        hash = 37 * hash + Objects.hashCode(this.apellidos);
-        hash = 37 * hash + Objects.hashCode(this.correo);
-        hash = 37 * hash + Objects.hashCode(this.fechaNacimiento);
-        hash = 37 * hash + (this.sexo ? 1 : 0);
-        hash = 37 * hash + Objects.hashCode(this.contrasena);
-        hash = 37 * hash + Objects.hashCode(this.rol);
-        return hash;
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Usuario usuario = (Usuario) o;
+        return id == usuario.id && sexo == usuario.sexo && Objects.equals(nombre, usuario.nombre) && Objects.equals(apellidos, usuario.apellidos) && Objects.equals(correo, usuario.correo) && Objects.equals(fechaNacimiento, usuario.fechaNacimiento) && Objects.equals(contrasena, usuario.contrasena) && Objects.equals(rol, usuario.rol);
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Usuario other = (Usuario) obj;
-        if (this.id != other.id) {
-            return false;
-        }
-        if (this.sexo != other.sexo) {
-            return false;
-        }
-        if (!Objects.equals(this.nombre, other.nombre)) {
-            return false;
-        }
-        if (!Objects.equals(this.apellidos, other.apellidos)) {
-            return false;
-        }
-        if (!Objects.equals(this.correo, other.correo)) {
-            return false;
-        }
-        if (!Objects.equals(this.contrasena, other.contrasena)) {
-            return false;
-        }
-        if (!Objects.equals(this.rol, other.rol)) {
-            return false;
-        }
-        return Objects.equals(this.fechaNacimiento, other.fechaNacimiento);
+    public int hashCode() {
+        return Objects.hash(id, nombre, apellidos, correo, fechaNacimiento, sexo, contrasena, rol);
     }
-    
 }

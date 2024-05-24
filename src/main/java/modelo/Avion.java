@@ -18,8 +18,8 @@ public class Avion implements Serializable {
     @Column(name = "PRECIO_COMPRA")
     private BigDecimal precioCompra;
 
-    @JoinColumn(name = "MODELO")
     @ManyToOne
+    @JoinColumn(name = "MODELO")
     private ModeloAvion modelo;
 
     public String getMsn() {

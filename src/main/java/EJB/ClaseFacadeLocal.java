@@ -5,6 +5,7 @@
  */
 package EJB;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Local;
 import modelo.Clase;
@@ -29,5 +30,12 @@ public interface ClaseFacadeLocal {
     List<Clase> findRange(int[] range);
 
     int count();
+
+    /**
+     * Buscar clase,
+     * @param name Nombre de la clase a buscar
+     * @return Lista de clases encontradas
+     */
+    ArrayList<Clase> searchByName(String name);
     
 }

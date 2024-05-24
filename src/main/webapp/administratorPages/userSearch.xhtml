@@ -15,7 +15,12 @@
         </h:panelGrid>
         <!-- La siguiente línea es solo para facilitar el desarrollo -->
         <p:panel style="width: 100%" header="Usuarios encontrados">
-            <ui:include src="#{'/administratorPages/userItem.xhtml'}" />
+            <ui:repeat value="#{userSearchBean.searchResults}" var="email">
+                <ui:include src="#{'/administratorPages/userItem.xhtml'}">
+                    <ui:param name="userItemBean" value="#{email}" />
+                </ui:include>
+            </ui:repeat>
+
         </p:panel>
     </p:panel>
     <p:messages id="messages" showDetail="true" />

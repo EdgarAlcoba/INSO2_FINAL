@@ -16,13 +16,11 @@ public class Vuelo implements Serializable {
     @Column(name = "NUMERO")
     private String numero;
 
-    @JoinColumn(name = "ORIGEN")
-    @ManyToOne
-    private Aeropuerto origen;
+    @Column(name = "ORIGEN")
+    private String origen;
 
-    @JoinColumn(name = "DESTINO")
-    @ManyToOne
-    private Aeropuerto destino;
+    @Column(name = "DESTINO")
+    private String destino;
 
     @Column(name = "SALIDA")
     @Temporal(TemporalType.TIMESTAMP)
@@ -58,19 +56,19 @@ public class Vuelo implements Serializable {
         this.numero = numero;
     }
 
-    public Aeropuerto getOrigen() {
+    public String getOrigen() {
         return origen;
     }
 
-    public void setOrigen(Aeropuerto origen) {
+    public void setOrigen(String origen) {
         this.origen = origen;
     }
 
-    public Aeropuerto getDestino() {
+    public String getDestino() {
         return destino;
     }
 
-    public void setDestino(Aeropuerto destino) {
+    public void setDestino(String destino) {
         this.destino = destino;
     }
 

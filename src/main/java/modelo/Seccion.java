@@ -18,12 +18,8 @@ public class Seccion implements Serializable {
     @Column(name = "NUM_COLUMNAS")
     private int numColumnas;
 
-    @JoinColumn(name = "CLASE")
-    @ManyToOne
-    private Clase clase;
-
-    @OneToMany
-    private List<Asiento> asientos;
+    @Column(name = "CLASE")
+    private String clase = "Economy";
 
     public int getId() {
         return id;
@@ -49,20 +45,12 @@ public class Seccion implements Serializable {
         this.numColumnas = numColumnas;
     }
 
-    public Clase getClase() {
+    public String getClase() {
         return clase;
     }
 
-    public void setClase(Clase clase) {
+    public void setClase(String clase) {
         this.clase = clase;
-    }
-
-    public List<Asiento> getAsientos() {
-        return asientos;
-    }
-
-    public void setAsientos(List<Asiento> asientos) {
-        this.asientos = asientos;
     }
 
     @Override
@@ -70,11 +58,11 @@ public class Seccion implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Seccion seccion = (Seccion) o;
-        return id == seccion.id && numFilas == seccion.numFilas && numColumnas == seccion.numColumnas && Objects.equals(clase, seccion.clase) && Objects.equals(asientos, seccion.asientos);
+        return id == seccion.id && numFilas == seccion.numFilas && numColumnas == seccion.numColumnas && Objects.equals(clase, seccion.clase);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, numFilas, numColumnas, clase, asientos);
+        return Objects.hash(id, numFilas, numColumnas, clase);
     }
 }

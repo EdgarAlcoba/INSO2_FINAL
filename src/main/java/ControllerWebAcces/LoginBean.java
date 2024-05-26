@@ -72,7 +72,6 @@ public class LoginBean {
     }
     
      private void showAlert(String name, String text) {
-        System.out.println(">Llega aqui");
         FacesContext context = FacesContext.getCurrentInstance();
         context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, name, text));
         }

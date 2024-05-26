@@ -12,6 +12,7 @@ import modelo.Vuelo;
 import EJB.VueloFacadeLocal;
 import java.util.Date;
 import javax.ejb.EJB;
+import org.primefaces.PrimeFaces;
 
 /**
  *
@@ -109,18 +110,21 @@ public class managerHomeBean {
     
     
     public void createFlight(){
-
+        
+        this.searchBtn();
     }
     
     public void searchBtn(){
         this.foundFlights = this.VFL.searchBetween(dateTimeFrom, dateTimeTo);
+        PrimeFaces.current().executeScript("updateTable()");
     }
     
     public void modifyFlight(){
-        
+        System.out.println("LLega a modificar");
+        this.VFL.edit(selectedFlight);
+        this.searchBtn();
     }
     
     public void viewFlightDialog(){
-        
     }
 }

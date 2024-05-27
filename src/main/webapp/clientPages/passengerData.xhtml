@@ -1,0 +1,26 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <p:panel   header="Datos del pasajero">
+        <h:panelGrid columns="1" cellspacing="2" >
+            <h:outputLabel value="Nombre" />
+            <p:inputText id="passengerName" value="#{passengerDataBean.pasajero.nombre}"/>
+            <br/>
+            <h:outputLabel value="Apellido 1" />
+            <p:inputText id="passengerSurname1" value="#{passengerDataBean.pasajero.apellido2}"/>
+            <br/>
+            <h:outputLabel value="Apellido 2" />
+            <p:inputText id="passengerSurname2" value="#{passengerDataBean.pasajero.apellido2}"/>
+            <br/>
+            <h:outputLabel value="DNI/NIF" />
+            <p:inputText id="passengerDNI" value="#{passengerDataBean.pasajero.dniNIE}"/>
+            <br/>
+            <h:outputLabel value="Número de pasaporte" />
+            <p:inputText id="passengerPassport" value="#{passengerDataBean.pasajero.pasaporte}"/>
+            <br/>
+            <p:button value='Siguiente'/>
+        </h:panelGrid>
+    </p:panel>
+</ui:composition>

@@ -4,7 +4,7 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:f="http://xmlns.jcp.org/jsf/core">
     <p:panel   header="Búsqueda de vuelos">
-        <p:panelGrid columns="1" >
+        <h:panelGrid columns="1" cellspacing="5">
             <h:outputLabel value="Origen" />
             <p:inputText id="origin" value="#{flightSearchBean.origin}"/>
             <h:outputLabel value="Destino" />
@@ -18,7 +18,7 @@
             <h:outputLabel value="Número de pasajeros" />
             <p:inputNumber id="passengerInput" value="#{flightSearchBean.numberOfPassengers}" minValue="1" decimalPlaces="0" />
             <p:button value='Buscar vuelos'/>
-        </p:panelGrid>
+        </h:panelGrid>
     </p:panel>
 </ui:composition>
 

@@ -18,6 +18,8 @@ public interface BilleteFacadeLocal {
 
     void create(Billete billete);
 
+    void createBillete(Billete billete);
+
     void edit(Billete billete);
 
     void remove(Billete billete);

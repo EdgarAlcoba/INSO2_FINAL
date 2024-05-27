@@ -8,6 +8,9 @@ package EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+
+import com.sun.javaws.exceptions.InvalidArgumentException;
+import es.unileon.inso2.aerolinea.exceptions.CreateBagException;
 import modelo.Maleta;
 
 /**
@@ -28,5 +31,14 @@ public class MaletaFacade extends AbstractFacade<Maleta> implements MaletaFacade
     public MaletaFacade() {
         super(Maleta.class);
     }
-    
+
+    public void createMaleta(Maleta maleta) throws CreateBagException {
+        if (maleta.getPesoKg() <= 0) {
+            throw new CreateBagException("El peso de la maleta debe ser positivo");
+        }
+        if (maleta.getBillete() == maleta.getBillete()) {
+            throw new IllegalArgumentException("No se puede asociar una maleta a un billete inválido");
+        }
+        em.persist(maleta);
+    }
 }

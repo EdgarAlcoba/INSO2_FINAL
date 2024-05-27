@@ -17,6 +17,10 @@ public class Billete implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaCompra;
 
+    @JoinColumn(name = "USUARIO")
+    @ManyToOne
+    private Usuario usuario;
+
     @Column(name = "PRECIO")
     private BigDecimal precio;
 
@@ -42,6 +46,14 @@ public class Billete implements Serializable {
 
     public void setFechaCompra(Date fechaCompra) {
         this.fechaCompra = fechaCompra;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 
     public BigDecimal getPrecio() {
@@ -73,11 +85,11 @@ public class Billete implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Billete billete = (Billete) o;
-        return id == billete.id && Objects.equals(fechaCompra, billete.fechaCompra) && Objects.equals(precio, billete.precio) && Objects.equals(vuelo, billete.vuelo) && Objects.equals(pasajero, billete.pasajero);
+        return id == billete.id && Objects.equals(fechaCompra, billete.fechaCompra) && Objects.equals(usuario, billete.usuario) && Objects.equals(precio, billete.precio) && Objects.equals(vuelo, billete.vuelo) && Objects.equals(pasajero, billete.pasajero);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, fechaCompra, precio, vuelo, pasajero);
+        return Objects.hash(id, fechaCompra, usuario, precio, vuelo, pasajero);
     }
 }

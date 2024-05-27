@@ -5,6 +5,8 @@
  */
 package EJB;
 
+import es.unileon.inso2.aerolinea.exceptions.CreateFlightException;
+
 import java.util.List;
 import javax.persistence.EntityManager;
 

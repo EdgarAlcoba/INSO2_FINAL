@@ -43,33 +43,33 @@
                         <p:calendar styleClass="full-width-calendar" id="dateTimeFrom" value="#{managerHomeBean.dateTimeFrom}" pattern="dd/MM/yyyy HH:mm" />
                         <h:outputLabel  for="searchTo" value="Hasta:" />
                         <p:calendar styleClass="full-width-calendar" id="dateTimeTo" value="#{managerHomeBean.dateTimeTo}" pattern="dd/MM/yyyy HH:mm" />
-                        <p:commandButton style="width: 100%; min-width: 30px" icon="pi pi-search" action="#{managerHomeBean.searchBtn}" update="messages"/>
+                        <p:commandButton style="width: 100%; min-width: 30px" icon="pi pi-search" action="#{managerHomeBean.searchBtn}" />
                     </h:panelGrid>
 
                     <!-- Tabla de vuelos encontrados -->
-                    <p:dataTable id="flightsTable" var="table" value="#{managerHomeBean.foundFlights}" rowKey="#{managerHomeBean.flight.id}"
+                    <p:dataTable id="flightsTable" var="flight" value="#{managerHomeBean.foundFlights}" rowKey="#{flight.id}"
                                  selection="#{managerHomeBean.selectedFlight}" selectionMode="single">
                         <f:facet name="header">
                             Vuelos encontrados:
                         </f:facet>
 
                         <p:column headerText="Origen">
-                            <h:outputText value="#{flight.origin}" />
+                            <h:outputText value="#{flight.origen}" />
                         </p:column>
                         <p:column headerText="Destino">
-                            <h:outputText value="#{flight.destination}" />
+                            <h:outputText value="#{flight.destino}" />
                         </p:column>
                         <p:column headerText="Salida">
-                            <h:outputText value="#{flight.departure}" />
+                            <h:outputText value="#{flight.salida}" />
                         </p:column>
                         <p:column headerText="Llegada">
-                            <h:outputText value="#{flight.arrival}" />
+                            <h:outputText value="#{flight.llegada}" />
                         </p:column>
                         <p:column headerText="Avión">
-                            <h:outputText value="#{flight.plane}" />
+                            <h:outputText value="#{flight.avion.matricula}" />
                         </p:column>
                         <p:column headerText="Cost">
-                            <h:outputText value="#{flight.cost}" />
+                            <h:outputText value="#{flight.precioMaleta}" />
                         </p:column>
                     </p:dataTable>
 
@@ -80,20 +80,22 @@
 
                     <p:dialog header="Datos del vuelo" widgetVar="modifyFlightDialog" modal="true" showEffect="fade"
                               hideEffect="fade" resizable="false">
-                        <h:panelGrid id="modifyFlight" columns="2" cellspacing="5" style="width: 100%; padding: 0 !important; margin: 0 !important">
-                            <h:outputLabel value="Origen:" />
-                            <p:inputText style="width: 100%" id="modifyOrigin" value="#{managerHomeBean.flight.origin}"/>
-                            <h:outputLabel value="Destino:" />
-                            <p:inputText style="width: 100%" id="modifyDestination" value="#{managerHomeBean.flight.destination}"/>
-                            <h:outputLabel value="Coste:" />
-                            <p:inputText style="width: 100%" id="modifyCost" value="#{managerHomeBean.flight.cost}"/>
-                            <h:outputLabel  value="Salida:" />
-                            <p:calendar styleClass="full-width-calendar" id="dateTimeDeparture" value="#{managerHomeBean.flight.dateTimeDeparture}" pattern="dd/MM/yyyy HH:mm" />
-                            <h:outputLabel value="Llegada:" />
-                            <p:calendar styleClass="full-width-calendar" id="dateTimeArrival" value="#{managerHomeBean.flight.dateTimeArrival}" pattern="dd/MM/yyyy HH:mm" />
+                        <h:panelGrid id="modifyFlight" columns="2" cellspacing="5" style="width: 100%; padding: 0 !important; margin: 0 !important" >
+                            <p:column rendered="#{not empty managerHomeBean.selectedFlight}">
+                                <h:outputLabel value="Origen:" />
+                                <p:inputText style="width: 100%" id="modifyOrigin" value="#{managerHomeBean.selectedFlight.origen}"/>
+                                <h:outputLabel value="Destino:" />
+                                <p:inputText style="width: 100%" id="modifyDestination" value="#{managerHomeBean.selectedFlight.destino}"/>
+                                <h:outputLabel value="Coste:" />
+                                <p:inputText style="width: 100%" id="modifyCost" value="#{managerHomeBean.selectedFlight.precioMaleta}"/>
+                                <h:outputLabel  value="Salida:" />
+                                <p:calendar styleClass="full-width-calendar" id="modifyDateTimeDeparture" value="#{managerHomeBean.selectedFlight.salida}" pattern="dd/MM/yyyy HH:mm" />
+                                <h:outputLabel value="Llegada:" />
+                                <p:calendar styleClass="full-width-calendar" id="modifyDateTimeArrival" value="#{managerHomeBean.selectedFlight.llegada}" pattern="dd/MM/yyyy HH:mm" />
+                            </p:column>
                         </h:panelGrid>
                         <br/>
-                        <p:commandButton value="Aplicar cambios" action="#{managerHomeBean.modifyFlight()}" onclick="PF('modifyFlightDialog').hide()" type="button" style="display:block; margin: 0 auto;width: 100%"/>
+                        <p:commandButton value="Aplicar cambios" action="#{managerHomeBean.modifyFlight()}" onclick="PF('modifyFlightDialog').hide()" type="submit" style="display:block; margin: 0 auto;width: 100%"/>
                     </p:dialog>
                 </div>
             </p:panel>

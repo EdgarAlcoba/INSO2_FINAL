@@ -1,0 +1,24 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <p:panel   header="Búsqueda de vuelos">
+        <h:panelGrid columns="1" cellspacing="5">
+            <h:outputLabel value="Origen" />
+            <p:inputText id="origin" value="#{flightSearchBean.origin}"/>
+            <h:outputLabel value="Destino" />
+            <p:inputText id="destination" value="#{flightSearchBean.destination}"/>
+            <p:selectOneRadio id="line" value="#{flightSearchBean.radioButton}" layout="pageDirection" columns="2">
+                <f:selectItem itemLabel="Ida y vuelta" itemValue="goAndReturn"/>
+                <f:selectItem itemLabel="Solo ida" itemValue="onlyGo"/>
+            </p:selectOneRadio>
+            <h:outputLabel value="Seleccione las fechas" />
+            <p:datePicker id="dates" selectionMode="range" showIcon="true" value="#{flightSearchBean.range}" readonlyInput="true" />
+            <h:outputLabel value="Número de pasajeros" />
+            <p:inputNumber id="passengerInput" value="#{flightSearchBean.numberOfPassengers}" minValue="1" decimalPlaces="0" />
+            <p:button value='Buscar vuelos'/>
+        </h:panelGrid>
+    </p:panel>
+</ui:composition>
+

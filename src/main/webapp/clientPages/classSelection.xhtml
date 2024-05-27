@@ -1,0 +1,52 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <p:panel   header="Selección de clase">
+        <h:panelGrid columns="1" cellspacing="5">
+            <h:panelGrid columns="3" cellspacing="10">
+                <p:panel header="Económico">
+                    <h:panelGrid columns="1" cellspacing="5">
+                        <p:outputLabel value='Nuestro mejor precio'/>
+                        <br/>
+                        <p:outputLabel value='Recomendado:'/>
+                        <p:outputLabel value='- Viajar ligero'/>
+                        <br/>
+                        <p:outputLabel value='Incluido:'/>
+                        <p:outputLabel value='- Equipaje de mano'/>
+                    </h:panelGrid>
+                </p:panel>
+                <p:panel   header="Turista">
+                    <h:panelGrid columns="1" cellspacing="5">
+                        <p:outputLabel value='Comodidad al mejor precio'/>
+                        <br/>
+                        <p:outputLabel value='Ideal para tus vacaciones'/>
+                        <br/>
+                        <p:outputLabel value='Incluido:'/>
+                        <p:outputLabel value='- Equipaje de mano'/>
+                        <p:outputLabel value='- Equipaje facturado (hasta 10kg)'/>
+                    </h:panelGrid>
+                </p:panel>
+                <p:panel   header="Premium">
+                    <h:panelGrid columns="1" cellspacing="5">
+                        <p:outputLabel value='Máxima comodidad'/>
+                        <p:outputLabel value='Prioridad de embarque'/>
+                        <p:outputLabel value='Atención prioritaria en vuelo'/>
+                        <br/>
+                        <p:outputLabel value='Incluido:'/>
+                        <p:outputLabel value='- Equipaje de mano'/>
+                        <p:outputLabel value='- Equipaje facturado (hasta 20kg)'/>
+                    </h:panelGrid>
+                </p:panel>
+            </h:panelGrid>
+            
+            <p:selectOneRadio id="line" value="#{flightSearchBean.radioButton}" layout="pageDirection" columns="3">
+                <f:selectItem itemLabel="Económico" itemValue="economic"/>
+                <f:selectItem itemLabel="Normal" itemValue="normal"/>
+                <f:selectItem itemLabel="Premium" itemValue="premium"/>
+            </p:selectOneRadio>
+            <p:button value='Seleccionar asientos'/>
+        </h:panelGrid>
+    </p:panel>
+</ui:composition>

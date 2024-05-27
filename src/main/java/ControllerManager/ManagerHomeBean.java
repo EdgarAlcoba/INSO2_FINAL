@@ -20,18 +20,14 @@ import org.primefaces.PrimeFaces;
  */
 @ManagedBean
 @ViewScoped
-public class managerHomeBean {
-    private String origin;
-    private String destination;
-    private String cost;
-    private String dateTimeDeparture;
-    private String dateTimeArrival;
+public class ManagerHomeBean {
     
     private Date dateTimeFrom ;
     private Date dateTimeTo ;
     
     private ArrayList<Vuelo> foundFlights;
     private Vuelo selectedFlight;
+    private Vuelo newFlight;
     
     @EJB
     private VueloFacadeLocal VFL;
@@ -43,47 +39,15 @@ public class managerHomeBean {
     public void setFoundFlights(ArrayList<Vuelo> foundFlights) {
         this.foundFlights = foundFlights;
     }
-    
-    public String getOrigin() {
-        return origin;
+
+    public Vuelo getNewFlight() {
+        return newFlight;
     }
 
-    public void setOrigin(String origin) {
-        this.origin = origin;
+    public void setNewFlight(Vuelo newFlight) {
+        this.newFlight = newFlight;
     }
-
-    public String getDestination() {
-        return destination;
-    }
-
-    public void setDestination(String destination) {
-        this.destination = destination;
-    }
-
-    public String getCost() {
-        return cost;
-    }
-
-    public void setCost(String cost) {
-        this.cost = cost;
-    }
-
-    public String getDateTimeDeparture() {
-        return dateTimeDeparture;
-    }
-
-    public void setDateTimeDeparture(String dateTimeDeparture) {
-        this.dateTimeDeparture = dateTimeDeparture;
-    }
-
-    public String getDateTimeArrival() {
-        return dateTimeArrival;
-    }
-
-    public void setDateTimeArrival(String dateTimeArrival) {
-        this.dateTimeArrival = dateTimeArrival;
-    }
-
+   
     public Date getDateTimeFrom() {
         return dateTimeFrom;
     }

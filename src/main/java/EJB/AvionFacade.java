@@ -8,7 +8,21 @@ package EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
+
 import modelo.Avion;
+import modelo.MapaAsientos;
+import modelo.Seccion;
+import modelo.Vuelo;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 
 /**
  *
@@ -28,5 +42,4 @@ public class AvionFacade extends AbstractFacade<Avion> implements AvionFacadeLoc
     public AvionFacade() {
         super(Avion.class);
     }
-    
 }

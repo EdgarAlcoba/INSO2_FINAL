@@ -61,11 +61,11 @@ public class LoginBean {
             FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("user", this.user);
             switch (this.user.getRol()){
                 case "Client":
-                    return "/clientPages/home?faces-redirect=true";
+                    return "/clientPages/home";
                 case "Manager":
-                    return "/managerPages/home?faces-redirect=true";
+                    return "/managerPages/home";
                 case "Admin" :
-                    return "/administratorPages/home?faces-redirect=true";
+                    return "/administratorPages/home";
                 }
         }   
         return null;

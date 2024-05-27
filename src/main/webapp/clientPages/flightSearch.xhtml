@@ -9,7 +9,7 @@
             <p:inputText id="origin" value="#{flightSearchBean.origin}"/>
             <h:outputLabel value="Destino" />
             <p:inputText id="destination" value="#{flightSearchBean.destination}"/>
-            <p:selectOneRadio id="line" value="#{flightSearchBean.radioButton}" layout="pageDirection" columns="2">
+            <p:selectOneRadio id="line" value="#{flightSearchBean.tipoBillete}" layout="pageDirection" columns="2">
                 <f:selectItem itemLabel="Ida y vuelta" itemValue="goAndReturn"/>
                 <f:selectItem itemLabel="Solo ida" itemValue="onlyGo"/>
             </p:selectOneRadio>

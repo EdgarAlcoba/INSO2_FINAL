@@ -21,20 +21,9 @@ public class Avion implements Serializable {
     @Column(name = "PRECIO_COMPRA")
     private BigDecimal precioCompra;
 
-    @Column(name = "DISTRIBUCION")
-    private String distribucion = "Economy";
-
     @ManyToOne
-    @JoinColumn(name = "SECCION_ECONOMY")
-    private Seccion seccionEconomy;
-
-    @ManyToOne
-    @JoinColumn(name = "SECCION_NORMAL")
-    private Seccion seccionNormal;
-
-    @ManyToOne
-    @JoinColumn(name = "SECCION_PREMIUM")
-    private Seccion seccionPremium;
+    @JoinColumn(name = "MAPA_ASIENTOS")
+    private MapaAsientos mapaAsientos;
 
     public String getMsn() {
         return msn;
@@ -68,36 +57,12 @@ public class Avion implements Serializable {
         this.precioCompra = precioCompra;
     }
 
-    public String getDistribucion() {
-        return distribucion;
+    public MapaAsientos getMapaAsientos() {
+        return mapaAsientos;
     }
 
-    public void setDistribucion(String distribucion) {
-        this.distribucion = distribucion;
-    }
-
-    public Seccion getSeccionEconomy() {
-        return seccionEconomy;
-    }
-
-    public void setSeccionEconomy(Seccion seccionEconomy) {
-        this.seccionEconomy = seccionEconomy;
-    }
-
-    public Seccion getSeccionNormal() {
-        return seccionNormal;
-    }
-
-    public void setSeccionNormal(Seccion seccionNormal) {
-        this.seccionNormal = seccionNormal;
-    }
-
-    public Seccion getSeccionPremium() {
-        return seccionPremium;
-    }
-
-    public void setSeccionPremium(Seccion seccionPremium) {
-        this.seccionPremium = seccionPremium;
+    public void setMapaAsientos(MapaAsientos mapaAsientos) {
+        this.mapaAsientos = mapaAsientos;
     }
 
     @Override
@@ -105,11 +70,11 @@ public class Avion implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Avion avion = (Avion) o;
-        return Objects.equals(msn, avion.msn) && Objects.equals(matricula, avion.matricula) && Objects.equals(modelo, avion.modelo) && Objects.equals(precioCompra, avion.precioCompra) && Objects.equals(distribucion, avion.distribucion) && Objects.equals(seccionEconomy, avion.seccionEconomy) && Objects.equals(seccionNormal, avion.seccionNormal) && Objects.equals(seccionPremium, avion.seccionPremium);
+        return Objects.equals(msn, avion.msn) && Objects.equals(matricula, avion.matricula) && Objects.equals(modelo, avion.modelo) && Objects.equals(precioCompra, avion.precioCompra) && Objects.equals(mapaAsientos, avion.mapaAsientos);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(msn, matricula, modelo, precioCompra, distribucion, seccionEconomy, seccionNormal, seccionPremium);
+        return Objects.hash(msn, matricula, modelo, precioCompra, mapaAsientos);
     }
 }

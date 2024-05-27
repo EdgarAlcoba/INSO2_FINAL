@@ -10,6 +10,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import modelo.Seccion;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author Administrador
@@ -28,5 +30,4 @@ public class SeccionFacade extends AbstractFacade<Seccion> implements SeccionFac
     public SeccionFacade() {
         super(Seccion.class);
     }
-    
 }

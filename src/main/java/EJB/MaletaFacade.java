@@ -9,7 +9,6 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import com.sun.javaws.exceptions.InvalidArgumentException;
 import es.unileon.inso2.aerolinea.exceptions.CreateBagException;
 import modelo.Maleta;
 

@@ -26,15 +26,16 @@ public class ClientHomeBean {
     }
     
     public void setView(String view){
+        System.out.println(view);
         switch(view){
             case "flightSearch":
                 currentView = "flightSearch.xhtml";
                 break;
             case "miFlights":
-                currentView = ("flightSearch.xhtml");
+                currentView = "myFlights.xhtml";
                 break;
             case "miProfile":
-                currentView = ("flightSearch.xhtml");
+                currentView = "modifyProfile.xhtml";
                 break;
         }
     }

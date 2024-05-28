@@ -20,7 +20,14 @@ import modelo.Vuelo;
 @Local
 public interface VueloFacadeLocal {
 
-    void create(Vuelo vuelo) throws CreateFlightException;
+    void create(Vuelo vuelo);
+
+    /**
+     * Crea un vuelo
+     * @param flight Vuelo a crear
+     * @throws CreateFlightException Cuando hay errores creando un vuelo. Este error debe mostrarse al usuario.
+     */
+    void createFlight(Vuelo flight) throws CreateFlightException;
 
     void edit(Vuelo vuelo);
 
@@ -37,6 +44,4 @@ public interface VueloFacadeLocal {
     ArrayList<Vuelo> searchBetween(Date from, Date to);
 
     ArrayList<Vuelo> search(Date date);
-
-    void createFlight(Vuelo flight) throws CreateFlightException;
 }

@@ -3,8 +3,11 @@ package modelo;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.Objects;
+import java.util.concurrent.ThreadLocalRandom;
 
 @Entity
 @Table(name="Vuelos")
@@ -39,6 +42,57 @@ public class Vuelo implements Serializable {
 
     @Column(name = "PRECIO_MALETA")
     private BigDecimal precioMaleta;
+
+    /**
+     * IMPORTANTE: Solo se puede llamar a este metodo una vez creado el vuelo en la DB
+     * Obtiene los precios del vuelo
+     * Si el avion tiene solo clase turista len = 1
+     * Si el avion tiene clase turista + normal len = 2
+     * Si el avion tiene clase turista + normal + premium len = 3
+     * En caso de error len = 0
+     * @return ArrayList con los precios
+     */
+    public ArrayList<BigDecimal> getPrecios() {
+        ArrayList<BigDecimal> prices = new ArrayList<>();
+        if (avion == null) return prices;
+        MapaAsientos seatMap = avion.getMapaAsientos();
+        if (seatMap == null) return prices;
+
+        BigDecimal averageKgCost = BigDecimal.valueOf(ThreadLocalRandom.current().nextDouble(0.75, 1.31));
+        BigDecimal costPrice = averageKgCost.multiply(BigDecimal.valueOf(gastoCombustibleKg));
+
+        // TODO number of seats
+        int numberOfSeats = 100;
+
+        BigDecimal costPricePerPax = costPrice.divide(BigDecimal.valueOf(numberOfSeats));
+
+        BigDecimal minCost = costPricePerPax.multiply(BigDecimal.valueOf(0.7));
+
+        double economyIncrease = ThreadLocalRandom.current().nextDouble(1, 1.31);
+        double normalIncrease = ThreadLocalRandom.current().nextDouble(1.32, 1.91);
+        double premiumIncrease = ThreadLocalRandom.current().nextDouble(2, 4.01);
+
+        BigDecimal economyCost = minCost.multiply(BigDecimal.valueOf(economyIncrease));
+        BigDecimal normalCost = minCost.multiply(BigDecimal.valueOf(normalIncrease));
+        BigDecimal premiumCost = minCost.multiply(BigDecimal.valueOf(premiumIncrease));
+
+        if (seatMap.getDistribucion().equals("Economy")) {
+            prices.add(economyCost);
+        }
+
+        if (seatMap.getDistribucion().equals("Normal")) {
+            prices.add(economyCost);
+            prices.add(normalCost);
+        }
+
+        if (seatMap.getDistribucion().equals("Premium")) {
+            prices.add(economyCost);
+            prices.add(normalCost);
+            prices.add(premiumCost);
+        }
+
+        return prices;
+    }
 
     public int getId() {
         return id;

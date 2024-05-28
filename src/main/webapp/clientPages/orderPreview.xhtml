@@ -17,7 +17,8 @@
                 <h:outputText value="#{order.precio}" />
             </p:column>
         </p:dataTable>
-        <p:outputLabel value="#{orderPreviewBean.totalPrice}"/>
+        <p:outputLabel  value="#{orderPreviewBean.totalPrice}"/>
         <p:commandButton value="Pagar" action="#{orderPreviewBean.pay()}"/>
+        </h:panelGrid>
     </p:panel>
 </ui:composition>

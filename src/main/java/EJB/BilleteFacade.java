@@ -9,7 +9,6 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import es.unileon.inso2.aerolinea.exceptions.CreateTicketException;
 import modelo.Billete;
 
 import java.util.Date;

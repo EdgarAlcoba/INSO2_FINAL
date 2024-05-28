@@ -10,6 +10,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.*;
 
+import es.unileon.inso2.aerolinea.exceptions.CreateBagException;
 import es.unileon.inso2.aerolinea.exceptions.CreateFlightException;
 import modelo.Avion;
 import modelo.Usuario;

@@ -20,6 +20,11 @@ public interface MaletaFacadeLocal {
 
     void create(Maleta maleta);
 
+    /**
+     * Crea una maleta
+     * @param maleta Maleta a crear
+     * @throws CreateBagException Cuando hay errores creando una maleta. Este error debe mostrarse al usuario.
+     */
     void createMaleta(Maleta maleta) throws CreateBagException;
 
     void edit(Maleta maleta);

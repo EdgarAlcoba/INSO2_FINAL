@@ -18,15 +18,15 @@
             <p:dialog id="floatingDialog" header="Datos del vuelo" widgetVar="floatingDialog" modal="true" resizable="false" draggable="false" closable="true" closeOnEscape="true">
                 <h:panelGrid columns="2" cellspacing="5" style="width: 100%; padding: 0 !important; margin: 0 !important">
                     <h:outputLabel for="origin" value="Origen:" />
-                    <p:inputText style="width: 100%" id="origin" value="#{managerHomeBean.origin}"/>
+                    <p:inputText style="width: 100%" id="origin" value="#{managerHomeBean.newFlight.origin}"/>
                     <h:outputLabel for="destination" value="Destino:" />
-                    <p:inputText style="width: 100%" id="destination" value="#{managerHomeBean.destination}"/>
+                    <p:inputText style="width: 100%" id="destination" value="#{managerHomeBean.newFlight.destination}"/>
                     <h:outputLabel for="cost" value="Coste:" />
-                    <p:inputText style="width: 100%" id="cost" value="#{managerHomeBean.cost}"/>
+                    <p:inputText style="width: 100%" id="cost" value="#{managerHomeBean.newFlight.cost}"/>
                     <h:outputLabel for="departure" value="Salida:" />
-                    <p:calendar styleClass="full-width-calendar" id="dateTimeDeparture" value="#{managerHomeBean.dateTimeDeparture}" pattern="dd/MM/yyyy HH:mm" />
+                    <p:calendar styleClass="full-width-calendar" id="dateTimeDeparture" value="#{managerHomeBean.newFlight.dateTimeDeparture}" pattern="dd/MM/yyyy HH:mm" />
                     <h:outputLabel for="arrival" value="Llegada:" />
-                    <p:calendar styleClass="full-width-calendar" id="dateTimeArrival" value="#{managerHomeBean.dateTimeArrival}" pattern="dd/MM/yyyy HH:mm" />
+                    <p:calendar styleClass="full-width-calendar" id="dateTimeArrival" value="#{managerHomeBean.newFlight.dateTimeArrival}" pattern="dd/MM/yyyy HH:mm" />
                 </h:panelGrid>
                 <br/>
                 <p:commandButton value="Añadir" action="#{managerHomeBean.createFlight()}" onclick="PF('floatingDialog').hide()" type="button" style="display:block; margin: 0 auto;width: 100%"/>
@@ -37,7 +37,7 @@
                 <div style="display: flex; flex-direction: column">
                     <p:commandButton style = "width: 25%" icon="pi pi-plus" value="Crear viaje" onclick="PF('floatingDialog').show();" type="button" />
                     <br/>
-                    <h:outputLabel style="font-size: 1rem;font-weight: bold;" for="searchFlights" value="Buscar vuelos:" />
+                    <h:outputLabel style="font-size: 1rem; font-weight: bold;" for="searchFlights" value="Buscar vuelos:" />
                     <h:panelGrid columns="5" cellspacing="10" style="width: 50%; padding: 0 !important; margin: 0 !important;">
                         <h:outputLabel for="searchFrom" value="Desde:" />
                         <p:calendar styleClass="full-width-calendar" id="dateTimeFrom" value="#{managerHomeBean.dateTimeFrom}" pattern="dd/MM/yyyy HH:mm" />

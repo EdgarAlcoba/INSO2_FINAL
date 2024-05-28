@@ -26,7 +26,6 @@ public class ClientHomeBean {
     }
     
     public void setView(String view){
-        System.out.println(view);
         switch(view){
             case "flightSearch":
                 currentView = "flightSearch.xhtml";

@@ -1,0 +1,24 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <p:panel   header="Datos del pedido">
+        <h:panelGrid columns="1" cellspacing="10" >
+        <p:dataTable id="flightsTable" var="flight" value="#{orderPreviewBean.order}" rowKey="#{order.id}"
+                     selection="#{orderPreviewBean.selectedOrder}" selectionMode="single">
+            <p:column headerText="Servicio">
+                <h:outputText value="#{order.servicio}" />
+            </p:column>
+            <p:column headerText="Cantidad">
+                <h:outputText value="#{order.cantidad}" />
+            </p:column>
+            <p:column headerText="Precio unitario">
+                <h:outputText value="#{order.precio}" />
+            </p:column>
+        </p:dataTable>
+        <p:outputLabel  value="#{orderPreviewBean.totalPrice}"/>
+        <p:commandButton value="Pagar" action="#{orderPreviewBean.pay()}"/>
+        </h:panelGrid>
+    </p:panel>
+</ui:composition>

@@ -1,0 +1,30 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                >
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
+    <p:panel   header="Selección de asientos">
+        <h:form>
+            <p:growl id="messages" showDetail="true"/>
+            <h:panelGrid columns="5" styleClass="seat-map">
+                <ui:repeat value="#{seatSelectionBean.row}" var="seat" varStatus="colStatus">
+                    <ui:repeat value="#{seatSelectionBean.seats}" var="row" varStatus="rowStatus">
+                        <h:panelGroup>
+                            <h:outputText value=" " rendered="#{seat == null}"/>
+                            <p:commandButton styleClass="seat #{seat}" 
+                                             rendered="#{seat != null}"
+                                             action="#{seatSelectionBean.selectSeat(rowStatus.index, colStatus.index)}"
+                                             update="@form:seat-map @form:messages">
+                                <i class="fas fa-chair"></i>
+
+                            </p:commandButton>
+                        </h:panelGroup>
+                    </ui:repeat>
+                </ui:repeat>
+            </h:panelGrid>
+        </h:form>
+    </p:panel>
+</ui:composition>
+

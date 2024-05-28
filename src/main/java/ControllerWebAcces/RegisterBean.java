@@ -54,7 +54,6 @@ public class RegisterBean {
 
     public String register() {
         if (!checkPassword()) {
-            //TODO avisar de que la contraseña esta mal
             showAlert(2, "Error en la contraseña","Las contraseñas introducidas no coinciden");
         } else if (!isValidEmail()) {
             showAlert(2, "Error en el correo","El correo introducido no es un correo valido");
@@ -98,7 +97,6 @@ public class RegisterBean {
                 context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, name, text));
                 break;
         }
-        
     }
 
 }

@@ -43,10 +43,10 @@ public class AdminHomeBean {
                 currentView = "fleet.xhtml";
                 break;
             case "userSearch":
-                currentView = ("userSearch.xhtml");
+                currentView = "userSearch.xhtml";
                 break;
             case "salesHistory":
-                currentView = ("salesHistory.xhtml");
+                currentView = "salesHistory.xhtml";
                 break;
         }
     }

@@ -1,0 +1,39 @@
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <p:panel id="modifyProfilePanel" header="Modificar perfil">
+        <h:panelGrid columns="2" cellpadding="5">
+            <h:outputLabel value="Correo:" />
+            <p:inputText id="modEmail" value="#{modifyProfileBean.user.correo}"/>
+
+            <h:outputLabel value="Nombre:" />
+            <p:inputText id="modName" value="#{modifyProfileBean.user.nombre}"/>
+
+            <h:outputLabel value="Apellidos:" />
+            <p:inputText id="modSurname" value="#{modifyProfileBean.user.apellidos}"/>
+
+            <h:outputLabel value="Día de nacimiento:" />
+            <p:calendar id="modDate" value="#{modifyProfileBean.user.fechaNacimiento}" pattern="dd / MM / yyyy" navigator="true" />
+
+
+            <h:outputLabel value="Sexo:" />
+            <p:selectOneMenu widgetVar="modGender" style="width: 100%" id="modGender" value="#{modifyProfileBean.user.sexo}">
+                <f:selectItem id="modMaleSex" itemLabel="Hombre " itemValue="true" />
+                <f:selectItem id="modFemaleSex" itemLabel="Mujer " itemValue="false" />
+                <!--
+                -->
+            </p:selectOneMenu>
+
+            <h:outputLabel value="Contraseña:" />
+            <p:password id="password" value="#{modifyProfileBean.user.contrasena}"/>
+
+            <h:outputLabel value="Repita la contraseña:" />
+            <p:password id="confirmPassword" value="#{modifyProfileBean.confirmPassword}"/>
+
+        </h:panelGrid>
+        <p:commandButton value="Guardar datos" action="#{modifyProfileBean.saveData}"/>
+    </p:panel>
+</ui:composition>

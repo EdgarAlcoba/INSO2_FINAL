@@ -27,10 +27,11 @@ public class ManagerHomeBean {
     
     private ArrayList<Vuelo> foundFlights;
     private Vuelo selectedFlight;
-    private Vuelo newFlight;
+    private Vuelo newFlight = new Vuelo();
     
     @EJB
     private VueloFacadeLocal VFL;
+    
 
     public ArrayList<Vuelo> getFoundFlights() {
         return foundFlights;

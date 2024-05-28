@@ -7,6 +7,8 @@ package EJB;
 
 import java.util.List;
 import javax.ejb.Local;
+
+import es.unileon.inso2.aerolinea.exceptions.CreateBagException;
 import modelo.Maleta;
 
 /**
@@ -17,6 +19,8 @@ import modelo.Maleta;
 public interface MaletaFacadeLocal {
 
     void create(Maleta maleta);
+
+    void createMaleta(Maleta maleta) throws CreateBagException;
 
     void edit(Maleta maleta);
 

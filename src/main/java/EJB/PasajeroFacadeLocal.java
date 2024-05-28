@@ -7,6 +7,8 @@ package EJB;
 
 import java.util.List;
 import javax.ejb.Local;
+
+import es.unileon.inso2.aerolinea.exceptions.CreatePassengerException;
 import modelo.Pasajero;
 
 /**
@@ -17,6 +19,8 @@ import modelo.Pasajero;
 public interface PasajeroFacadeLocal {
 
     void create(Pasajero pasajero);
+
+    void createPasajero(Pasajero pasajero) throws CreatePassengerException;
 
     void edit(Pasajero pasajero);
 

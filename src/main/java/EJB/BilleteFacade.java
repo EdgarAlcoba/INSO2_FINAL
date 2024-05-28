@@ -8,7 +8,11 @@ package EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+
+import es.unileon.inso2.aerolinea.exceptions.CreateTicketException;
 import modelo.Billete;
+
+import java.util.Date;
 
 /**
  *
@@ -28,5 +32,24 @@ public class BilleteFacade extends AbstractFacade<Billete> implements BilleteFac
     public BilleteFacade() {
         super(Billete.class);
     }
-    
+
+    public void createBillete(Billete billete) {
+        billete.setFechaCompra(new Date(System.currentTimeMillis()));
+
+        if (billete.getUsuario() == null) {
+            throw new IllegalArgumentException("No se puede comprar un billete con un usuario nulo");
+        }
+
+        if (billete.getVuelo() == null) {
+            throw new IllegalArgumentException("No se puede comprar un billete con un vuelo nulo");
+        }
+
+        if (billete.getPasajero() == null) {
+            throw new IllegalArgumentException("No se puede comprar un billete con un pasajero nulo");
+        }
+
+        // Calculate flight price
+
+        em.persist(billete);
+    }
 }

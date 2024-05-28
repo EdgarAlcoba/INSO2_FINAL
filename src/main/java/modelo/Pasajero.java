@@ -20,8 +20,11 @@ public class Pasajero implements Serializable {
     @Column(name = "APELLIDO_2")
     private String apellido2;
 
-    @Column(name = "NIF")
-    private String nif;
+    @Column(name = "DNI_NIE")
+    private String dniNIE;
+
+    @Column(name = "NUMERO_PASAPORTE")
+    private String pasaporte;
 
     public int getId() {
         return id;
@@ -55,12 +58,20 @@ public class Pasajero implements Serializable {
         this.apellido2 = apellido2;
     }
 
-    public String getNif() {
-        return nif;
+    public String getDniNIE() {
+        return dniNIE;
     }
 
-    public void setNif(String nif) {
-        this.nif = nif;
+    public void setDniNIE(String dniNIE) {
+        this.dniNIE = dniNIE;
+    }
+
+    public String getPasaporte() {
+        return pasaporte;
+    }
+
+    public void setPasaporte(String pasaporte) {
+        this.pasaporte = pasaporte;
     }
 
     @Override
@@ -68,11 +79,11 @@ public class Pasajero implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Pasajero pasajero = (Pasajero) o;
-        return id == pasajero.id && Objects.equals(nombre, pasajero.nombre) && Objects.equals(apellido1, pasajero.apellido1) && Objects.equals(apellido2, pasajero.apellido2) && Objects.equals(nif, pasajero.nif);
+        return id == pasajero.id && Objects.equals(nombre, pasajero.nombre) && Objects.equals(apellido1, pasajero.apellido1) && Objects.equals(apellido2, pasajero.apellido2) && Objects.equals(dniNIE, pasajero.dniNIE) && Objects.equals(pasaporte, pasajero.pasaporte);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, nombre, apellido1, apellido2, nif);
+        return Objects.hash(id, nombre, apellido1, apellido2, dniNIE, pasaporte);
     }
 }

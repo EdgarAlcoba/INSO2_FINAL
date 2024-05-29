@@ -3,7 +3,6 @@
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:f="http://xmlns.jcp.org/jsf/core">
-    <h:form>
         <p:panel style="width: 100%" header="Control de flota">
             <!-- Añadir avión -->
             <p:commandButton value="Añadir avión" onclick="PF('floatingDialog').show();" type="button" />
@@ -11,17 +10,17 @@
             <br/>
 
             <!-- Tabla de flota -->
-            <p:dataTable id="fleetTable" var="plane" value="#{fleetBean.fleet}" rowKey="#{plane.id}"
+            <p:dataTable id="fleetTable" var="plane" value="#{fleetBean.fleet}" rowKey="#{plane.msn}"
                          selection="#{fleetBean.selectedPlane}" selectionMode="single">
                 <f:facet name="header">
                     Flota:
                 </f:facet>
 
                 <p:column headerText="Modelo">
-                    <h:outputText value="#{flight.modelo}" />
+                    <h:outputText value="#{plane.modelo}" />
                 </p:column>
                 <p:column headerText="Distribución">
-                    <h:outputText value="#{flight.distribucion}" />
+                    <h:outputText value="#{plane.mapaAsientos.distribucion}" />
                 </p:column>
                 <p:column headerText="MSN">
                     <h:outputText value="#{plane.msn}" />
@@ -30,7 +29,7 @@
                     <h:outputText value="#{plane.matricula}" />
                 </p:column>
                 <p:column headerText="Precio de compra">
-                    <h:outputText value="#{flight.precioCompra}" />
+                    <h:outputText value="#{plane.precioCompra}" />
                 </p:column>
             </p:dataTable>
 
@@ -56,13 +55,13 @@
                 <h:graphicImage value="#{resource['/assets/Normal.png']}" style="width: 100%"/>
                 <h:graphicImage value="#{resource['/assets/Economy.png']}" style="width: 100%"/>
             </h:panelGrid>
-            <p:selectOneRadio style="width: 100%; text-align: center" id="line" value="#{fleetBean.distribution}" layout="responsive" columns="3">
+            <p:selectOneRadio style="width: 100%; text-align: center" id="lineCreate" value="#{fleetBean.distribution}" layout="responsive" columns="3">
                 <f:selectItem itemLabel="Premium" itemValue="Premium"/>
                 <f:selectItem itemLabel="Normal" itemValue="Normal"/>
                 <f:selectItem itemLabel="Económico" itemValue="Economy"/>
             </p:selectOneRadio>
             <br/>
-            <p:commandButton value="Añadir" action="#{fleetBean.createPlane()}" onclick="PF('floatingDialog').hide()" type="button" style="display:block; margin: 0 auto;width: 50%"/>
+            <p:commandButton value="Añadir" action="#{fleetBean.createPlane()}" oncomplete="PF('floatingDialog').hide()" type="submit" style="display:block; margin: 0 auto;width: 50%"/>
         </p:dialog>
         
         <!-- Menú desplegable al hacer click derecho sobre un avión -->
@@ -80,17 +79,15 @@
                     <h:graphicImage value="#{resource['/assets/Normal.png']}" style="width: 100%"/>
                     <h:graphicImage value="#{resource['/assets/Economy.png']}" style="width: 100%"/>
                 </h:panelGrid>
-                <p:selectOneRadio style="width: 100%; text-align: center" id="line" value="#{fleetBean.distributionModify}" layout="responsive" columns="3">
+                <p:selectOneRadio style="width: 100%; text-align: center" id="lineModify" value="#{fleetBean.distributionModify}" layout="responsive" columns="3">
                     <f:selectItem itemLabel="Premium" itemValue="Premium"/>
                     <f:selectItem itemLabel="Normal" itemValue="Normal"/>
                     <f:selectItem itemLabel="Económico" itemValue="Economy"/>
                 </p:selectOneRadio>
                 <br/>
                 <br/>
-                <p:commandButton value="Aplicar cambios" action="#{fleetBean.modifyPlane()}" onclick="PF('modifyPlaneDialog').hide()" type="button" style="display:block; margin: 0 auto;width: 100%"/>
+                <p:commandButton value="Aplicar cambios" action="#{fleetBean.modifyPlane()}" oncomplete="PF('modifyPlaneDialog').hide()" type="submit" style="display:block; margin: 0 auto;width: 100%"/>
+                <p:remoteCommand name="updateTable" update="fleetTable"/>
             </p:outputPanel>
         </p:dialog>
-
-
-    </h:form>
 </ui:composition>

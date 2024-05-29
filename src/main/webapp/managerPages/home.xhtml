@@ -15,24 +15,33 @@
     </h:head>
     <h:body>
         <h:form>
+            <!-- Tabla de crear vuelo -->
             <p:dialog id="floatingDialog" header="Datos del vuelo" widgetVar="floatingDialog" modal="true" resizable="false" draggable="false" closable="true" closeOnEscape="true">
                 <h:panelGrid columns="2" cellspacing="5" style="width: 100%; padding: 0 !important; margin: 0 !important">
                     <h:outputLabel for="origin" value="Origen:" />
                     <p:inputText style="width: 100%" id="origin" value="#{managerHomeBean.newFlight.origin}"/>
                     <h:outputLabel for="destination" value="Destino:" />
                     <p:inputText style="width: 100%" id="destination" value="#{managerHomeBean.newFlight.destination}"/>
-                    <h:outputLabel for="cost" value="Coste:" />
-                    <p:inputText style="width: 100%" id="cost" value="#{managerHomeBean.newFlight.cost}"/>
+                    <h:outputLabel for="luggagePrice" value="Precio maleta:" />
+                    <p:inputText style="width: 100%" id="luggagePriceTF" value="#{managerHomeBean.newFlight.luggageCost}"/>
+                    <h:outputLabel for="fuel" value="Combustible (Kg):" />
+                    <p:inputNumber id="fuelKg" emptyValue="min" value="#{luggageSelectionBean.newFlight.fuel}" minValue="0" decimalPlaces="0" />
                     <h:outputLabel for="departure" value="Salida:" />
                     <p:calendar styleClass="full-width-calendar" id="dateTimeDeparture" value="#{managerHomeBean.newFlight.dateTimeDeparture}" pattern="dd/MM/yyyy HH:mm" />
                     <h:outputLabel for="arrival" value="Llegada:" />
                     <p:calendar styleClass="full-width-calendar" id="dateTimeArrival" value="#{managerHomeBean.newFlight.dateTimeArrival}" pattern="dd/MM/yyyy HH:mm" />
+                    <h:outputLabel for="plane" value="Avión:" />
+                    <p:selectOneMenu style="width: 100%" id="rol" value="#{user.rol}">
+                        <ui:repeat value="#{managerHomeBean.planes}" var="plane" varStatus="rowStatus">
+                            <f:selectItem itemLabel="#{plane.matricula}" itemValue="#{plane.matricula}" />
+                        </ui:repeat>
+                    </p:selectOneMenu>
                 </h:panelGrid>
                 <br/>
                 <p:commandButton value="Añadir" action="#{managerHomeBean.createFlight()}" onclick="PF('floatingDialog').hide()" type="button" style="display:block; margin: 0 auto;width: 100%"/>
             </p:dialog>
 
-
+            <!-- Panel de visualización de vuelos -->
             <p:panel style="width: 100%" header="Gestión de vuelos">
                 <div style="display: flex; flex-direction: column">
                     <p:commandButton style = "width: 25%" icon="pi pi-plus" value="Crear viaje" onclick="PF('floatingDialog').show();" type="button" />
@@ -73,11 +82,13 @@
                         </p:column>
                     </p:dataTable>
 
+                    <!-- Menú desplegable al hacer click derecho sobre un vuelo -->
                     <p:contextMenu for="flightsTable">
                         <p:menuitem value="Modify" update="modifyFlight" icon="pi pi-pencil"
                                     oncomplete="PF('modifyFlightDialog').show()" actionListener="#{managerHomeBean.viewFlightDialog}"/>
                     </p:contextMenu>
 
+                    <!-- Tabla de modificación de vuelos -->
                     <p:dialog header="Datos del vuelo" widgetVar="modifyFlightDialog" modal="true" showEffect="fade"
                               hideEffect="fade" resizable="false">
                         <h:panelGrid id="modifyFlight" columns="2" cellspacing="5" style="width: 100%; padding: 0 !important; margin: 0 !important" >

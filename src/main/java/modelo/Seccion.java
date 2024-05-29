@@ -21,6 +21,9 @@ public class Seccion implements Serializable {
     @Column(name = "CLASE")
     private String clase = "Economy";
 
+    @OneToMany(mappedBy = "seccion")
+    private List<Asiento> asientos;
+
     public int getId() {
         return id;
     }
@@ -51,6 +54,14 @@ public class Seccion implements Serializable {
 
     public void setClase(String clase) {
         this.clase = clase;
+    }
+
+    public List<Asiento> getAsientos() {
+        return asientos;
+    }
+
+    public void setAsientos(List<Asiento> asientos) {
+        this.asientos = asientos;
     }
 
     @Override

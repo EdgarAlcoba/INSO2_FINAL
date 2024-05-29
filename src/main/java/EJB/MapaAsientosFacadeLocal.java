@@ -31,5 +31,7 @@ public interface MapaAsientosFacadeLocal {
     int count();
 
     MapaAsientos getMapaAsientos(String distribution);
+
+    int getNumeroAsientos();
     
 }

@@ -58,4 +58,9 @@ public class MapaAsientosFacade extends AbstractFacade<MapaAsientos> implements 
 
         return seatMaps.get(randomSeatMapIndex);
     }
+
+    @Override
+    public int getNumeroAsientos() {
+        return 0;
+    }
 }

@@ -7,6 +7,8 @@ package EJB;
 
 import java.util.List;
 import javax.ejb.Local;
+
+import es.unileon.inso2.aerolinea.exceptions.CreateAirplaneException;
 import modelo.Avion;
 
 /**
@@ -17,6 +19,8 @@ import modelo.Avion;
 public interface AvionFacadeLocal {
 
     void create(Avion avion);
+
+    void createAvion(Avion avion) throws CreateAirplaneException;
 
     void edit(Avion avion);
 

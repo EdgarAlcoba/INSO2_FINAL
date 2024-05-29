@@ -3,7 +3,6 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>Gestión de aerolínea</title>
@@ -18,29 +17,30 @@
             <!-- Tabla de crear vuelo -->
             <p:dialog id="floatingDialog" header="Datos del vuelo" widgetVar="floatingDialog" modal="true" resizable="false" draggable="false" closable="true" closeOnEscape="true">
                 <h:panelGrid columns="2" cellspacing="5" style="width: 100%; padding: 0 !important; margin: 0 !important">
+                    <h:outputLabel for="flightNumber" value="Número de vuelo:" />
+                    <p:inputText style="width: 100%" id="flightNumberTF" value="#{managerHomeBean.newFlight.numero}"/>
                     <h:outputLabel for="origin" value="Origen:" />
-                    <p:inputText style="width: 100%" id="origin" value="#{managerHomeBean.newFlight.origin}"/>
+                    <p:inputText style="width: 100%" id="origin" value="#{managerHomeBean.newFlight.origen}"/>
                     <h:outputLabel for="destination" value="Destino:" />
-                    <p:inputText style="width: 100%" id="destination" value="#{managerHomeBean.newFlight.destination}"/>
+                    <p:inputText style="width: 100%" id="destination" value="#{managerHomeBean.newFlight.destino}"/>
                     <h:outputLabel for="luggagePrice" value="Precio maleta:" />
-                    <p:inputText style="width: 100%" id="luggagePriceTF" value="#{managerHomeBean.newFlight.luggageCost}"/>
+                    <p:inputText style="width: 100%" id="luggagePriceTF" value="#{managerHomeBean.newFlight.precioMaleta}"/>
                     <h:outputLabel for="fuel" value="Combustible (Kg):" />
-                    <p:inputNumber id="fuelKg" emptyValue="min" value="#{luggageSelectionBean.newFlight.fuel}" minValue="0" decimalPlaces="0" />
+                    <p:inputNumber id="fuelKg" emptyValue="min" value="#{managerHomeBean.newFlight.gastoCombustibleKg}" minValue="0" decimalPlaces="0" />
                     <h:outputLabel for="departure" value="Salida:" />
-                    <p:calendar styleClass="full-width-calendar" id="dateTimeDeparture" value="#{managerHomeBean.newFlight.dateTimeDeparture}" pattern="dd/MM/yyyy HH:mm" />
+                    <p:calendar styleClass="full-width-calendar" id="dateTimeDeparture" value="#{managerHomeBean.newFlight.salida}" pattern="dd/MM/yyyy HH:mm" />
                     <h:outputLabel for="arrival" value="Llegada:" />
-                    <p:calendar styleClass="full-width-calendar" id="dateTimeArrival" value="#{managerHomeBean.newFlight.dateTimeArrival}" pattern="dd/MM/yyyy HH:mm" />
+                    <p:calendar styleClass="full-width-calendar" id="dateTimeArrival" value="#{managerHomeBean.newFlight.llegada}" pattern="dd/MM/yyyy HH:mm" />
                     <h:outputLabel for="plane" value="Avión:" />
-                    <p:selectOneMenu style="width: 100%" id="rol" value="#{user.rol}">
-                        <ui:repeat value="#{managerHomeBean.planes}" var="plane" varStatus="rowStatus">
-                            <f:selectItem itemLabel="#{plane.matricula}" itemValue="#{plane.matricula}" />
-                        </ui:repeat>
+                    <p:selectOneMenu style="width: 100%" id="rol" value="#{managerHomeBean.newFlight.avion}">
+                        <f:selectItems value="#{managerHomeBean.planes}" var="possiblePlane" itemLabel="#{possiblePlane.matricula}" itemValue="#{possiblePlane}" /> 
                     </p:selectOneMenu>
                 </h:panelGrid>
                 <br/>
                 <p:commandButton value="Añadir" action="#{managerHomeBean.createFlight()}" onclick="PF('floatingDialog').hide()" type="button" style="display:block; margin: 0 auto;width: 100%"/>
             </p:dialog>
-
+        </h:form>
+        <h:form>
             <!-- Panel de visualización de vuelos -->
             <p:panel style="width: 100%" header="Gestión de vuelos">
                 <div style="display: flex; flex-direction: column">

@@ -41,13 +41,13 @@
         <p:dialog id="floatingDialog" header="Introduzca las especificaciones" widgetVar="floatingDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="true" draggable="false" closable="true" closeOnEscape="true" width="80vw" height="80vh">
             <h:panelGrid columns="2" cellspacing="5" style="width: 50%; padding: 0 !important; margin: 0 !important">
                 <h:outputLabel value="Modelo:" />
-                <p:inputText style="width: 100%" id="msnTF" value="#{fleetBean.planeModel}"/>
+                <p:inputText style="width: 100%" id="modelTF" value="#{fleetBean.plane.modelo}"/>
                 <h:outputLabel for="msn" value="MSN:" />
-                <p:inputText style="width: 100%" id="msnTF" value="#{fleetBean.msnTF}"/>
+                <p:inputText style="width: 100%" id="msnTF" value="#{fleetBean.plane.msn}"/>
                 <h:outputLabel for="licensePlate" value="Matrícula:" />
-                <p:inputText style="width: 100%" id="licensePlateTF" value="#{fleetBean.licensePlateTF}"/>
+                <p:inputText style="width: 100%" id="licensePlateTF" value="#{fleetBean.plane.matricula}"/>
                 <h:outputLabel for="buyPrice" value="Precio de compra:" />
-                <p:inputText style="width: 100%" id="buyPriceTF" value="#{fleetBean.buyPriceTF}"/>
+                <p:inputText style="width: 100%" id="buyPriceTF" value="#{fleetBean.plane.precioCompra}"/>
             </h:panelGrid>
             <br/>
             <h:outputLabel for="layout" value="Distribución:" style="width: 100%; display: block; text-align: center;"/>
@@ -56,7 +56,7 @@
                 <h:graphicImage value="#{resource['/assets/Normal.png']}" style="width: 100%"/>
                 <h:graphicImage value="#{resource['/assets/Economy.png']}" style="width: 100%"/>
             </h:panelGrid>
-            <p:selectOneRadio style="width: 100%; text-align: center" id="line" value="#{fleetBean.radioButton}" layout="responsive" columns="3">
+            <p:selectOneRadio style="width: 100%; text-align: center" id="line" value="#{fleetBean.distribution}" layout="responsive" columns="3">
                 <f:selectItem itemLabel="Premium" itemValue="Premium"/>
                 <f:selectItem itemLabel="Normal" itemValue="Normal"/>
                 <f:selectItem itemLabel="Económico" itemValue="Economy"/>
@@ -80,7 +80,7 @@
                     <h:graphicImage value="#{resource['/assets/Normal.png']}" style="width: 100%"/>
                     <h:graphicImage value="#{resource['/assets/Economy.png']}" style="width: 100%"/>
                 </h:panelGrid>
-                <p:selectOneRadio style="width: 100%; text-align: center" id="line" value="#{fleetBean.radioButton}" layout="responsive" columns="3">
+                <p:selectOneRadio style="width: 100%; text-align: center" id="line" value="#{fleetBean.distributionModify}" layout="responsive" columns="3">
                     <f:selectItem itemLabel="Premium" itemValue="Premium"/>
                     <f:selectItem itemLabel="Normal" itemValue="Normal"/>
                     <f:selectItem itemLabel="Económico" itemValue="Economy"/>

@@ -4,7 +4,6 @@
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:f="http://xmlns.jcp.org/jsf/core">
-    <h:form>
         <p:panel id="myFlightsPanel" header="Mis reservas">
             <h:outputLabel style="font-size: 1rem; font-weight: bold;" value="Buscar vuelos:" />
             <h:panelGrid columns="5" cellspacing="10" >
@@ -40,6 +39,5 @@
                     </p:dataTable>
         </p:panel>
         <p:remoteCommand name="updateTable" update="flightsTable"/>
-    </h:form>
 </ui:composition>
 

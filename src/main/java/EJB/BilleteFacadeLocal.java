@@ -5,9 +5,13 @@
  */
 package EJB;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.Local;
 import modelo.Billete;
+import modelo.Usuario;
+import modelo.Vuelo;
 
 /**
  *
@@ -18,7 +22,7 @@ public interface BilleteFacadeLocal {
 
     void create(Billete billete);
 
-    void createBillete(Billete billete);
+    void createBillete(Billete billete) throws Exception;
 
     void edit(Billete billete);
 
@@ -31,5 +35,9 @@ public interface BilleteFacadeLocal {
     List<Billete> findRange(int[] range);
 
     int count();
+
+    ArrayList<Billete> searchBetween(Date from, Date to);
+
+    ArrayList<Billete> searchBetween(Date from, Date to, Usuario user);
     
 }

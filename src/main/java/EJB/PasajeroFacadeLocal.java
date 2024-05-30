@@ -27,7 +27,7 @@ public interface PasajeroFacadeLocal {
      * @param pasajero Pasajero a crear
      * @throws CreatePassengerException Cuando hay errores creando un pasajero. Este error debe mostrarse al usuario.
      */
-    void createPasajero(Pasajero pasajero) throws CreatePassengerException;
+    Pasajero createPasajero(Pasajero pasajero) throws CreatePassengerException;
 
     void edit(Pasajero pasajero);
 

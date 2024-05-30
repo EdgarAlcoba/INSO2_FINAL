@@ -2,6 +2,7 @@ package modelo;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -25,6 +26,9 @@ public class Pasajero implements Serializable {
 
     @Column(name = "NUMERO_PASAPORTE")
     private String pasaporte;
+
+    @OneToMany(mappedBy = "pasajero")
+    private List<Billete> billetes;
 
     public int getId() {
         return id;
@@ -74,16 +78,24 @@ public class Pasajero implements Serializable {
         this.pasaporte = pasaporte;
     }
 
+    public List<Billete> getBilletes() {
+        return billetes;
+    }
+
+    public void setBilletes(List<Billete> billetes) {
+        this.billetes = billetes;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Pasajero pasajero = (Pasajero) o;
-        return id == pasajero.id && Objects.equals(nombre, pasajero.nombre) && Objects.equals(apellido1, pasajero.apellido1) && Objects.equals(apellido2, pasajero.apellido2) && Objects.equals(dniNIE, pasajero.dniNIE) && Objects.equals(pasaporte, pasajero.pasaporte);
+        return id == pasajero.id && Objects.equals(nombre, pasajero.nombre) && Objects.equals(apellido1, pasajero.apellido1) && Objects.equals(apellido2, pasajero.apellido2) && Objects.equals(dniNIE, pasajero.dniNIE) && Objects.equals(pasaporte, pasajero.pasaporte) && Objects.equals(billetes, pasajero.billetes);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, nombre, apellido1, apellido2, dniNIE, pasaporte);
+        return Objects.hash(id, nombre, apellido1, apellido2, dniNIE, pasaporte, billetes);
     }
 }

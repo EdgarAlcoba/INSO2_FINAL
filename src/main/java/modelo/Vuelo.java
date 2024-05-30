@@ -66,7 +66,7 @@ public class Vuelo implements Serializable {
 
         BigDecimal costPricePerPax = costPrice.divide(BigDecimal.valueOf(numberOfSeatsEconomy), RoundingMode.CEILING);
 
-        BigDecimal minCost = costPricePerPax.multiply(BigDecimal.valueOf(0.7));
+        BigDecimal minCost = costPricePerPax.multiply(BigDecimal.valueOf(1.3));
 
         double economyIncrease = ThreadLocalRandom.current().nextDouble(1, 1.31);
         double normalIncrease = ThreadLocalRandom.current().nextDouble(1.32, 1.91);

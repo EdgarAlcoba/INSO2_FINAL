@@ -2,15 +2,9 @@ package modelo;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 
 @Entity
 @Table(name="Usuarios")
@@ -43,6 +37,9 @@ public class Usuario implements Serializable {
     
     @Column(name = "ROL")
     private String rol = "Client";
+
+    @OneToMany(mappedBy = "usuario")
+    private List<Billete> billetes;
 
     public int getId() {
         return id;
@@ -108,16 +105,24 @@ public class Usuario implements Serializable {
         this.rol = rol;
     }
 
+    public List<Billete> getBilletes() {
+        return billetes;
+    }
+
+    public void setBilletes(List<Billete> billetes) {
+        this.billetes = billetes;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Usuario usuario = (Usuario) o;
-        return id == usuario.id && sexo == usuario.sexo && Objects.equals(nombre, usuario.nombre) && Objects.equals(apellidos, usuario.apellidos) && Objects.equals(correo, usuario.correo) && Objects.equals(fechaNacimiento, usuario.fechaNacimiento) && Objects.equals(contrasena, usuario.contrasena) && Objects.equals(rol, usuario.rol);
+        return id == usuario.id && sexo == usuario.sexo && Objects.equals(nombre, usuario.nombre) && Objects.equals(apellidos, usuario.apellidos) && Objects.equals(correo, usuario.correo) && Objects.equals(fechaNacimiento, usuario.fechaNacimiento) && Objects.equals(contrasena, usuario.contrasena) && Objects.equals(rol, usuario.rol) && Objects.equals(billetes, usuario.billetes);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, nombre, apellidos, correo, fechaNacimiento, sexo, contrasena, rol);
+        return Objects.hash(id, nombre, apellidos, correo, fechaNacimiento, sexo, contrasena, rol, billetes);
     }
 }

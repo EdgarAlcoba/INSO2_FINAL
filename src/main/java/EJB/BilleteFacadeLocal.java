@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.ejb.Local;
+
+import es.unileon.inso2.aerolinea.exceptions.CreateTicketException;
 import modelo.Billete;
 import modelo.Usuario;
 import modelo.Vuelo;
@@ -22,7 +24,7 @@ public interface BilleteFacadeLocal {
 
     void create(Billete billete);
 
-    void createBillete(Billete billete) throws Exception;
+    void createBillete(Billete billete) throws CreateTicketException, Exception;
 
     void edit(Billete billete);
 

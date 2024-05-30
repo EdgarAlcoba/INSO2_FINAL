@@ -2,7 +2,10 @@ package modelo;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "Asientos")
@@ -23,6 +26,9 @@ public class Asiento implements Serializable {
     @ManyToOne
     @JoinColumn(name = "SECCION")
     private Seccion seccion;
+
+    @OneToMany(mappedBy = "asiento")
+    private List<Billete> billetes;
 
     public int getId() {
         return id;
@@ -64,16 +70,24 @@ public class Asiento implements Serializable {
         this.seccion = seccion;
     }
 
+    public List<Billete> getBilletes() {
+        return billetes;
+    }
+
+    public void setBilletes(List<Billete> billetes) {
+        this.billetes = billetes;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Asiento asiento = (Asiento) o;
-        return id == asiento.id && posicionX == asiento.posicionX && posicionY == asiento.posicionY && Objects.equals(tipo, asiento.tipo) && Objects.equals(seccion, asiento.seccion);
+        return id == asiento.id && posicionX == asiento.posicionX && posicionY == asiento.posicionY && Objects.equals(tipo, asiento.tipo) && Objects.equals(seccion, asiento.seccion) && Objects.equals(billetes, asiento.billetes);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, posicionX, posicionY, tipo, seccion);
+        return Objects.hash(id, posicionX, posicionY, tipo, seccion, billetes);
     }
 }

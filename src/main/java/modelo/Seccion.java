@@ -64,6 +64,10 @@ public class Seccion implements Serializable {
         this.asientos = asientos;
     }
 
+    public int getNumeroAsientos() {
+        return asientos.size();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

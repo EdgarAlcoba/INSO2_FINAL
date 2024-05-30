@@ -5,13 +5,22 @@
  */
 package ControllerManager;
 
+import EJB.AvionFacadeLocal;
 import java.util.ArrayList;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import modelo.Vuelo;
 import EJB.VueloFacadeLocal;
+import es.unileon.inso2.aerolinea.exceptions.CreateFlightException;
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
+import modelo.Avion;
 import org.primefaces.PrimeFaces;
 
 /**
@@ -21,17 +30,39 @@ import org.primefaces.PrimeFaces;
 @ManagedBean
 @ViewScoped
 public class ManagerHomeBean {
-    
-    private Date dateTimeFrom ;
-    private Date dateTimeTo ;
-    
+
+    private Date dateTimeFrom;
+    private Date dateTimeTo;
+
     private ArrayList<Vuelo> foundFlights;
     private Vuelo selectedFlight;
     private Vuelo newFlight = new Vuelo();
-    
+
+    private Avion selectedPlane;
+
+    private Map<String, String> planes;
+    private String msn;
+
     @EJB
     private VueloFacadeLocal VFL;
-    
+
+    @EJB
+    private AvionFacadeLocal AFL;
+
+    @PostConstruct
+    public void update() {
+        List<Avion> planeList = AFL.findAll();
+        planes = planeList.stream().collect(Collectors.toMap(Avion::getMatricula, Avion::getMsn));
+        PrimeFaces.current().executeScript("updateTable()");
+    }
+
+    public Avion getSelectedPlane() {
+        return selectedPlane;
+    }
+
+    public void setSelectedPlane(Avion selectedPlane) {
+        this.selectedPlane = selectedPlane;
+    }
 
     public ArrayList<Vuelo> getFoundFlights() {
         return foundFlights;
@@ -48,7 +79,7 @@ public class ManagerHomeBean {
     public void setNewFlight(Vuelo newFlight) {
         this.newFlight = newFlight;
     }
-   
+
     public Date getDateTimeFrom() {
         return dateTimeFrom;
     }
@@ -72,24 +103,50 @@ public class ManagerHomeBean {
     public void setSelectedFlight(Vuelo selectedFlight) {
         this.selectedFlight = selectedFlight;
     }
-    
-    
-    public void createFlight(){
-        
+
+    public Map<String, String> getPlanes() {
+        return planes;
+    }
+
+    public void setPlanes(Map<String, String> planes) {
+        this.planes = planes;
+    }
+
+    public String getMsn() {
+        return msn;
+    }
+
+    public void setMsn(String msn) {
+        this.msn = msn;
+    }
+
+    public void createFlight() {
+        try {
+            this.newFlight.setAvion(this.AFL.find(this.msn));
+            this.VFL.createFlight(newFlight);
+        } catch (CreateFlightException e) {
+            System.out.println("Llega al break");
+            showAlert(e.getMessage());
+        }
         this.searchBtn();
     }
-    
-    public void searchBtn(){
+
+    public void searchBtn() {
         this.foundFlights = this.VFL.searchBetween(dateTimeFrom, dateTimeTo);
-        PrimeFaces.current().executeScript("updateTable()");
+        update();
     }
-    
-    public void modifyFlight(){
-        System.out.println("LLega a modificar");
+
+    public void modifyFlight() {
         this.VFL.edit(selectedFlight);
-        this.searchBtn();
+        update();
     }
     
-    public void viewFlightDialog(){
+     private void showAlert(String text) {
+         System.out.println("LLega al metodo");
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error al crear un vuelo", text));
+    }
+
+    public void viewFlightDialog() {
     }
 }

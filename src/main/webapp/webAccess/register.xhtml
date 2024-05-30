@@ -26,8 +26,8 @@
 
                     <h:outputLabel for="gender" value="Sexo:" />
                     <p:selectOneMenu style="width: 100%" id="gender" value="#{registerBean.user.sexo}">
-                        <f:selectItem itemLabel="Hombre" itemValue="Male" />
-                        <f:selectItem itemLabel="Mujer" itemValue="Female" />
+                        <f:selectItem itemLabel="Hombre" itemValue="true" />
+                        <f:selectItem itemLabel="Mujer" itemValue="false" />
                     </p:selectOneMenu>
 
                     <h:outputLabel for="password" value="Contraseña:" />

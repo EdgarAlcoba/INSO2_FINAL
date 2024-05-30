@@ -19,6 +19,7 @@ import modelo.Usuario;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.regex.Pattern;
 
 /**
  *
@@ -35,6 +36,8 @@ public class UsuarioFacade extends AbstractFacade<Usuario> implements UsuarioFac
 
     @Inject
     private PasswordUtil passwordUtil;
+
+    Pattern emailPattern = Pattern.compile("[0-9A-Za-z+\\-_~]+@([A-Za-z][A-Za-z\\-\\d]{0,62}\\.)+[A-Za-z\\-][A-Za-z\\d]*", Pattern.CASE_INSENSITIVE);
 
     @Override
     protected EntityManager getEntityManager() {
@@ -56,6 +59,10 @@ public class UsuarioFacade extends AbstractFacade<Usuario> implements UsuarioFac
 
         if (usuario.getCorreo() == null || usuario.getCorreo().isEmpty()) {
             throw new EditUserException("El correo del usuario no puede ser nulo o vacio");
+        }
+
+        if (!emailPattern.matcher(usuario.getCorreo()).find()) {
+            throw new EditUserException("El correo no es válido");
         }
 
         if (emailExists(usuario.getCorreo())) {
@@ -81,7 +88,19 @@ public class UsuarioFacade extends AbstractFacade<Usuario> implements UsuarioFac
     }
 
     private boolean emailExists(String email) {
-        return false;
+        try {
+            CriteriaBuilder cb = em.getCriteriaBuilder();
+            CriteriaQuery<Usuario> cq;
+
+            cq = cb.createQuery(Usuario.class);
+            Root<Usuario> user = cq.from(Usuario.class);
+            cq.select(user).where(cb.like(user.get("correo"), "%" + email + "%"));
+
+            return !em.createQuery(cq).getResultList().isEmpty();
+        } catch (Exception e) {
+            System.out.println("No se pudo comprobar si un email existe: " + e.getMessage());
+            return false;
+        }
     }
 
     /**

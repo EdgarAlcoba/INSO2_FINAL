@@ -48,7 +48,7 @@ public class UsuarioFacade extends AbstractFacade<Usuario> implements UsuarioFac
         super(Usuario.class);
     }
 
-    public void editUsuario(Usuario usuario) throws EditUserException {
+    public void editUsuario(Usuario usuario, String oldEmail) throws EditUserException {
         if (usuario.getNombre() == null || usuario.getNombre().isEmpty()) {
             throw new EditUserException("El nombre del usuario no puede ser nulo o vacío");
         }
@@ -65,7 +65,7 @@ public class UsuarioFacade extends AbstractFacade<Usuario> implements UsuarioFac
             throw new EditUserException("El correo no es válido");
         }
 
-        if (emailExists(usuario.getCorreo())) {
+        if (!oldEmail.equals(usuario.getCorreo()) && emailExists(usuario.getCorreo())) {
             throw new EditUserException("El correo ya existe");
         }
 

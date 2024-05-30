@@ -42,7 +42,7 @@ public class PasajeroFacade extends AbstractFacade<Pasajero> implements Pasajero
         super(Pasajero.class);
     }
 
-    public void createPasajero(Pasajero passenger) throws CreatePassengerException {
+    public Pasajero createPasajero(Pasajero passenger) throws CreatePassengerException {
         if (passenger.getNombre() == null || passenger.getNombre().isEmpty()) {
             throw new CreatePassengerException("El nombre no puede ser nulo o vacío");
         }
@@ -66,6 +66,7 @@ public class PasajeroFacade extends AbstractFacade<Pasajero> implements Pasajero
         Pasajero oldPassenger = exists(passenger.getDniNIE());
         if (oldPassenger == null) {
             em.persist(passenger);
+            return passenger;
         } else {
             oldPassenger.setNombre(passenger.getNombre());
             oldPassenger.setApellido1(passenger.getApellido1());
@@ -73,6 +74,7 @@ public class PasajeroFacade extends AbstractFacade<Pasajero> implements Pasajero
             oldPassenger.setDniNIE(passenger.getDniNIE());
             oldPassenger.setPasaporte(passenger.getPasaporte());
             edit(oldPassenger);
+            return oldPassenger;
         }
     }
 

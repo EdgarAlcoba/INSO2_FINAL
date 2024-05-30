@@ -10,6 +10,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.*;
 
+import es.unileon.inso2.aerolinea.exceptions.CreateTicketException;
 import modelo.*;
 
 import java.util.ArrayList;
@@ -40,15 +41,19 @@ public class BilleteFacade extends AbstractFacade<Billete> implements BilleteFac
         billete.setFechaCompra(new Date(System.currentTimeMillis()));
 
         if (billete.getUsuario() == null) {
-            throw new IllegalArgumentException("No se puede comprar un billete con un usuario nulo");
+            throw new CreateTicketException("No se puede comprar un billete con un usuario nulo");
         }
 
         if (billete.getVuelo() == null) {
-            throw new IllegalArgumentException("No se puede comprar un billete con un vuelo nulo");
+            throw new CreateTicketException("No se puede comprar un billete con un vuelo nulo");
+        }
+
+        if (billete.getVuelo().getSalida().before(new Date(System.currentTimeMillis()))) {
+            throw new CreateTicketException("No se puede comprar un vuelo que ya ha salido");
         }
 
         if (billete.getPasajero() == null) {
-            throw new IllegalArgumentException("No se puede comprar un billete con un pasajero nulo");
+            throw new CreateTicketException("No se puede comprar un billete con un pasajero nulo");
         }
 
         billete.setPrecio(billete.getPrecioTotal());
@@ -57,8 +62,6 @@ public class BilleteFacade extends AbstractFacade<Billete> implements BilleteFac
                         billete.getVuelo().getAsientoAleatorio() :
                         billete.getVuelo().getAsiento(billete.getAsiento());
         billete.setAsiento(seat);
-
-
 
         em.persist(billete);
     }

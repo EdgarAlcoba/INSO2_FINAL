@@ -41,6 +41,8 @@ public interface VueloFacadeLocal {
 
     int count();
 
+    ArrayList<Vuelo> searchAllDay(Date day, String origin, String destination);
+
     ArrayList<Vuelo> searchBetween(Date from, Date to);
 
     ArrayList<Vuelo> search(Date date);

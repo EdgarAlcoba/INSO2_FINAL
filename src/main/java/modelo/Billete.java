@@ -106,7 +106,7 @@ public class Billete implements Serializable {
         this.maletas = maletas;
     }
 
-    public BigDecimal getPrecioTotal() throws Exception {
+    public BigDecimal getPrecioTotal() {
         if (vuelo == null) {
             throw new IllegalArgumentException("No se puede obtener el precio total de un billete sin tener un vuelo asociado");
         }
@@ -138,7 +138,7 @@ public class Billete implements Serializable {
 
         BigDecimal bagsPrice = getPrecioTotalMaletas();
 
-        totalPrice = totalPrice.add(bagsPrice);
+        totalPrice = totalPrice.add(basePrice);
         totalPrice = totalPrice.add(bagsPrice);
 
         return totalPrice;
@@ -165,10 +165,13 @@ public class Billete implements Serializable {
             throw new IllegalArgumentException("No se puede obtener precios de maletas si no hay un vuelo asociado");
         }
 
-        BigDecimal kgCost = vuelo.getPrecioMaleta();
-        BigDecimal totalBagsCost = new BigDecimal(0);
-        for (Maleta maleta : maletas) {
-            totalBagsCost = totalBagsCost.add(BigDecimal.valueOf(maleta.getPesoKg()).multiply(kgCost));
+        BigDecimal totalBagsCost = BigDecimal.ZERO;
+
+        if (maletas != null) {
+            BigDecimal kgCost = vuelo.getPrecioMaleta();
+            for (Maleta maleta : maletas) {
+                totalBagsCost = totalBagsCost.add(BigDecimal.valueOf(maleta.getPesoKg()).multiply(kgCost));
+            }
         }
 
         return totalBagsCost;

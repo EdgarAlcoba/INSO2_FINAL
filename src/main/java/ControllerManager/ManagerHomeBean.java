@@ -142,7 +142,6 @@ public class ManagerHomeBean {
     }
     
      private void showAlert(String text) {
-         System.out.println("LLega al metodo");
         FacesContext context = FacesContext.getCurrentInstance();
         context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error al crear un vuelo", text));
     }

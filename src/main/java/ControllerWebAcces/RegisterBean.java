@@ -87,7 +87,6 @@ public class RegisterBean {
     }
 
     private void showAlert(int severity, String name, String text) {
-        System.out.println(">Llega aqui");
         FacesContext context = FacesContext.getCurrentInstance();
         switch (severity){
             case 2:

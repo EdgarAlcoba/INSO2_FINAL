@@ -1,43 +1,41 @@
-
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:f="http://xmlns.jcp.org/jsf/core">
-        <p:panel id="myFlightsPanel" header="Mis reservas">
-            <h:outputLabel style="font-size: 1rem; font-weight: bold;" value="Buscar vuelos:" />
-            <h:panelGrid columns="5" cellspacing="10" >
-                <h:outputLabel for="searchFrom" value="Desde:" />
-                <p:calendar styleClass="full-width-calendar" id="dateTimeFrom" value="#{myFlightsBean.dateTimeFrom}" pattern="dd/MM/yyyy HH:mm" />
-                <h:outputLabel  for="searchTo" value="Hasta:" />
-                <p:calendar styleClass="full-width-calendar" id="dateTimeTo" value="#{myFlightsBean.dateTimeTo}" pattern="dd/MM/yyyy HH:mm" />
-                <p:commandButton icon="pi pi-search" action="#{myFlightsBean.searchBtn}" />
-            </h:panelGrid>
-            
-            <!-- Tabla de vuelos encontrados -->
-                    <p:dataTable id="flightsTable" var="flight" value="#{myFlightsBean.foundFlights}" rowKey="#{flight.id}"
-                                 selection="#{myFlightsBean.selectedFlight}" selectionMode="single">
-                        <f:facet name="header">
-                            Vuelos encontrados:
-                        </f:facet>
+    <p:panel id="myFlightsPanel" header="Mis reservas">
+        <h:outputLabel style="font-size: 1rem; font-weight: bold;" value="Buscar vuelos:" />
+        <h:panelGrid columns="5" cellspacing="10" >
+            <h:outputLabel for="searchFrom" value="Desde:" />
+            <p:calendar styleClass="full-width-calendar" id="dateTimeFrom" value="#{myFlightsBean.dateTimeFrom}" pattern="dd/MM/yyyy HH:mm" />
+            <h:outputLabel  for="searchTo" value="Hasta:" />
+            <p:calendar styleClass="full-width-calendar" id="dateTimeTo" value="#{myFlightsBean.dateTimeTo}" pattern="dd/MM/yyyy HH:mm" />
+            <p:commandButton icon="pi pi-search" action="#{myFlightsBean.searchBtn}" />
+        </h:panelGrid>
 
-                        <p:column headerText="Origen">
-                            <h:outputText value="#{flight.origen}" />
-                        </p:column>
-                        <p:column headerText="Destino">
-                            <h:outputText value="#{flight.destino}" />
-                        </p:column>
-                        <p:column headerText="Salida">
-                            <h:outputText value="#{flight.salida}" />
-                        </p:column>
-                        <p:column headerText="Llegada">
-                            <h:outputText value="#{flight.llegada}" />
-                        </p:column>
-                        <p:column headerText="Número de asiento">
-                            <h:outputText value="#{flight.asiento}" />
-                        </p:column>
-                    </p:dataTable>
-        </p:panel>
-        <p:remoteCommand name="updateTable" update="flightsTable"/>
+        <!-- Tabla de vuelos encontrados -->
+        <p:dataTable id="flightsTable" var="ticket" value="#{myFlightsBean.foundTickets}" rowKey="#{ticket.id}"
+                     selection="#{myFlightsBean.selectedTicket}" selectionMode="single">
+            <f:facet name="header">
+                Vuelos encontrados:
+            </f:facet>
+
+            <p:column headerText="Origen">
+                <h:outputText value="#{ticket.vuelo.origen}" />
+            </p:column>
+            <p:column headerText="Destino">
+                <h:outputText value="#{ticket.vuelo.destino}" />
+            </p:column>
+            <p:column headerText="Salida">
+                <h:outputText value="#{ticket.vuelo.salida}" />
+            </p:column>
+            <p:column headerText="Llegada">
+                <h:outputText value="#{ticket.vuelo.llegada}" />
+            </p:column>
+            <p:column headerText="Número de asiento">
+                <h:outputText value="#{ticket.asiento.numeroAsiento}" />
+            </p:column>
+        </p:dataTable>
+    </p:panel>
+    <p:remoteCommand name="updateTable" update="flightsTable"/>
 </ui:composition>
-

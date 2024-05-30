@@ -48,7 +48,7 @@ public class UsuarioFacade extends AbstractFacade<Usuario> implements UsuarioFac
         super(Usuario.class);
     }
 
-    public void editUsuario(Usuario usuario, String oldEmail) throws EditUserException {
+    public void editUsuario(Usuario usuario, String oldEmail, String oldPassword) throws EditUserException {
         if (usuario.getNombre() == null || usuario.getNombre().isEmpty()) {
             throw new EditUserException("El nombre del usuario no puede ser nulo o vacío");
         }
@@ -75,6 +75,8 @@ public class UsuarioFacade extends AbstractFacade<Usuario> implements UsuarioFac
 
         if (usuario.getContrasena() != null && !usuario.getContrasena().isEmpty()) {
             usuario.setContrasena(passwordUtil.hashPassword(usuario.getContrasena()));
+        } else {
+            usuario.setContrasena(oldPassword);
         }
 
         ArrayList<String> roles = new ArrayList<>(Arrays.asList("Admin", "Client", "Manager"));

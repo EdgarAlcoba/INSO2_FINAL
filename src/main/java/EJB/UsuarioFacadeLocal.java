@@ -8,6 +8,8 @@ package EJB;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Local;
+
+import es.unileon.inso2.aerolinea.exceptions.EditUserException;
 import modelo.Usuario;
 
 /**
@@ -21,7 +23,7 @@ public interface UsuarioFacadeLocal {
 
     void edit(Usuario usuario);
 
-    void editPassword(Usuario user, String newPassword);
+    void editUsuario(Usuario usuario) throws EditUserException;
 
     void remove(Usuario usuario);
 

@@ -13,9 +13,11 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
+import es.unileon.inso2.aerolinea.exceptions.EditUserException;
 import modelo.Usuario;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -43,17 +45,43 @@ public class UsuarioFacade extends AbstractFacade<Usuario> implements UsuarioFac
         super(Usuario.class);
     }
 
-    /**
-     * Editar contraseña
-     * @param user Usuario de la db
-     * @param newPassword Contraseña nueva
-     */
-    public void editPassword(Usuario user, String newPassword) {
-        String hashedNewPassword = passwordUtil.hashPassword(newPassword);
-        if (!user.getContrasena().equals(hashedNewPassword)) {
-            user.setContrasena(hashedNewPassword);
+    public void editUsuario(Usuario usuario) throws EditUserException {
+        if (usuario.getNombre() == null || usuario.getNombre().isEmpty()) {
+            throw new EditUserException("El nombre del usuario no puede ser nulo o vacío");
         }
-        edit(user);
+
+        if (usuario.getApellidos() == null || usuario.getApellidos().isEmpty()) {
+            throw new EditUserException("El apellido del usuario no puede ser nulo o vacio");
+        }
+
+        if (usuario.getCorreo() == null || usuario.getCorreo().isEmpty()) {
+            throw new EditUserException("El correo del usuario no puede ser nulo o vacio");
+        }
+
+        if (emailExists(usuario.getCorreo())) {
+            throw new EditUserException("El correo ya existe");
+        }
+
+        if (usuario.getFechaNacimiento() == null) {
+            throw new EditUserException("La fecha de nacimiento no puede ser nula");
+        }
+
+        if (usuario.getContrasena() == null || usuario.getContrasena().isEmpty()) {
+            throw new EditUserException("La contraseña del usuario no puede ser nula o vacía");
+        }
+
+        usuario.setContrasena(passwordUtil.hashPassword(usuario.getContrasena()));
+
+        ArrayList<String> roles = new ArrayList<>(Arrays.asList("Admin", "Client", "Manager"));
+        if (usuario.getRol() == null || !roles.contains(usuario.getRol())) {
+            throw new EditUserException("El rol del usuario no existe");
+        }
+
+        edit(usuario);
+    }
+
+    private boolean emailExists(String email) {
+        return false;
     }
 
     /**

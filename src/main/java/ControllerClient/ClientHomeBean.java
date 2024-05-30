@@ -6,14 +6,14 @@
 package ControllerClient;
 
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.SessionScoped;
 
 /**
  *
  * @author extre
  */
 @ManagedBean (name = "clientHomeBean")
-@ViewScoped
+@SessionScoped
 public class ClientHomeBean {
     private String currentView = "";
 

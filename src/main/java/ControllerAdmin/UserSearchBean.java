@@ -7,10 +7,10 @@ package ControllerAdmin;
 
 import java.util.ArrayList;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
 import modelo.Usuario;
 import EJB.UsuarioFacadeLocal;
 import javax.ejb.EJB;
+import javax.faces.bean.ViewScoped;
 import org.primefaces.PrimeFaces;
 
 /**
@@ -18,7 +18,7 @@ import org.primefaces.PrimeFaces;
  * @author extre
  */
 @ManagedBean (name = "userSearchBean")
-@SessionScoped
+@ViewScoped
 public class UserSearchBean {
 
     private String searchTF;

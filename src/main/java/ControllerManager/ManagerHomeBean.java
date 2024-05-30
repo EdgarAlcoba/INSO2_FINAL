@@ -8,7 +8,6 @@ package ControllerManager;
 import EJB.AvionFacadeLocal;
 import java.util.ArrayList;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
 import modelo.Vuelo;
 import EJB.VueloFacadeLocal;
 import es.unileon.inso2.aerolinea.exceptions.CreateFlightException;
@@ -19,6 +18,7 @@ import java.util.stream.Collectors;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import modelo.Avion;
 import org.primefaces.PrimeFaces;
@@ -28,7 +28,7 @@ import org.primefaces.PrimeFaces;
  * @author extre
  */
 @ManagedBean
-@ViewScoped
+@SessionScoped
 public class ManagerHomeBean {
 
     private Date dateTimeFrom;

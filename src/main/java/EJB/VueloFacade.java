@@ -108,6 +108,25 @@ public class VueloFacade extends AbstractFacade<Vuelo> implements VueloFacadeLoc
         em.persist(vuelo);
     }
 
+    @Override
+    public ArrayList<Vuelo> searchAllDay(Date day, String origin, String destination) {
+        if (day == null || origin == null || destination == null) {
+            System.out.println("searchAllDay day origin or destination is null");
+            return new ArrayList<>();
+        }
+
+        ArrayList<Vuelo> dayFlights = search(day);
+        ArrayList<Vuelo> flights = new ArrayList<>();
+
+        for (Vuelo flight : dayFlights) {
+            if (flight.getOrigen().equals(origin) && flight.getDestino().equals(destination)) {
+                flights.add(flight);
+            }
+        }
+
+        return flights;
+    }
+
     private boolean exists(String flightNumber) {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Vuelo> cq = cb.createQuery(Vuelo.class);

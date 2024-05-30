@@ -5,13 +5,13 @@
  */
 package ControllerClient;
 
-import EJB.VueloFacadeLocal;
+import EJB.BilleteFacadeLocal;
 import java.util.ArrayList;
 import java.util.Date;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import modelo.Vuelo;
+import modelo.Billete;
 import org.primefaces.PrimeFaces;
 
 /**
@@ -21,23 +21,15 @@ import org.primefaces.PrimeFaces;
 @ManagedBean
 @ViewScoped
 public class MyFlightsBean {
-    private ArrayList<Vuelo> foundFlights;
+    private ArrayList<Billete> foundTickets;
     
     private Date dateTimeFrom;
     private Date dateTimeTo;
     
-    private Vuelo selectedFlight;
+    private Billete selectedTicket;
     
     @EJB
-    private VueloFacadeLocal VFL;
-
-    public ArrayList<Vuelo> getFoundFlights() {
-        return foundFlights;
-    }
-
-    public void setFoundFlights(ArrayList<Vuelo> foundFlights) {
-        this.foundFlights = foundFlights;
-    }
+    private BilleteFacadeLocal BFL;
 
     public Date getDateTimeFrom() {
         return dateTimeFrom;
@@ -55,16 +47,28 @@ public class MyFlightsBean {
         this.dateTimeTo = dateTimeTo;
     }
 
-    public Vuelo getSelectedFlight() {
-        return selectedFlight;
+    public ArrayList<Billete> getFoundTickets() {
+        return foundTickets;
     }
 
-    public void setSelectedFlight(Vuelo selectedFlight) {
-        this.selectedFlight = selectedFlight;
+    public void setFoundTickets(ArrayList<Billete> foundTickets) {
+        this.foundTickets = foundTickets;
+    }
+
+    public Billete getSelectedTicket() {
+        return selectedTicket;
+    }
+
+    public void setSelectedTicket(Billete selectedTicket) {
+        this.selectedTicket = selectedTicket;
+    }
+
+    public void searchBtn(){
+        this.foundTickets = BFL.searchBetween(dateTimeFrom, dateTimeTo);
+        update();
     }
     
-    public void searchBtn(){
-        VFL.searchBetween(dateTimeFrom, dateTimeTo);
+    public void update(){
         PrimeFaces.current().executeScript("updateTable()");
     }
 }

@@ -73,11 +73,9 @@ public class UsuarioFacade extends AbstractFacade<Usuario> implements UsuarioFac
             throw new EditUserException("La fecha de nacimiento no puede ser nula");
         }
 
-        if (usuario.getContrasena() == null || usuario.getContrasena().isEmpty()) {
-            throw new EditUserException("La contraseña del usuario no puede ser nula o vacía");
+        if (usuario.getContrasena() != null && !usuario.getContrasena().isEmpty()) {
+            usuario.setContrasena(passwordUtil.hashPassword(usuario.getContrasena()));
         }
-
-        usuario.setContrasena(passwordUtil.hashPassword(usuario.getContrasena()));
 
         ArrayList<String> roles = new ArrayList<>(Arrays.asList("Admin", "Client", "Manager"));
         if (usuario.getRol() == null || !roles.contains(usuario.getRol())) {

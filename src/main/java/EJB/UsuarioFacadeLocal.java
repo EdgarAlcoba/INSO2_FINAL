@@ -23,7 +23,7 @@ public interface UsuarioFacadeLocal {
 
     void edit(Usuario usuario);
 
-    void editUsuario(Usuario usuario, String oldEmail) throws EditUserException;
+    void editUsuario(Usuario usuario, String oldEmail, String oldPassword) throws EditUserException;
 
     void remove(Usuario usuario);
 

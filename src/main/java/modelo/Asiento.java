@@ -30,6 +30,11 @@ public class Asiento implements Serializable {
     @OneToMany(mappedBy = "asiento")
     private List<Billete> billetes;
 
+    public String getNumeroAsiento() {
+        // TODO Calcular numero asiento
+        return "1A";
+    }
+
     public int getId() {
         return id;
     }

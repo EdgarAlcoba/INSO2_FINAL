@@ -2,38 +2,36 @@
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui">
-    <h:form>
-        <p:panel header="Historial de ventas">
-            <h:outputLabel style="font-size: 1rem; font-weight: bold;" value="Buscar vuelos:" />
-            <h:panelGrid columns="5" cellspacing="10" >
-                <h:outputLabel for="searchFrom" value="Desde:" />
-                <p:calendar styleClass="full-width-calendar" id="dateTimeFrom" value="#{salesHistoryBean.dateTimeFrom}" pattern="dd/MM/yyyy HH:mm" />
-                <h:outputLabel  for="searchTo" value="Hasta:" />
-                <p:calendar styleClass="full-width-calendar" id="dateTimeTo" value="#{salesHistoryBean.dateTimeTo}" pattern="dd/MM/yyyy HH:mm" />
-                <p:commandButton icon="pi pi-search" action="#{salesHistoryBean.searchBtn}" />
-            </h:panelGrid>
-                    <p:dataTable id="salesTable" var="ticket" value="#{salesHistoryBean.foundTickets}" rowKey="#{ticket.id}"
-                                 selection="#{salesHistoryBean.selectedTicket}" selectionMode="single">
-                        <p:column headerText="Origen">
-                            <h:outputText value="#{ticket.origen}" />
-                        </p:column>
-                        <p:column headerText="Destino">
-                            <h:outputText value="#{ticket.destino}" />
-                        </p:column>
-                        <p:column headerText="Salida">
-                            <h:outputText value="#{ticket.salida}" />
-                        </p:column>
-                        <p:column headerText="Llegada">
-                            <h:outputText value="#{ticket.llegada}" />
-                        </p:column>
-                        <p:column headerText="Clase">
-                            <h:outputText value="#{ticket.clase}" />
-                        </p:column>
-                        <p:column headerText="Precio">
-                            <h:outputText value="#{ticket.precio}" />
-                        </p:column>
-                    </p:dataTable>
-        </p:panel>
-        <p:remoteCommand name="updateTable" update="salesTable"/>
-    </h:form>
+    <p:panel header="Historial de ventas">
+        <h:outputLabel style="font-size: 1rem; font-weight: bold;" value="Buscar vuelos:" />
+        <h:panelGrid columns="5" cellspacing="10" >
+            <h:outputLabel for="searchFrom" value="Desde:" />
+            <p:calendar styleClass="full-width-calendar" id="dateTimeFrom" value="#{salesHistoryBean.dateTimeFrom}" pattern="dd/MM/yyyy HH:mm" />
+            <h:outputLabel  for="searchTo" value="Hasta:" />
+            <p:calendar styleClass="full-width-calendar" id="dateTimeTo" value="#{salesHistoryBean.dateTimeTo}" pattern="dd/MM/yyyy HH:mm" />
+            <p:commandButton icon="pi pi-search" action="#{salesHistoryBean.searchBtn()}" />
+        </h:panelGrid>
+        <p:dataTable id="salesTable" var="ticket" value="#{salesHistoryBean.foundTickets}" rowKey="#{ticket.id}"
+                     selection="#{salesHistoryBean.selectedTicket}" selectionMode="single">
+            <p:column headerText="Origen">
+                <h:outputText value="#{ticket.vuelo.origen}" />
+            </p:column>
+            <p:column headerText="Destino">
+                <h:outputText value="#{ticket.vuelo.destino}" />
+            </p:column>
+            <p:column headerText="Salida">
+                <h:outputText value="#{ticket.vuelo.salida}" />
+            </p:column>
+            <p:column headerText="Llegada">
+                <h:outputText value="#{ticket.vuelo.llegada}" />
+            </p:column>
+            <p:column headerText="Clase">
+                <h:outputText value="#{ticket.asiento.seccion.clase}" />
+            </p:column>
+            <p:column headerText="Precio">
+                <h:outputText value="#{ticket.precio}" />
+            </p:column>
+        </p:dataTable>
+    </p:panel>
+    <p:remoteCommand name="updateTable" update="salesTable"/>
 </ui:composition>

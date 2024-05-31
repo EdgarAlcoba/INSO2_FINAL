@@ -70,7 +70,7 @@ public interface VueloFacadeLocal {
 
     HashMap<Asiento, Boolean> getSeatMap(Vuelo flight);
 
-    ArrayList<ArrayList<Pair<Asiento, Boolean>>> getSeatLists(Vuelo flight, String cabin);
+    ArrayList<ArrayList<Pair<Asiento, Character>>> getSeatLists(Vuelo flight, String cabin);
 
     int getSeatMatrixRows(Vuelo flight, String cabin);
 

@@ -28,7 +28,7 @@ public class Asiento implements Serializable {
     private Seccion seccion;
 
     @Column(name = "NUMERO")
-    private String numero;
+    private String numero = "X";
 
     public int getId() {
         return id;

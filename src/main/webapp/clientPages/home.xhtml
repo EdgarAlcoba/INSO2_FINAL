@@ -5,28 +5,28 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <h:head>
-        <title>Facelet Title</title>
+        <title>Página principal</title>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
     </h:head>
     <h:body>
         <h:form id="viewPanel">
             <p:menubar >
-                
+
                 <h:graphicImage class="logo" value="#{resource['/assets/SkySurfersLogo.png']}"/>
-                
-                <p:menuitem value="Vuelos" icon="pi pi-fw pi-send " action="#{clientHomeBean.setView('flightSearch')}" update="viewPanel" />
+
+                <p:menuitem value="Vuelos" icon="pi pi-fw pi-send " action="#{clientHomeBean.setView('flightSearch')}"  />
 
                 <p:divider layout="vertical"/>
 
-                <p:menuitem value="Mis reservas" icon="pi pi-fw pi-history " action="#{clientHomeBean.setView('miFlights')}" update="viewPanel"/>
+                <p:menuitem value="Mis reservas" icon="pi pi-fw pi-history " action="#{clientHomeBean.setView('miFlights')}" />
 
                 <p:divider layout="vertical"/>
 
-                <p:menuitem value="Mi perfil" icon="pi pi-fw pi-users" action="#{clientHomeBean.setView('miProfile')}" update="viewPanel"/>
+                <p:menuitem value="Mi perfil" icon="pi pi-fw pi-users" action="#{clientHomeBean.setView('miProfile')}" />
             </p:menubar>
             <br/>
             <ui:include src="#{clientHomeBean.currentView}" />
+            <p:remoteCommand name="updateView" update="viewPanel"/>
         </h:form>
     </h:body>
 </html>
-

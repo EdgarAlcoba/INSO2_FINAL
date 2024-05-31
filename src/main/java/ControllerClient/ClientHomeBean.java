@@ -7,12 +7,13 @@ package ControllerClient;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import org.primefaces.PrimeFaces;
 
 /**
  *
  * @author extre
  */
-@ManagedBean (name = "clientHomeBean")
+@ManagedBean 
 @SessionScoped
 public class ClientHomeBean {
     private String currentView = "";
@@ -23,6 +24,10 @@ public class ClientHomeBean {
 
     public void setCurrentView(String currentView) {
         this.currentView = currentView;
+    }
+    
+    public void update(){
+        PrimeFaces.current().executeScript("updateView()");
     }
     
     public void setView(String view){
@@ -37,6 +42,7 @@ public class ClientHomeBean {
                 currentView = "modifyProfile.xhtml";
                 break;
         }
+        update();
     }
     
 }

@@ -2,11 +2,12 @@
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui"
-                xmlns:f="http://xmlns.jcp.org/jsf/core">
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <p:panel   header="Selección de clase">
         <h:panelGrid columns="1" cellspacing="5">
             <h:panelGrid columns="3" cellspacing="10">
-                <p:panel header="Económico">
+                <p:panel header="Económico" rendered="#{classSelectionBean.hasEco}">
                     <h:panelGrid columns="1" cellspacing="5">
                         <p:outputLabel value='Nuestro mejor precio'/>
                         <br/>
@@ -17,7 +18,7 @@
                         <p:outputLabel value='- Equipaje de mano'/>
                     </h:panelGrid>
                 </p:panel>
-                <p:panel   header="Turista">
+                <p:panel   header="Turista" rendered="#{classSelectionBean.hasNor}" >
                     <h:panelGrid columns="1" cellspacing="5">
                         <p:outputLabel value='Comodidad al mejor precio'/>
                         <br/>
@@ -28,7 +29,7 @@
                         <p:outputLabel value='- Equipaje facturado (hasta 10kg)'/>
                     </h:panelGrid>
                 </p:panel>
-                <p:panel   header="Premium">
+                <p:panel   header="Premium" rendered="#{classSelectionBean.hasPre}">
                     <h:panelGrid columns="1" cellspacing="5">
                         <p:outputLabel value='Máxima comodidad'/>
                         <p:outputLabel value='Prioridad de embarque'/>
@@ -40,13 +41,19 @@
                     </h:panelGrid>
                 </p:panel>
             </h:panelGrid>
-            
+
             <p:selectOneRadio id="line" value="#{classSelectionBean.classType}" layout="pageDirection" columns="3">
-                <f:selectItem itemLabel="Económico" itemValue="economic"/>
-                <f:selectItem itemLabel="Normal" itemValue="normal"/>
-                <f:selectItem itemLabel="Premium" itemValue="premium"/>
+                <c:if test="#{classSelectionBean.hasEco}">
+                    <f:selectItem itemLabel="Económico" itemValue="Economy"/>
+                </c:if>
+                <c:if test="#{classSelectionBean.hasNor}">
+                    <f:selectItem itemLabel="Normal" itemValue="Normal"/>
+                </c:if>
+                <c:if test="#{classSelectionBean.hasPre}">z
+                    <f:selectItem itemLabel="Premium" itemValue="Premium"/>
+                </c:if>
             </p:selectOneRadio>
-            <p:button value='Seleccionar asientos'/>
+            <p:commandButton value='Seleccionar asientos' action="#{classSelectionBean.selectSeats}" type="submit"/>
         </h:panelGrid>
     </p:panel>
 </ui:composition>

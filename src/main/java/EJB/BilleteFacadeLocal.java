@@ -5,13 +5,16 @@
  */
 package EJB;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import javax.ejb.Local;
 
 import es.unileon.inso2.aerolinea.exceptions.CreateTicketException;
 import modelo.Billete;
+import modelo.Maleta;
 import modelo.Usuario;
 import modelo.Vuelo;
 
@@ -41,5 +44,13 @@ public interface BilleteFacadeLocal {
     ArrayList<Billete> searchBetween(Date from, Date to);
 
     ArrayList<Billete> searchBetween(Date from, Date to, Usuario user);
+
+    BigDecimal getTotalPrice(Billete ticket);
+
+    HashMap<Maleta,BigDecimal> getBagsPrice(Billete ticket);
+
+    BigDecimal getTotalBagsPrice(Billete ticket);
+
+    ArrayList<Maleta> getBags(Billete ticket);
     
 }

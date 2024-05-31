@@ -3,24 +3,30 @@
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:f="http://xmlns.jcp.org/jsf/core">
-    <p:panel   header="Datos del pasajero">
+    <p:panel header="Datos del pasajero">
         <h:panelGrid columns="1" cellspacing="2" >
-            <h:outputLabel value="Nombre" />
-            <p:inputText id="passengerName" value="#{passengerDataBean.pasajero.nombre}"/>
+            <ui:repeat value="#{passengerDataBean.pasajeros}" var="pasajero">
+                <p:panel header="Datos del pasajero #{passengerDataBean.pasajero.numero}">
+                    <h:outputLabel value="Nombre" />
+                    <p:inputText id="passengerName" value="#{passengerDataBean.pasajero.nombre}"/>
+                    <br/>
+                    <h:outputLabel value="Apellido 1" />
+                    <p:inputText id="passengerSurname1" value="#{passengerDataBean.pasajero.apellido2}"/>
+                    <br/>
+                    <h:outputLabel value="Apellido 2" />
+                    <p:inputText id="passengerSurname2" value="#{passengerDataBean.pasajero.apellido2}"/>
+                    <br/>
+                    <h:outputLabel value="DNI/NIF" />
+                    <p:inputText id="passengerDNI" value="#{passengerDataBean.pasajero.dniNIE}"/>
+                    <br/>
+                    <h:outputLabel value="Número de pasaporte" />
+                    <p:inputText id="passengerPassport" value="#{passengerDataBean.pasajero.pasaporte}"/>
+                </p:panel>
+                <br/>
+            </ui:repeat>
+            <p:messages id="passengerDataAlerts" showDetail="true" />
             <br/>
-            <h:outputLabel value="Apellido 1" />
-            <p:inputText id="passengerSurname1" value="#{passengerDataBean.pasajero.apellido2}"/>
-            <br/>
-            <h:outputLabel value="Apellido 2" />
-            <p:inputText id="passengerSurname2" value="#{passengerDataBean.pasajero.apellido2}"/>
-            <br/>
-            <h:outputLabel value="DNI/NIF" />
-            <p:inputText id="passengerDNI" value="#{passengerDataBean.pasajero.dniNIE}"/>
-            <br/>
-            <h:outputLabel value="Número de pasaporte" />
-            <p:inputText id="passengerPassport" value="#{passengerDataBean.pasajero.pasaporte}"/>
-            <br/>
-            <p:button value='Siguiente'/>
+            <p:commandButton value='Siguiente' action="#{passengerDataBean.checkPassengerData()}" type="submit"/>
         </h:panelGrid>
     </p:panel>
 </ui:composition>

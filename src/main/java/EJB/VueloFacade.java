@@ -119,6 +119,8 @@ public class VueloFacade extends AbstractFacade<Vuelo> implements VueloFacadeLoc
 
         for (Vuelo flight : dayFlights) {
             if (flight.getOrigen().equals(origin) && flight.getDestino().equals(destination)) {
+                ArrayList<BigDecimal> prices = getPrices(flight);
+                flight.setPrecio(prices.isEmpty() ? BigDecimal.ZERO : prices.get(0).setScale(2, RoundingMode.CEILING));
                 flights.add(flight);
             }
         }
@@ -352,6 +354,34 @@ public class VueloFacade extends AbstractFacade<Vuelo> implements VueloFacadeLoc
         }
 
         return seatMatrix;
+    }
+
+    @Override
+    public int getSeatMatrixRows(Vuelo flight, String cabin) {
+        Seccion cabinSection = flight.getAvion().getMapaAsientos().getSeccionEconomy();
+
+        if (cabin.equals("Normal")) {
+            cabinSection = flight.getAvion().getMapaAsientos().getSeccionNormal();
+        }
+        if (cabin.equals("Premium")) {
+            cabinSection = flight.getAvion().getMapaAsientos().getSeccionPremium();
+        }
+
+        return cabinSection.getNumFilas();
+    }
+
+    @Override
+    public int getSeatMatrixColumns(Vuelo flight, String cabin) {
+        Seccion cabinSection = flight.getAvion().getMapaAsientos().getSeccionEconomy();
+
+        if (cabin.equals("Normal")) {
+            cabinSection = flight.getAvion().getMapaAsientos().getSeccionNormal();
+        }
+        if (cabin.equals("Premium")) {
+            cabinSection = flight.getAvion().getMapaAsientos().getSeccionPremium();
+        }
+
+        return cabinSection.getNumColumnas();
     }
 
     @Override

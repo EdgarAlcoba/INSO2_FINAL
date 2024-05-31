@@ -41,6 +41,19 @@ public class Vuelo implements Serializable {
     @Column(name = "PRECIO_MALETA")
     private BigDecimal precioMaleta;
 
+    @Transient
+    private BigDecimal precio;
+
+    @Transient
+    public BigDecimal getPrecio() {
+        return precio;
+    }
+
+    @Transient
+    public void setPrecio(BigDecimal precio) {
+        this.precio = precio;
+    }
+
     public int getId() {
         return id;
     }

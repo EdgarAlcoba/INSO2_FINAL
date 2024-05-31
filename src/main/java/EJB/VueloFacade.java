@@ -336,7 +336,7 @@ public class VueloFacade extends AbstractFacade<Vuelo> implements VueloFacadeLoc
     }
 
     @Override
-    public ArrayList<ArrayList<Pair<Asiento, Character>>> getSeatLists(Vuelo flight, String cabin) {
+    public ArrayList<ArrayList<Pair<Asiento, Integer>>> getSeatLists(Vuelo flight, String cabin) {
         Seccion cabinSection = flight.getAvion().getMapaAsientos().getSeccionEconomy();
 
         if (cabin.equals("Normal")) {
@@ -347,18 +347,18 @@ public class VueloFacade extends AbstractFacade<Vuelo> implements VueloFacadeLoc
         }
 
         HashMap<Asiento, Boolean> seatMap = getSeatMap(flight);
-        ArrayList<ArrayList<Pair<Asiento, Character>>> seatLists = new ArrayList<>();
+        ArrayList<ArrayList<Pair<Asiento, Integer>>> seatLists = new ArrayList<>();
         int rows = cabinSection.getNumFilas();
         int cols = cabinSection.getNumColumnas();
 
         for (int i=0; i<rows; i++) {
-            ArrayList<Pair<Asiento, Character>> row = new ArrayList<>();
+            ArrayList<Pair<Asiento, Integer>> row = new ArrayList<>();
             for (int j=0; j<cols; j++) {
                 for (Asiento seat: seatMap.keySet()) {
                     if (seat.getSeccion().getClase().equals(cabin)) {
                         if (seat.getPosicionX() == i && seat.getPosicionY() == j) {
-                            Character character = seatMap.get(seat) ? 'O' : 'L';
-                            row.add(new Pair<>(seat, character));
+                            int value = seatMap.get(seat) ? 1 : 0;
+                            row.add(new Pair<>(seat, value));
                         }
                     }
                 }

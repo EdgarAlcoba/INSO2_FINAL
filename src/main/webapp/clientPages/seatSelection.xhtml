@@ -5,26 +5,30 @@
                 xmlns:f="http://xmlns.jcp.org/jsf/core"
                 >
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
-    <p:panel   header="Selección de asientos">
-        <h:form>
-            <p:growl id="messages" showDetail="true"/>
-            <h:panelGrid columns="5" styleClass="seat-map">
-                <ui:repeat value="#{seatSelectionBean.row}" var="seat" varStatus="colStatus">
-                    <ui:repeat value="#{seatSelectionBean.seats}" var="row" varStatus="rowStatus">
+    <p:panel   header="Selección de asientos" id="plane">
+        <h:panelGrid columns="1" cellspacing="5">
+            <h:panelGrid columns="#{seatSelectionBean.rows}" styleClass="seat-map">
+                <ui:repeat value="#{seatSelectionBean.seatMap}" var="row" varStatus="rowStatus">
+                    <ui:repeat value="#{row}" var="seat" varStatus="colStatus">
                         <h:panelGroup>
-                            <h:outputText value=" " rendered="#{seat == null}"/>
-                            <p:commandButton styleClass="seat #{seat}" 
-                                             rendered="#{seat != null}"
-                                             action="#{seatSelectionBean.selectSeat(rowStatus.index, colStatus.index)}"
-                                             update="@form:seat-map @form:messages">
-                                <i class="fas fa-chair"></i>
-
-                            </p:commandButton>
+                            <h:outputText value="|---------|"  rendered="#{seat.key.tipo == 'Hallway'}" style="color: #fff"/>
+                            <p:commandButton icon='fas fa-chair'
+                                             value="#{seat.key.id}"
+                                             type="submit"
+                                             disabled="#{(seat.value == 1) ? true : false}"
+                                             rendered="#{seat.key.tipo == 'Seat'}"
+                                             action="#{seatSelectionBean.selectSeat(rowStatus.index, colStatus.index, seat.key)}"
+                                             style="background-color: #{(seat.value == 1) ? 'red': (seat.value == 0) ? 'limeGreen' : 'orange'} ; margin: 10px ;"
+                                             />
                         </h:panelGroup>
                     </ui:repeat>
+                    <br/>
                 </ui:repeat>
             </h:panelGrid>
-        </h:form>
+            <p:messages id="messages" showDetail="true" />
+            <p:commandButton value="Seleccionar Equipaje" type="submit" action="#{seatSelectionBean.selectLuggage()}"/>
+        </h:panelGrid>
     </p:panel>
+    <p:remoteCommand name="updatePlane" update="plane"/>
+    <p:remoteCommand name="updateMSG" update="messages"/>
 </ui:composition>
-

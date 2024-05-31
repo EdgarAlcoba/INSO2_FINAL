@@ -12,7 +12,7 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.SessionScoped;
 import modelo.Vuelo;
 import org.primefaces.event.SelectEvent;
 
@@ -21,7 +21,7 @@ import org.primefaces.event.SelectEvent;
  * @author extre
  */
 @ManagedBean
-@ViewScoped
+@SessionScoped
 public class FoundFlightsBean {
     
    private ArrayList<Vuelo> foundFlights;
@@ -43,7 +43,6 @@ public class FoundFlightsBean {
        String paramDest = FSB.getDestination();
        Date paramDate = FSB.getRange();
        this.foundFlights = this.VFL.searchAllDay(paramDate, paramOri, paramDest);
-       System.out.println(this.foundFlights.size());
    }
 
     public ArrayList<Vuelo> getFoundFlights() {

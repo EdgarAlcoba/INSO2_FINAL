@@ -5,10 +5,16 @@
  */
 package ControllerClient;
 
+import EJB.VueloFacadeLocal;
 import java.util.ArrayList;
+import java.util.Date;
+import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import modelo.Vuelo;
+import org.primefaces.event.SelectEvent;
 
 /**
  *
@@ -21,6 +27,24 @@ public class FoundFlightsBean {
    private ArrayList<Vuelo> foundFlights;
    
    private Vuelo selectedFlight;
+   
+   @ManagedProperty(value ="#{flightSearchBean}")
+   private FlightSearchBean FSB;
+   
+   @ManagedProperty (value ="#{clientHomeBean}")
+   private ClientHomeBean CHB;
+   
+   @EJB
+   private VueloFacadeLocal VFL;
+   
+   @PostConstruct
+   public void init(){
+       String paramOri = FSB.getOrigin();
+       String paramDest = FSB.getDestination();
+       Date paramDate = FSB.getRange();
+       this.foundFlights = this.VFL.searchAllDay(paramDate, paramOri, paramDest);
+       System.out.println(this.foundFlights.size());
+   }
 
     public ArrayList<Vuelo> getFoundFlights() {
         return foundFlights;
@@ -37,9 +61,30 @@ public class FoundFlightsBean {
     public void setSelectedFlight(Vuelo selectedFlight) {
         this.selectedFlight = selectedFlight;
     }
+
+    public FlightSearchBean getFSB() {
+        return FSB;
+    }
+
+    public void setFSB(FlightSearchBean FSB) {
+        this.FSB = FSB;
+    }
+
+    public ClientHomeBean getCHB() {
+        return CHB;
+    }
+
+    public void setCHB(ClientHomeBean CHB) {
+        this.CHB = CHB;
+    }
     
+    public void onRowSelect(SelectEvent event){
+        this.selectedFlight = (Vuelo) event.getObject();
+    }
     
-   
-   
+    public void selectClass(){
+        this.CHB.setCurrentView("classSelection.xhtml");
+        this.CHB.update();
+    }
     
 }

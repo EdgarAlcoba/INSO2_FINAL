@@ -302,7 +302,6 @@ public class VueloFacade extends AbstractFacade<Vuelo> implements VueloFacadeLoc
     }
 
 
-
     public ArrayList<Billete> getTickets(Vuelo flight) {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Billete> cq = cb.createQuery(Billete.class);
@@ -331,6 +330,28 @@ public class VueloFacade extends AbstractFacade<Vuelo> implements VueloFacadeLoc
         }
 
         return seatMap;
+    }
+
+    @Override
+    public Asiento[][] getSeatMatrix(Vuelo flight, String cabin) {
+        Seccion cabinSection = flight.getAvion().getMapaAsientos().getSeccionEconomy();
+
+        if (cabin.equals("Normal")) {
+            cabinSection = flight.getAvion().getMapaAsientos().getSeccionNormal();
+        }
+        if (cabin.equals("Premium")) {
+            cabinSection = flight.getAvion().getMapaAsientos().getSeccionPremium();
+        }
+
+        HashMap<Asiento, Boolean> seatMap = getSeatMap(flight);
+        Asiento[][] seatMatrix = new Asiento[cabinSection.getNumFilas()][cabinSection.getNumColumnas()];
+        for (Asiento seat: seatMap.keySet()) {
+            if (seat.getSeccion().getClase().equals(cabin)) {
+                seatMatrix[seat.getPosicionX()][seat.getPosicionY()] = seat;
+            }
+        }
+
+        return seatMatrix;
     }
 
     @Override

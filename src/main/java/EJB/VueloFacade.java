@@ -355,6 +355,34 @@ public class VueloFacade extends AbstractFacade<Vuelo> implements VueloFacadeLoc
     }
 
     @Override
+    public int getSeatMatrixRows(Vuelo flight, String cabin) {
+        Seccion cabinSection = flight.getAvion().getMapaAsientos().getSeccionEconomy();
+
+        if (cabin.equals("Normal")) {
+            cabinSection = flight.getAvion().getMapaAsientos().getSeccionNormal();
+        }
+        if (cabin.equals("Premium")) {
+            cabinSection = flight.getAvion().getMapaAsientos().getSeccionPremium();
+        }
+
+        return cabinSection.getNumFilas();
+    }
+
+    @Override
+    public int getSeatMatrixColumns(Vuelo flight, String cabin) {
+        Seccion cabinSection = flight.getAvion().getMapaAsientos().getSeccionEconomy();
+
+        if (cabin.equals("Normal")) {
+            cabinSection = flight.getAvion().getMapaAsientos().getSeccionNormal();
+        }
+        if (cabin.equals("Premium")) {
+            cabinSection = flight.getAvion().getMapaAsientos().getSeccionPremium();
+        }
+
+        return cabinSection.getNumColumnas();
+    }
+
+    @Override
     public Asiento bookSeat(Vuelo flight, String cabin, Asiento preferredSeat) {
         if (flight == null) return null;
         if (cabin == null || cabin.isEmpty()) cabin = "Economy";

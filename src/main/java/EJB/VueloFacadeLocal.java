@@ -71,6 +71,10 @@ public interface VueloFacadeLocal {
 
     Asiento[][] getSeatMatrix(Vuelo flight, String cabin);
 
+    int getSeatMatrixRows(Vuelo flight, String cabin);
+
+    int getSeatMatrixColumns(Vuelo flight, String cabin);
+
     /**
      *
      * @param flight Vuelo a obtener el asiento.

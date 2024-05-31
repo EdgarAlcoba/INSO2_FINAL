@@ -12,6 +12,7 @@ import javax.persistence.criteria.*;
 
 import es.unileon.inso2.aerolinea.exceptions.CreateBagException;
 import es.unileon.inso2.aerolinea.exceptions.CreateFlightException;
+import javafx.util.Pair;
 import modelo.*;
 import sun.security.krb5.internal.Ticket;
 
@@ -335,7 +336,7 @@ public class VueloFacade extends AbstractFacade<Vuelo> implements VueloFacadeLoc
     }
 
     @Override
-    public Asiento[][] getSeatMatrix(Vuelo flight, String cabin) {
+    public ArrayList<ArrayList<Pair<Asiento, Boolean>>> getSeatLists(Vuelo flight, String cabin) {
         Seccion cabinSection = flight.getAvion().getMapaAsientos().getSeccionEconomy();
 
         if (cabin.equals("Normal")) {
@@ -346,14 +347,25 @@ public class VueloFacade extends AbstractFacade<Vuelo> implements VueloFacadeLoc
         }
 
         HashMap<Asiento, Boolean> seatMap = getSeatMap(flight);
-        Asiento[][] seatMatrix = new Asiento[cabinSection.getNumFilas()][cabinSection.getNumColumnas()];
-        for (Asiento seat: seatMap.keySet()) {
-            if (seat.getSeccion().getClase().equals(cabin)) {
-                seatMatrix[seat.getPosicionX()][seat.getPosicionY()] = seat;
+        ArrayList<ArrayList<Pair<Asiento, Boolean>>> seatLists = new ArrayList<>();
+        int rows = cabinSection.getNumFilas();
+        int cols = cabinSection.getNumColumnas();
+
+        for (int i=0; i<rows; i++) {
+            ArrayList<Pair<Asiento, Boolean>> row = new ArrayList<>();
+            for (int j=0; j<cols; j++) {
+                for (Asiento seat: seatMap.keySet()) {
+                    if (seat.getSeccion().getClase().equals(cabin)) {
+                        if (seat.getPosicionX() == i && seat.getPosicionY() == j) {
+                            row.add(new Pair<>(seat, seatMap.get(seat)));
+                        }
+                    }
+                }
             }
+            seatLists.add(row);
         }
 
-        return seatMatrix;
+        return seatLists;
     }
 
     @Override

@@ -13,6 +13,7 @@ import java.util.List;
 import javax.ejb.Local;
 
 import es.unileon.inso2.aerolinea.exceptions.CreateFlightException;
+import javafx.util.Pair;
 import modelo.Asiento;
 import modelo.Billete;
 import modelo.Vuelo;
@@ -69,7 +70,7 @@ public interface VueloFacadeLocal {
 
     HashMap<Asiento, Boolean> getSeatMap(Vuelo flight);
 
-    Asiento[][] getSeatMatrix(Vuelo flight, String cabin);
+    ArrayList<ArrayList<Pair<Asiento, Boolean>>> getSeatLists(Vuelo flight, String cabin);
 
     int getSeatMatrixRows(Vuelo flight, String cabin);
 

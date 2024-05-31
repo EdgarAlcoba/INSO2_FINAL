@@ -27,10 +27,8 @@ public class Asiento implements Serializable {
     @JoinColumn(name = "SECCION")
     private Seccion seccion;
 
-    public String getNumeroAsiento() {
-        // TODO Calcular numero asiento
-        return "1A";
-    }
+    @Column(name = "NUMERO")
+    private String numero;
 
     public int getId() {
         return id;
@@ -72,16 +70,24 @@ public class Asiento implements Serializable {
         this.seccion = seccion;
     }
 
+    public String getNumero() {
+        return numero;
+    }
+
+    public void setNumero(String numero) {
+        this.numero = numero;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Asiento asiento = (Asiento) o;
-        return id == asiento.id && posicionX == asiento.posicionX && posicionY == asiento.posicionY && Objects.equals(tipo, asiento.tipo) && Objects.equals(seccion, asiento.seccion);
+        return id == asiento.id && posicionX == asiento.posicionX && posicionY == asiento.posicionY && Objects.equals(tipo, asiento.tipo) && Objects.equals(seccion, asiento.seccion) && Objects.equals(numero, asiento.numero);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, posicionX, posicionY, tipo, seccion);
+        return Objects.hash(id, posicionX, posicionY, tipo, seccion, numero);
     }
 }

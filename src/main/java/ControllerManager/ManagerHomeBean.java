@@ -124,11 +124,10 @@ public class ManagerHomeBean {
         try {
             this.newFlight.setAvion(this.AFL.find(this.msn));
             this.VFL.createFlight(newFlight);
+            this.searchBtn();
         } catch (CreateFlightException e) {
-            System.out.println("Llega al break");
             showAlert(e.getMessage());
         }
-        this.searchBtn();
     }
 
     public void searchBtn() {
@@ -140,8 +139,8 @@ public class ManagerHomeBean {
         this.VFL.edit(selectedFlight);
         update();
     }
-    
-     private void showAlert(String text) {
+
+    private void showAlert(String text) {
         FacesContext context = FacesContext.getCurrentInstance();
         context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error al crear un vuelo", text));
     }

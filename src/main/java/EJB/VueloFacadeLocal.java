@@ -69,6 +69,7 @@ public interface VueloFacadeLocal {
 
     HashMap<Asiento, Boolean> getSeatMap(Vuelo flight);
 
+    Asiento[][] getSeatMatrix(Vuelo flight, String cabin);
 
     /**
      *

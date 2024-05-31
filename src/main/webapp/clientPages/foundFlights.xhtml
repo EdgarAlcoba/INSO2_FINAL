@@ -3,41 +3,39 @@
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:f="http://xmlns.jcp.org/jsf/core">
-    <h:form id="form">
-        <p:panel header="Vuelos encontrados">
-            <h:panelGrid columns="1" cellspacing="5">
-                <p:dataTable id="foundFlightsTable" var="flight" value="#{foundFlightsBean.foundFlights}" rowKey="#{flight.id}"
-                             selection="#{foundFlightsBean.selectedFlight}" selectionMode="single">
-                    <f:facet name="header">
-                        Vuelos encontrados:
-                    </f:facet>
-                    <p:ajax event="rowSelect" update="@form:selectedOrigin @form:selectedDestination @form:selectedDeparture @form:selectedArrival" listener="#{foundFlightsBean.onRowSelect}" />
-                    <p:column headerText="Origen">
-                        <h:outputText value="#{flight.origen}" />
-                    </p:column>
-                    <p:column headerText="Destino">
-                        <h:outputText value="#{flight.destino}" />
-                    </p:column>
-                    <p:column headerText="Salida">
-                        <h:outputText value="#{flight.salida}" />
-                    </p:column>
-                    <p:column headerText="Llegada">
-                        <h:outputText value="#{flight.llegada}" />
-                    </p:column>
-                    <p:column headerText="Coste">
-                        <h:outputText value="#{flight.precioViaje}" />
-                    </p:column>
-                </p:dataTable>
-                <br/>
-                <p:outputLabel value="Vuelo seleccionado:"/>
-                <h:panelGrid columns="4" cellspacing="5">
-                    <p:outputLabel id="selectedOrigin" value="#{foundFlightsBean.selectedFlight.origen}"/>
-                    <p:outputLabel id="selectedDestination" value="#{foundFlightsBean.selectedFlight.destino}"/>
-                    <p:outputLabel id="selectedDeparture" value="#{foundFlightsBean.selectedFlight.salida}"/>
-                    <p:outputLabel id="selectedArrival" value="#{foundFlightsBean.selectedFlight.llegada}"/>
-                </h:panelGrid>
-                <p:button value='Seleccionar clase'/>
+    <p:panel header="Vuelos encontrados">
+        <h:panelGrid columns="1" cellspacing="5">
+            <p:dataTable id="foundFlightsTable" var="flight" value="#{foundFlightsBean.foundFlights}" rowKey="#{flight.id}"
+                         selection="#{foundFlightsBean.selectedFlight}" selectionMode="single">
+                <f:facet name="header">
+                    Vuelos encontrados:
+                </f:facet>
+                <p:ajax event="rowSelect" update="@form:selectedOrigin @form:selectedDestination @form:selectedDeparture @form:selectedArrival" listener="#{foundFlightsBean.onRowSelect}" />
+                <p:column headerText="Origen">
+                    <h:outputText value="#{flight.origen}" />
+                </p:column>
+                <p:column headerText="Destino">
+                    <h:outputText value="#{flight.destino}" />
+                </p:column>
+                <p:column headerText="Salida">
+                    <h:outputText value="#{flight.salida}" />
+                </p:column>
+                <p:column headerText="Llegada">
+                    <h:outputText value="#{flight.llegada}" />
+                </p:column>
+                <p:column headerText="Coste">
+                    <h:outputText value="Desde: #{flight.precios.get(0)}€" />
+                </p:column>
+            </p:dataTable>
+            <br/>
+            <p:outputLabel value="Vuelo seleccionado:"/>
+            <h:panelGrid columns="4" cellspacing="5">
+                <p:outputLabel id="selectedOrigin" value="#{foundFlightsBean.selectedFlight.origen}"/>
+                <p:outputLabel id="selectedDestination" value="#{foundFlightsBean.selectedFlight.destino}"/>
+                <p:outputLabel id="selectedDeparture" value="#{foundFlightsBean.selectedFlight.salida}"/>
+                <p:outputLabel id="selectedArrival" value="#{foundFlightsBean.selectedFlight.llegada}"/>
             </h:panelGrid>
-        </p:panel>
-    </h:form>
+            <p:commandButton value='Seleccionar clase' action="#{foundFlightsBean.selectClass()}" type="submit"/>
+        </h:panelGrid>
+    </p:panel>
 </ui:composition>

@@ -6,21 +6,26 @@
 package ControllerClient;
 
 import java.util.Date;
+import java.util.List;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.SessionScoped;
 
 /**
  *
  * @author extre
  */
 @ManagedBean
-@ViewScoped
+@SessionScoped
 public class FlightSearchBean {
     private String origin;
     private String destination;
     private String tipoBillete;
     
     private Date range;
+    
+    @ManagedProperty (value = "#{clientHomeBean}")
+    private ClientHomeBean CHB;
     
     private int numberOfPassengers;
 
@@ -55,7 +60,7 @@ public class FlightSearchBean {
     public void setRange(Date range) {
         this.range = range;
     }
-
+    
     public int getNumberOfPassengers() {
         return numberOfPassengers;
     }
@@ -63,7 +68,18 @@ public class FlightSearchBean {
     public void setNumberOfPassengers(int numberOfPassengers) {
         this.numberOfPassengers = numberOfPassengers;
     }
+
+    public ClientHomeBean getCHB() {
+        return CHB;
+    }
+
+    public void setCHB(ClientHomeBean CHB) {
+        this.CHB = CHB;
+    }
     
-    
+    public void search(){
+        this.CHB.setCurrentView("foundFlights.xhtml");
+        this.CHB.update();
+    }
     
 }

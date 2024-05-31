@@ -118,11 +118,11 @@ public class Usuario implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Usuario usuario = (Usuario) o;
-        return id == usuario.id && sexo == usuario.sexo && Objects.equals(nombre, usuario.nombre) && Objects.equals(apellidos, usuario.apellidos) && Objects.equals(correo, usuario.correo) && Objects.equals(fechaNacimiento, usuario.fechaNacimiento) && Objects.equals(contrasena, usuario.contrasena) && Objects.equals(rol, usuario.rol) && Objects.equals(billetes, usuario.billetes);
+        return id == usuario.id && sexo == usuario.sexo && Objects.equals(nombre, usuario.nombre) && Objects.equals(apellidos, usuario.apellidos) && Objects.equals(correo, usuario.correo) && Objects.equals(fechaNacimiento, usuario.fechaNacimiento) && Objects.equals(contrasena, usuario.contrasena) && Objects.equals(rol, usuario.rol);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, nombre, apellidos, correo, fechaNacimiento, sexo, contrasena, rol, billetes);
+        return Objects.hash(id);
     }
 }

@@ -12,14 +12,13 @@ import javax.persistence.criteria.*;
 
 import es.unileon.inso2.aerolinea.exceptions.CreateBagException;
 import es.unileon.inso2.aerolinea.exceptions.CreateFlightException;
-import modelo.Avion;
-import modelo.Usuario;
-import modelo.Vuelo;
+import modelo.*;
+import sun.security.krb5.internal.Ticket;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.util.*;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -219,5 +218,182 @@ public class VueloFacade extends AbstractFacade<Vuelo> implements VueloFacadeLoc
             System.out.println("Hubo un error buscando vuelos: " + e.getMessage());
             return new ArrayList<>();
         }
+    }
+
+    @Override
+    public Vuelo searchById(int id) {
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Vuelo> cq = cb.createQuery(Vuelo.class);
+        Root<Vuelo> vuelo = cq.from(Vuelo.class);
+
+        Predicate condition = cb.equal(vuelo.get("id"), id);
+
+        cq.where(condition);
+
+        List<Vuelo> result = em.createQuery(cq).getResultList();
+
+        if (result.isEmpty()) {
+            return null;
+        }
+
+        return result.get(0);
+    }
+
+    public ArrayList<BigDecimal> getPrices(Vuelo flight) {
+        ArrayList<BigDecimal> prices = new ArrayList<>();
+
+        if (flight == null) return prices;
+        if (flight.getAvion() == null) return prices;
+        MapaAsientos seatMap = flight.getAvion().getMapaAsientos();
+        if (seatMap == null) return prices;
+
+
+        BigDecimal averageKgCost = BigDecimal.valueOf(ThreadLocalRandom.current().nextDouble(0.75, 1.31));
+        BigDecimal costPrice = averageKgCost.multiply(BigDecimal.valueOf(flight.getGastoCombustibleKg()));
+
+        int numberOfSeatsEconomy = flight.getAvion().getMapaAsientos().getSeccionEconomy().getNumeroAsientos();
+
+        BigDecimal costPricePerPax = costPrice.divide(BigDecimal.valueOf(numberOfSeatsEconomy), RoundingMode.CEILING);
+
+        BigDecimal minCost = costPricePerPax.multiply(BigDecimal.valueOf(1.3));
+
+        double economyIncrease = ThreadLocalRandom.current().nextDouble(1, 1.31);
+        double normalIncrease = ThreadLocalRandom.current().nextDouble(1.32, 1.91);
+        double premiumIncrease = ThreadLocalRandom.current().nextDouble(2, 4.01);
+
+        BigDecimal economyCost = minCost.multiply(BigDecimal.valueOf(economyIncrease)).setScale(2, RoundingMode.CEILING);
+        BigDecimal normalCost = minCost.multiply(BigDecimal.valueOf(normalIncrease)).setScale(2, RoundingMode.CEILING);
+        BigDecimal premiumCost = minCost.multiply(BigDecimal.valueOf(premiumIncrease)).setScale(2, RoundingMode.CEILING);
+
+        if (seatMap.getDistribucion().equals("Economy")) {
+            prices.add(economyCost);
+        }
+
+        if (seatMap.getDistribucion().equals("Normal")) {
+            prices.add(economyCost);
+            prices.add(normalCost);
+        }
+
+        if (seatMap.getDistribucion().equals("Premium")) {
+            prices.add(economyCost);
+            prices.add(normalCost);
+            prices.add(premiumCost);
+        }
+
+        return prices;
+    }
+
+    @Override
+    public ArrayList<Asiento> getSeats(Vuelo flight) {
+        ArrayList<Asiento> seats = new ArrayList<>();
+        if (flight.getAvion().getMapaAsientos().getDistribucion().equals("Economy")) {
+            seats = new ArrayList<>(flight.getAvion().getMapaAsientos().getSeccionEconomy().getAsientos());
+        }
+        if (flight.getAvion().getMapaAsientos().getDistribucion().equals("Normal")) {
+            seats = new ArrayList<>(flight.getAvion().getMapaAsientos().getSeccionEconomy().getAsientos());
+            seats.addAll(flight.getAvion().getMapaAsientos().getSeccionNormal().getAsientos());
+        }
+        if (flight.getAvion().getMapaAsientos().getDistribucion().equals("Premium")) {
+            seats = new ArrayList<>(flight.getAvion().getMapaAsientos().getSeccionEconomy().getAsientos());
+            seats.addAll(flight.getAvion().getMapaAsientos().getSeccionNormal().getAsientos());
+            seats.addAll(flight.getAvion().getMapaAsientos().getSeccionPremium().getAsientos());
+        }
+        return seats;
+    }
+
+
+
+    public ArrayList<Billete> getTickets(Vuelo flight) {
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Billete> cq = cb.createQuery(Billete.class);
+        Root<Billete> ticketsRoot = cq.from(Billete.class);
+
+        Predicate condition = cb.equal(ticketsRoot.get("vuelo"), flight);
+
+        cq.where(condition);
+
+        return new ArrayList<>(em.createQuery(cq).getResultList());
+    }
+
+    @Override
+    public HashMap<Asiento, Boolean> getSeatMap(Vuelo flight) {
+        HashMap<Asiento, Boolean> seatMap = new HashMap<>();
+        ArrayList<Asiento> allSeats = getSeats(flight);
+        ArrayList<Billete> tickets = getTickets(flight);
+
+        for (Asiento seat: allSeats) {
+            boolean reserved = false;
+            for (Billete ticket: tickets) {
+                reserved = ticket.getAsiento().equals(seat);
+                if (reserved) break;
+            }
+            seatMap.put(seat, reserved);
+        }
+
+        return seatMap;
+    }
+
+    @Override
+    public Asiento bookSeat(Vuelo flight, String cabin, Asiento preferredSeat) {
+        if (flight == null) return null;
+        if (cabin == null || cabin.isEmpty()) cabin = "Economy";
+        ArrayList<Asiento> seats = getSeats(flight);
+        boolean selectedFound = false;
+
+        for (Asiento seat: seats) {
+            if (!seat.getTipo().equals("Seat")) continue;
+            if (!seat.getSeccion().getClase().equals(cabin)) continue;
+            boolean reserved = false;
+            ArrayList<Billete> tickets = new ArrayList<>(getTickets(flight));
+            for (Billete ticket: tickets) {
+                reserved = ticket.getAsiento().equals(seat);
+                if (reserved) break;
+            }
+
+            if (preferredSeat == null) {
+                if (reserved) {
+                    continue;
+                } else {
+                    return seat;
+                }
+            } else {
+                if (seat.equals(preferredSeat) && reserved) {
+                    selectedFound = true;
+                    System.out.println("The selected seat was already occupied");
+                }
+            }
+        }
+
+        if (!selectedFound) {
+            System.out.println("The selected seat was not found");
+        }
+
+        return null;
+    }
+
+    @Override
+    public ArrayList<Integer> getAvailableSeats(Vuelo flight) {
+        HashMap<Asiento, Boolean> seatMap = getSeatMap(flight);
+        int freeEconomy = 0;
+        int freeNormal = 0;
+        int freePremium = 0;
+        for (Asiento seat: seatMap.keySet()) {
+            if (!seat.getTipo().equals("Seat")) continue;
+            if (!seatMap.get(seat)) {
+                String seatClass = seat.getSeccion().getClase();
+                switch (seatClass) {
+                    case "Economy":
+                        freeEconomy++;
+                        break;
+                    case "Normal":
+                        freeNormal++;
+                        break;
+                    case "Premium":
+                        freePremium++;
+                        break;
+                }
+            }
+        }
+        return new ArrayList<>(Arrays.asList(freeEconomy, freeNormal, freePremium));
     }
 }

@@ -10,11 +10,14 @@ import java.util.ArrayList;
 import javafx.util.Pair;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 import modelo.Asiento;
 import modelo.Vuelo;
+import org.primefaces.PrimeFaces;
 
 /**
  *
@@ -28,7 +31,7 @@ public class SeatSelectionBean {
 
     private ArrayList<ArrayList<Pair<Asiento, Integer >>> seatMap;
 
-    private ArrayList<Asiento> selectedSeats;
+    private ArrayList<Asiento> selectedSeats = new ArrayList<>();
     
     private int people;
 
@@ -94,11 +97,7 @@ public class SeatSelectionBean {
     public void setRows(int rows) {
         this.rows = rows;
     }
-
-    public void selectSeat(int row, int col) {
-        System.out.println("fila: " + row + "col: " + col);
-    }
-
+    
     public ArrayList<Asiento> getSelectedSeats() {
         return selectedSeats;
     }
@@ -107,9 +106,42 @@ public class SeatSelectionBean {
         this.selectedSeats = selectedSeats;
     }
 
+    public int getPeople() {
+        return people;
+    }
+
+    public void setPeople(int people) {
+        this.people = people;
+    }
+    
+    public void selectSeat(int row, int col, Asiento seat) {
+            if (this.selectedSeats.contains(seat)) {
+                Pair<Asiento, Integer> changeSeat = new Pair<>(seat, 0);
+                this.seatMap.get(row).set(col, changeSeat);
+                this.selectedSeats.remove(seat);
+            } else  if(people > this.selectedSeats.size()){
+                Pair<Asiento, Integer> changeSeat = new Pair<>(seat, 2);
+                this.seatMap.get(row).set(col, changeSeat);
+                this.selectedSeats.add(seat);
+            }
+             update();
+    }
+    
+    public void update(){
+        PrimeFaces.current().executeScript("updatePlane()");
+        PrimeFaces.current().executeScript("updateMSG()");
+    }
+    
     public void selectLuggage() {
-        this.CHB.setCurrentView("luggageSelection.xhtml");
-        this.CHB.update();
+        if(this.people > this.selectedSeats.size()){
+            FacesContext context = FacesContext.getCurrentInstance();
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Faltan asientos", "No ha elegido los suficientes asientos"));
+            update();
+        }else{
+            this.CHB.setCurrentView("luggageSelection.xhtml");
+            this.CHB.update();  
+        }
+
     }
 
 }

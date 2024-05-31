@@ -119,6 +119,8 @@ public class VueloFacade extends AbstractFacade<Vuelo> implements VueloFacadeLoc
 
         for (Vuelo flight : dayFlights) {
             if (flight.getOrigen().equals(origin) && flight.getDestino().equals(destination)) {
+                ArrayList<BigDecimal> prices = getPrices(flight);
+                flight.setPrecio(prices.isEmpty() ? BigDecimal.ZERO : prices.get(0).setScale(2, RoundingMode.CEILING));
                 flights.add(flight);
             }
         }

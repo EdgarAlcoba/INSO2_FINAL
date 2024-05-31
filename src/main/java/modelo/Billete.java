@@ -35,6 +35,14 @@ public class Billete implements Serializable {
     @ManyToOne
     private Asiento asiento;
 
+    @OneToMany(mappedBy = "billete", cascade = CascadeType.PERSIST)
+    private List<Maleta> maletas;
+
+    public Billete() {
+        super();
+        maletas = new ArrayList<>();
+    }
+
     public int getId() {
         return id;
     }
@@ -89,6 +97,18 @@ public class Billete implements Serializable {
 
     public void setAsiento(Asiento asiento) {
         this.asiento = asiento;
+    }
+
+    public List<Maleta> getMaletas() {
+        return maletas;
+    }
+
+    public void setMaletas(List<Maleta> maletas) {
+        this.maletas = maletas;
+    }
+
+    public void addMaleta(Maleta maleta) {
+        this.maletas.add(maleta);
     }
 
     @Override

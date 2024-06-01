@@ -43,6 +43,10 @@ public class PasajeroFacade extends AbstractFacade<Pasajero> implements Pasajero
     }
 
     public Pasajero createPasajero(Pasajero passenger) throws CreatePassengerException {
+        if (passenger == null) {
+            throw new IllegalArgumentException("createPasajero: passenger must not be null");
+        }
+
         if (passenger.getNombre() == null || passenger.getNombre().isEmpty()) {
             throw new CreatePassengerException("El nombre no puede ser nulo o vacío");
         }

@@ -38,4 +38,26 @@
         </p:dataTable>
     </p:panel>
     <p:remoteCommand name="updateTable" update="flightsTable"/>
+
+
+    <p:dialog id="floatingDialog" header="Datos del vuelo" widgetVar="floatingDialog" modal="true" resizable="false" draggable="false" closable="true" closeOnEscape="true">
+        <h:panelGrid columns="2" cellspacing="2" style="width: 100%; padding: 0 !important; margin: 0 !important">
+            <h:outputLabel value="Nombre: " />
+            <h:outputLabel value="#{myFlightsBean.ticket.pasajero.nombre}" />
+            <h:outputLabel value="Apellido 1: " />
+            <h:outputLabel value="#{myFlightsBean.ticket.pasajero.apellido1}" />
+            <h:outputLabel value="Apellido 2: " />
+            <h:outputLabel value="#{myFlightsBean.ticket.pasajero.apellido2}" />
+            <h:outputLabel value="DNI / NIE: " />
+            <h:outputLabel value="#{myFlightsBean.ticket.pasajero.dniNIE}" />
+            <h:outputLabel value="Pasaporte: " />
+            <h:outputLabel value="#{myFlightsBean.ticket.pasajero.pasaporte}" />
+            <ui:repeat value="#{myFlightsBean.ticket.maletas}" var="maleta">
+                <h:outputLabel value="Maletas #{maleta.peso}kg: " />
+                <h:outputLabel value="#{maleta.cantidad} unidades" />
+            </ui:repeat>
+        </h:panelGrid>
+        <br/>
+        <p:commandButton value="Download Boarding Pass" action="#{myFlightsBean.downloadPDF}" type="submit" ajax="false" style="display:block; margin: 0 auto;width: 100%" />
+    </p:dialog>
 </ui:composition>

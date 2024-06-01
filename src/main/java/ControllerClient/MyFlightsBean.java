@@ -36,7 +36,7 @@ public class MyFlightsBean {
 
     private Billete selectedTicket;
     
-    @ManagedProperty(value="clientHomeBean")
+    @ManagedProperty(value="#{clientHomeBean}")
     private ClientHomeBean CHB;
     
 

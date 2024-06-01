@@ -5,20 +5,22 @@
                 xmlns:f="http://xmlns.jcp.org/jsf/core">
     <p:panel   header="Datos del pedido">
         <h:panelGrid columns="1" cellspacing="10" >
-        <p:dataTable id="flightsTable" var="flight" value="#{orderPreviewBean.order}" rowKey="#{order.id}"
-                     selection="#{orderPreviewBean.selectedOrder}" selectionMode="single">
-            <p:column headerText="Servicio">
-                <h:outputText value="#{order.servicio}" />
-            </p:column>
-            <p:column headerText="Cantidad">
-                <h:outputText value="#{order.cantidad}" />
-            </p:column>
-            <p:column headerText="Precio unitario">
-                <h:outputText value="#{order.precio}" />
-            </p:column>
-        </p:dataTable>
-        <p:outputLabel  value="#{orderPreviewBean.totalPrice}"/>
-        <p:commandButton value="Pagar" action="#{orderPreviewBean.pay()}"/>
+            <p:dataTable id="orderTable" var="order" value="#{orderPreviewBean.order}" rowKey="#{order.id}"
+                         selection="#{orderPreviewBean.selectedOrder}" selectionMode="single">
+                <p:column headerText="Vuelo">
+                    <h:outputText value="#{order.vuelo.numero}" />
+                </p:column>
+                <p:column headerText="Asiento">
+                    <h:outputText value="#{order.asiento.numero}" />
+                </p:column>
+                <p:column headerText="Precio unitario">
+                    <h:outputText value="#{order.precio}" />
+                </p:column>
+            </p:dataTable>
+            <p:outputLabel  id="precio" value="#{orderPreviewBean.totalPrice}"/>
+            <p:commandButton value="Pagar" action="#{orderPreviewBean.pay()}"/>
         </h:panelGrid>
+        <p:remoteCommand name="updatePrice" update="precio"/>
+        <p:remoteCommand name="updateOrder" update="orderTable"/>
     </p:panel>
 </ui:composition>

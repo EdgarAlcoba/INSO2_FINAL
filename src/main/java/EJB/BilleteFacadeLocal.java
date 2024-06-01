@@ -13,6 +13,7 @@ import java.util.List;
 import javax.ejb.Local;
 
 import es.unileon.inso2.aerolinea.exceptions.CreateTicketException;
+import javafx.util.Pair;
 import modelo.Billete;
 import modelo.Maleta;
 import modelo.Usuario;
@@ -47,7 +48,7 @@ public interface BilleteFacadeLocal {
 
     BigDecimal getTotalPrice(Billete ticket);
 
-    HashMap<Maleta,BigDecimal> getBagsPrice(Billete ticket);
+    ArrayList<Pair<Maleta, BigDecimal>> getBagsPrice(Billete ticket);
 
     BigDecimal getTotalBagsPrice(Billete ticket);
 

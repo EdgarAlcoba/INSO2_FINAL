@@ -12,6 +12,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.*;
 
 import es.unileon.inso2.aerolinea.exceptions.CreateTicketException;
+import javafx.util.Pair;
 import modelo.*;
 
 import java.math.BigDecimal;
@@ -154,18 +155,18 @@ public class BilleteFacade extends AbstractFacade<Billete> implements BilleteFac
     }
 
     @Override
-    public HashMap<Maleta, BigDecimal> getBagsPrice(Billete ticket) {
+    public ArrayList<Pair<Maleta, BigDecimal>> getBagsPrice(Billete ticket) {
         if (ticket.getVuelo() == null) {
             throw new IllegalArgumentException("No se puede obtener precios de maletas si no hay un vuelo asociado");
         }
 
-        HashMap<Maleta,BigDecimal> bags = new HashMap<>();
+        ArrayList<Pair<Maleta,BigDecimal>> bags = new ArrayList<>();
 
         BigDecimal kgCost = ticket.getVuelo().getPrecioMaleta();
         ArrayList<Maleta> bagsList = new ArrayList<>(getBags(ticket));
 
         for (Maleta bag : bagsList) {
-            bags.put(bag, BigDecimal.valueOf(bag.getPesoKg()).multiply(kgCost));
+            bags.add(new Pair<>(bag, BigDecimal.valueOf(bag.getPesoKg()).multiply(kgCost)));
         }
 
         return bags;
@@ -178,12 +179,11 @@ public class BilleteFacade extends AbstractFacade<Billete> implements BilleteFac
         }
 
         BigDecimal totalBagsCost = BigDecimal.ZERO;
-
-        HashMap<Maleta, BigDecimal> bagsPrices = getBagsPrice(ticket);
+        ArrayList<Pair<Maleta, BigDecimal>>  bagsPrices = getBagsPrice(ticket);
         BigDecimal kgCost = ticket.getVuelo().getPrecioMaleta();
 
-        for (Maleta bag: bagsPrices.keySet()) {
-            totalBagsCost = totalBagsCost.add(bagsPrices.get(bag));
+        for (Pair<Maleta, BigDecimal> bagPair: bagsPrices) {
+            totalBagsCost = totalBagsCost.add(bagPair.getValue());
         }
 
         return totalBagsCost;

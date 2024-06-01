@@ -1,7 +1,6 @@
 package modelo;
 
 import org.apache.pdfbox.pdmodel.PDDocument;
-import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
@@ -15,6 +14,7 @@ import com.google.zxing.client.j2se.MatrixToImageWriter;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.*;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
@@ -136,7 +136,7 @@ public class Billete implements Serializable {
     }
 
     public String getPdfName() {
-        return "Boarding_Pass_" + String.valueOf(id);
+        return "Boarding_Pass_" + id;
     }
 
     public String generatePDF() {
@@ -148,57 +148,127 @@ public class Billete implements Serializable {
             document.addPage(page);
 
             try (PDPageContentStream contentStream = new PDPageContentStream(document, page)) {
+                int y = 710;
+
                 contentStream.beginText();
                 contentStream.setFont(PDType1Font.HELVETICA_BOLD, 20);
-                contentStream.newLineAtOffset(100, 710);
+                contentStream.newLineAtOffset(100, y);
                 contentStream.showText(airlineName);
                 contentStream.endText();
 
-                contentStream.beginText();
-                contentStream.setFont(PDType1Font.HELVETICA, 12);
-                contentStream.newLineAtOffset(100, 690);
-                contentStream.showText("Identificador del billete: " + id);
-                contentStream.endText();
+                y -= 30;
 
                 contentStream.beginText();
                 contentStream.setFont(PDType1Font.HELVETICA, 12);
-                contentStream.newLineAtOffset(100, 670);
+                contentStream.newLineAtOffset(100, y);
+                contentStream.showText("Precio: " + precio.setScale(2, RoundingMode.HALF_UP).toString() + "€");
+                contentStream.endText();
+
+                y -= 20;
+
+                contentStream.beginText();
+                contentStream.setFont(PDType1Font.HELVETICA, 12);
+                contentStream.newLineAtOffset(100, y);
                 contentStream.showText("Número de vuelo: " + vuelo.getNumero());
                 contentStream.endText();
 
-                contentStream.beginText();
-                contentStream.setFont(PDType1Font.HELVETICA, 12);
-                contentStream.newLineAtOffset(100, 650);
-                contentStream.showText("Origin: " + vuelo.getOrigen());
-                contentStream.endText();
+                y -= 20;
 
                 contentStream.beginText();
                 contentStream.setFont(PDType1Font.HELVETICA, 12);
-                contentStream.newLineAtOffset(100, 630);
-                contentStream.showText("Destination: " + vuelo.getDestino());
+                contentStream.newLineAtOffset(100, y);
+                contentStream.showText("Origen: " + vuelo.getOrigen());
                 contentStream.endText();
+
+                y -= 20;
 
                 contentStream.beginText();
                 contentStream.setFont(PDType1Font.HELVETICA, 12);
-                contentStream.newLineAtOffset(100, 610);
-                contentStream.showText("Passenger: " + pasajero.getNombre() + " " + pasajero.getApellido1() + " " + pasajero.getApellido2());
+                contentStream.newLineAtOffset(100, y);
+                contentStream.showText("Destino: " + vuelo.getDestino());
                 contentStream.endText();
+
+                y -= 20;
 
                 contentStream.beginText();
                 contentStream.setFont(PDType1Font.HELVETICA, 12);
-                contentStream.newLineAtOffset(100, 590);
-                contentStream.showText("Seat: " + asiento.getNumero());
+                contentStream.newLineAtOffset(100, y);
+                contentStream.showText("Pasajero: " + pasajero.getNombre() + " " + pasajero.getApellido1() + " " + pasajero.getApellido2());
                 contentStream.endText();
+
+                y -= 20;
 
                 contentStream.beginText();
                 contentStream.setFont(PDType1Font.HELVETICA, 12);
-                contentStream.newLineAtOffset(100, 570);
+                contentStream.newLineAtOffset(100, y);
+                contentStream.showText("Modelo de avión: " + vuelo.getAvion().getModelo());
+                contentStream.endText();
+
+                y -= 20;
+
+                contentStream.beginText();
+                contentStream.setFont(PDType1Font.HELVETICA, 12);
+                contentStream.newLineAtOffset(100, y);
+                contentStream.showText("Asiento: " + asiento.getNumero());
+                contentStream.endText();
+
+                y -= 20;
+
+                contentStream.beginText();
+                contentStream.setFont(PDType1Font.HELVETICA, 12);
+                contentStream.newLineAtOffset(100, y);
                 contentStream.showText("Class: " + asiento.getSeccion().getClase());
                 contentStream.endText();
 
-                BufferedImage qrCode = generateQRCodeImage(String.valueOf(id), 100, 100);
+                if (maletas != null) {
+                    if (!maletas.isEmpty()) {
+                        int maletas12 = 0;
+                        int maletas20 = 0;
+                        int maletas25 = 0;
+
+                        for (Maleta maleta: maletas) {
+                            if (maleta.getPesoKg() <= 12) {
+                                maletas12++;
+                                continue;
+                            }
+                            if (maleta.getPesoKg() <= 20) {
+                                maletas20++;
+                                continue;
+                            }
+                            if (maleta.getPesoKg() <= 25) {
+                               maletas25++;
+                            }
+                        }
+
+                        y -= 20;
+                        contentStream.beginText();
+                        contentStream.setFont(PDType1Font.HELVETICA, 12);
+                        contentStream.newLineAtOffset(100, y);
+                        contentStream.showText("Maleta facturada (12kg): " + maletas12 + " unidades");
+                        contentStream.endText();
+
+                        y -= 20;
+                        contentStream.beginText();
+                        contentStream.setFont(PDType1Font.HELVETICA, 12);
+                        contentStream.newLineAtOffset(100, y);
+                        contentStream.showText("Maleta mediana (20kg): " + maletas20 + " unidades");
+                        contentStream.endText();
+
+                        y -= 20;
+                        contentStream.beginText();
+                        contentStream.setFont(PDType1Font.HELVETICA, 12);
+                        contentStream.newLineAtOffset(100, y);
+                        contentStream.showText("Maleta facturada (25kg): " + maletas25 + " unidades");
+                        contentStream.endText();
+                    }
+                }
+
+
+                y -= 220;
+
+                BufferedImage qrCode = generateQRCodeImage(String.valueOf(id), 200, 200);
                 PDImageXObject qrCodeImage = PDImageXObject.createFromByteArray(document, imageToByteArray(qrCode), "qrcode");
-                contentStream.drawImage(qrCodeImage, 100, 450);
+                contentStream.drawImage(qrCodeImage, 100, y);
             }
 
             document.save(pdfPath);

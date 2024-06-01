@@ -140,7 +140,7 @@ public class Billete implements Serializable {
     }
 
     public String generatePDF() {
-        String airlineName = "Rianxeira Airlines";
+        String airlineName = "SkySurfers";
         String pdfPath = getPdfName();
 
         try(PDDocument document = new PDDocument()) {

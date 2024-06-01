@@ -52,7 +52,7 @@ public class Pasajero implements Serializable {
     }
 
     public String getApellido2() {
-        return apellido2;
+        return (apellido2 == null) ? "" : apellido2;
     }
 
     public void setApellido2(String apellido2) {

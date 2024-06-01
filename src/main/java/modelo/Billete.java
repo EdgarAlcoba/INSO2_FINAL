@@ -111,8 +111,11 @@ public class Billete implements Serializable {
         this.maletas.add(maleta);
     }
 
-    public void addMaletas(ArrayList<Maleta> maletas) {
-        this.maletas.addAll(maletas);
+    public void addMaletas(ArrayList<Maleta> maletas, Billete billete) {
+        for (Maleta maleta : maletas) {
+            maleta.setBillete(billete);
+            this.maletas.add(maleta);
+        }
     }
 
     @Override

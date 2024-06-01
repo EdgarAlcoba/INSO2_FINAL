@@ -12,7 +12,7 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import modelo.Vuelo;
 import org.primefaces.event.SelectEvent;
 
@@ -21,7 +21,7 @@ import org.primefaces.event.SelectEvent;
  * @author extre
  */
 @ManagedBean
-@SessionScoped
+@ViewScoped
 public class FoundFlightsBean {
     
    private ArrayList<Vuelo> foundFlights;

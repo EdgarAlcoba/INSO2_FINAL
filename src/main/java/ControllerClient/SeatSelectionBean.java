@@ -13,7 +13,7 @@ import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import modelo.Asiento;
 import modelo.Vuelo;
@@ -24,7 +24,7 @@ import org.primefaces.PrimeFaces;
  * @author extre
  */
 @ManagedBean
-@SessionScoped
+@ViewScoped
 public class SeatSelectionBean {
 
     private String section;

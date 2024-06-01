@@ -8,7 +8,7 @@ package ControllerClient;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import modelo.Vuelo;
 
 /**
@@ -16,7 +16,7 @@ import modelo.Vuelo;
  * @author extre
  */
 @ManagedBean
-@SessionScoped
+@ViewScoped
 public class ClassSelectionBean {
     
     private String classType;

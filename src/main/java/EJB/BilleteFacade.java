@@ -111,15 +111,7 @@ public class BilleteFacade extends AbstractFacade<Billete> implements BilleteFac
     }
 
     public ArrayList<Maleta> getBags(Billete ticket) {
-        CriteriaBuilder cb = em.getCriteriaBuilder();
-        CriteriaQuery<Maleta> cq = cb.createQuery(Maleta.class);
-        Root<Maleta> bagsRoot = cq.from(Maleta.class);
-
-        Predicate condition = cb.equal(bagsRoot.get("billete"), ticket);
-
-        cq.where(condition);
-
-        return new ArrayList<>(em.createQuery(cq).getResultList());
+        return new ArrayList<>(ticket.getMaletas());
     }
 
     @Override
@@ -171,6 +163,7 @@ public class BilleteFacade extends AbstractFacade<Billete> implements BilleteFac
 
         BigDecimal kgCost = ticket.getVuelo().getPrecioMaleta();
         ArrayList<Maleta> bagsList = new ArrayList<>(getBags(ticket));
+
         for (Maleta bag : bagsList) {
             bags.put(bag, BigDecimal.valueOf(bag.getPesoKg()).multiply(kgCost));
         }
@@ -186,10 +179,11 @@ public class BilleteFacade extends AbstractFacade<Billete> implements BilleteFac
 
         BigDecimal totalBagsCost = BigDecimal.ZERO;
 
-        ArrayList<Maleta> bags = new ArrayList<>(getBags(ticket));
+        HashMap<Maleta, BigDecimal> bagsPrices = getBagsPrice(ticket);
         BigDecimal kgCost = ticket.getVuelo().getPrecioMaleta();
-        for (Maleta bag : bags) {
-            totalBagsCost = totalBagsCost.add(BigDecimal.valueOf(bag.getPesoKg()).multiply(kgCost));
+
+        for (Maleta bag: bagsPrices.keySet()) {
+            totalBagsCost = totalBagsCost.add(bagsPrices.get(bag));
         }
 
         return totalBagsCost;

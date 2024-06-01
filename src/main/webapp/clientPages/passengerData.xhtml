@@ -5,28 +5,30 @@
                 xmlns:f="http://xmlns.jcp.org/jsf/core">
     <p:panel header="Datos del pasajero">
         <h:panelGrid columns="1" cellspacing="2" >
-            <ui:repeat value="#{passengerDataBean.pasajeros}" var="pasajero">
-                <p:panel header="Datos del pasajero #{passengerDataBean.pasajero.numero}">
+            <ui:repeat value="#{passengerDataBean.pasajeros}" var="pasajero" varStatus="loop">
+                <p:panel header="Datos del pasajero #{loop.index + 1}">
                     <h:panelGrid columns="2" cellspacing="2" >
                         <h:outputLabel value="Nombre" />
-                        <p:inputText id="passengerName" value="#{passengerDataBean.pasajero.nombre}"/>
-                        <br/>
+                        <p:inputText id="passengerName#{loop.index}" value="#{pasajero.nombre}"/>
+                        <br/><br/>
                         <h:outputLabel value="Apellido 1" />
-                        <p:inputText id="passengerSurname1" value="#{passengerDataBean.pasajero.apellido2}"/>
-                        <br/>
+                        <p:inputText id="passengerSurname1#{loop.index}" value="#{pasajero.apellido1}"/>
+                        <br/><br/>
                         <h:outputLabel value="Apellido 2" />
-                        <p:inputText id="passengerSurname2" value="#{passengerDataBean.pasajero.apellido2}"/>
-                        <br/>
+                        <p:inputText id="passengerSurname2#{loop.index}" value="#{pasajero.apellido2}"/>
+                        <br/><br/>
                         <h:outputLabel value="DNI/NIF" />
-                        <p:inputText id="passengerDNI" value="#{passengerDataBean.pasajero.dniNIE}"/>
-                        <br/>
+                        <p:inputText id="passengerDNI#{loop.index}" value="#{pasajero.dniNIE}"/>
+                        <br/><br/>
                         <h:outputLabel value="Número de pasaporte" />
-                        <p:inputText id="passengerPassport" value="#{passengerDataBean.pasajero.pasaporte}"/>
+                        <p:inputText id="passengerPassport_#{loop.index}" value="#{pasajero.pasaporte}"/>
                     </h:panelGrid>
                 </p:panel>
                 <br/>
             </ui:repeat>
-            <p:messages id="passengerDataAlerts" showDetail="true" />
+            <p:messages id="passengerDataAlerts" showDetail="true">
+                <p:autoUpdate/>
+            </p:messages>
             <br/>
             <p:commandButton value='Siguiente' action="#{passengerDataBean.checkPassengerData()}" type="submit"/>
         </h:panelGrid>

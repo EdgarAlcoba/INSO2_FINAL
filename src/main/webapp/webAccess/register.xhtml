@@ -38,9 +38,11 @@
 
                     <h:outputLabel />
                 </h:panelGrid>
-                <p:commandButton style="width: 100%" value="Confirmar datos" action="#{registerBean.register}" update="messages"/>
+                <p:commandButton style="width: 100%" value="Confirmar datos" action="#{registerBean.register}" />
             </p:panel>
-            <p:messages id="messages" showDetail="true" />
+            <p:messages id="messages" showDetail="true" >
+                <p:autoUpdate/>
+            </p:messages>
         </h:form>
     </h:body>
 </html>

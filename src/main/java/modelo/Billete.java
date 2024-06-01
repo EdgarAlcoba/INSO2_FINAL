@@ -111,6 +111,10 @@ public class Billete implements Serializable {
         this.maletas.add(maleta);
     }
 
+    public void addMaletas(ArrayList<Maleta> maletas) {
+        this.maletas.addAll(maletas);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

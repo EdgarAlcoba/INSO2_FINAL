@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletResponse;
@@ -34,6 +35,10 @@ public class MyFlightsBean {
     private Date dateTimeTo;
 
     private Billete selectedTicket;
+    
+    @ManagedProperty(value="#{clientHomeBean}")
+    private ClientHomeBean CHB;
+    
 
     @EJB
     private BilleteFacadeLocal BFL;
@@ -71,7 +76,7 @@ public class MyFlightsBean {
     }
 
     public void searchBtn() {
-        this.foundTickets = BFL.searchBetween(dateTimeFrom, dateTimeTo);
+        this.foundTickets = BFL.searchBetween(dateTimeFrom, dateTimeTo, this.CHB.getUser());
         update();
     }
 
@@ -83,6 +88,14 @@ public class MyFlightsBean {
             }
         }
         return num;
+    }
+
+    public ClientHomeBean getCHB() {
+        return CHB;
+    }
+
+    public void setCHB(ClientHomeBean CHB) {
+        this.CHB = CHB;
     }
 
     public void update() {

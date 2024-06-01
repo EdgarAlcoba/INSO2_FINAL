@@ -109,7 +109,7 @@ public class VueloFacade extends AbstractFacade<Vuelo> implements VueloFacadeLoc
         ArrayList<Vuelo> flights = new ArrayList<>();
 
         for (Vuelo flight : dayFlights) {
-            if (flight.getOrigen().equals(origin) && flight.getDestino().equals(destination)) {
+            if (flight.getOrigen().toLowerCase().contains(origin.toLowerCase()) && flight.getDestino().toLowerCase().contains(destination.toLowerCase())) {
                 ArrayList<BigDecimal> prices = getPrices(flight);
                 flight.setPrecio(prices.isEmpty() ? BigDecimal.ZERO : prices.get(0).setScale(2, RoundingMode.CEILING));
                 flights.add(flight);

@@ -38,8 +38,6 @@ public class VueloFacade extends AbstractFacade<Vuelo> implements VueloFacadeLoc
         return em;
     }
 
-    Pattern icaoPattern = Pattern.compile("[A-Z]{4}", Pattern.CASE_INSENSITIVE);
-
     public VueloFacade() {
         super(Vuelo.class);
     }
@@ -63,14 +61,6 @@ public class VueloFacade extends AbstractFacade<Vuelo> implements VueloFacadeLoc
 
         if (vuelo.getOrigen().equals(vuelo.getDestino())) {
             throw new CreateFlightException("El origen y destino del vuelo no pueden ser iguales", vuelo);
-        }
-
-        if (!icaoPattern.matcher(vuelo.getOrigen()).find()) {
-            throw new CreateFlightException("El código del aeropuerto de origen debe ser formato ICAO. Ejemplo: LECO", vuelo);
-        }
-
-        if (!icaoPattern.matcher(vuelo.getDestino()).find()) {
-            throw new CreateFlightException("El código del aeropuerto de destino debe ser formato ICAO. Ejemplo: LEST", vuelo);
         }
 
         if (vuelo.getSalida() == null) {
@@ -254,9 +244,19 @@ public class VueloFacade extends AbstractFacade<Vuelo> implements VueloFacadeLoc
         BigDecimal averageKgCost = BigDecimal.valueOf(ThreadLocalRandom.current().nextDouble(0.75, 1.31));
         BigDecimal costPrice = averageKgCost.multiply(BigDecimal.valueOf(flight.getGastoCombustibleKg()));
 
-        int numberOfSeatsEconomy = flight.getAvion().getMapaAsientos().getSeccionEconomy().getNumeroAsientos();
+        int numberOfSeatsToPrice = flight.getAvion().getMapaAsientos().getSeccionEconomy().getNumeroAsientos();
 
-        BigDecimal costPricePerPax = costPrice.divide(BigDecimal.valueOf(numberOfSeatsEconomy), RoundingMode.CEILING);
+        if (flight.getAvion().getMapaAsientos().getSeccionNormal() != null) {
+            numberOfSeatsToPrice += flight.getAvion().getMapaAsientos().getSeccionNormal().getNumeroAsientos();
+        }
+
+        if (flight.getAvion().getMapaAsientos().getSeccionPremium() != null) {
+            numberOfSeatsToPrice += flight.getAvion().getMapaAsientos().getSeccionPremium().getNumeroAsientos();
+        }
+
+        numberOfSeatsToPrice /= 2;
+
+        BigDecimal costPricePerPax = costPrice.divide(BigDecimal.valueOf(numberOfSeatsToPrice), RoundingMode.CEILING);
 
         BigDecimal minCost = costPricePerPax.multiply(BigDecimal.valueOf(1.3));
 

@@ -6,9 +6,11 @@
 package ControllerClient;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 import modelo.Vuelo;
 
 /**
@@ -18,34 +20,34 @@ import modelo.Vuelo;
 @ManagedBean
 @ViewScoped
 public class ClassSelectionBean {
-    
+
     private String classType;
     private Vuelo vuelo;
-    
+
     private boolean hasEco = true;
     private boolean hasNor = true;
     private boolean hasPre = true;
-    
-    @ManagedProperty (value = "#{clientHomeBean}")
+
+    @ManagedProperty(value = "#{clientHomeBean}")
     private ClientHomeBean CHB;
-    
-    @ManagedProperty (value = "#{foundFlightsBean}")
+
+    @ManagedProperty(value = "#{foundFlightsBean}")
     private FoundFlightsBean FFB;
-    
+
     @PostConstruct
-    public void init(){
+    public void init() {
         this.vuelo = FFB.getSelectedFlight();
-        if(vuelo.getAvion().getMapaAsientos().getSeccionEconomy() == null){
+        if (vuelo.getAvion().getMapaAsientos().getSeccionEconomy() == null) {
             hasEco = false;
         }
-        if(vuelo.getAvion().getMapaAsientos().getSeccionNormal() == null){
+        if (vuelo.getAvion().getMapaAsientos().getSeccionNormal() == null) {
             hasNor = false;
         }
-        if(vuelo.getAvion().getMapaAsientos().getSeccionPremium() == null){
+        if (vuelo.getAvion().getMapaAsientos().getSeccionPremium() == null) {
             hasPre = false;
         }
     }
-    
+
     public String getClassType() {
         return classType;
     }
@@ -93,10 +95,15 @@ public class ClassSelectionBean {
     public void setFFB(FoundFlightsBean FFB) {
         this.FFB = FFB;
     }
-    
-    public void selectSeats(){
-        this.CHB.setCurrentView("seatSelection.xhtml");
-        this.CHB.update();
+
+    public void selectSeats() {
+        if (this.classType != null) {
+            this.CHB.setCurrentView("seatSelection.xhtml");
+            this.CHB.update();
+        } else {
+            FacesContext context = FacesContext.getCurrentInstance();
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Error al seleccionar una clase", "No se ha seleccionado ninguna clase de asiento"));
+        }
     }
-    
+
 }

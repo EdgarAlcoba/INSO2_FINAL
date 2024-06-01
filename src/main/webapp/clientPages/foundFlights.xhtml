@@ -36,6 +36,10 @@
                 <p:outputLabel id="selectedArrival" value="#{foundFlightsBean.selectedFlight.llegada}"/>
             </h:panelGrid>
             <p:commandButton value='Seleccionar clase' action="#{foundFlightsBean.selectClass()}" type="submit"/>
+
         </h:panelGrid>
+        <p:messages id="messages" showDetail="true">
+            <p:autoUpdate/>
+        </p:messages>
     </p:panel>
 </ui:composition>

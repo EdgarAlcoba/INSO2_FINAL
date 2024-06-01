@@ -11,7 +11,7 @@
                     <p:inputText style="width: 100%" id="searchTF" value="#{userSearchBean.searchTF}" placeholder="Buscar"/>
                 </span>
             </h:outputLabel>
-            <p:commandButton style="width: 100%; min-width: 30px" icon="pi pi-search" action="#{userSearchBean.searchBtn}" update="messages"/>
+            <p:commandButton style="width: 100%; min-width: 30px" icon="pi pi-search" action="#{userSearchBean.searchBtn}"/>
         </h:panelGrid>
         <p:panel id="foundUsersList" style="width: 100%" header="Usuarios encontrados">
             <ui:repeat value="#{userSearchBean.searchResults}" var="user">
@@ -22,6 +22,8 @@
 
         </p:panel>
     </p:panel>
-    <p:messages id="messages" showDetail="true" />
+    <p:messages id="messages" showDetail="true">
+        <p:autoUpdate/>
+    </p:messages>
     <p:remoteCommand name="updateList" update="foundUsersList"/>
 </ui:composition>

@@ -34,7 +34,9 @@
             </p:dataTable>
 
         </p:panel>
-        <p:messages id="messages" showDetail="true" />
+    <p:messages id="messages" showDetail="true">
+        <p:autoUpdate/>
+    </p:messages>
   
         <!-- Panel de creación de avión -->
         <p:dialog id="floatingDialog" header="Introduzca las especificaciones" widgetVar="floatingDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="true" draggable="false" closable="true" closeOnEscape="true" width="80vw" height="80vh">

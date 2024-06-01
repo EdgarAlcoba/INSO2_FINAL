@@ -22,10 +22,12 @@
                     <p:commandLink action="register" value="Regístrate" />
                 </h:panelGrid>
                 <br/>
-                <p:commandButton style="width: 100%" value="Login" action="#{loginBean.login}" update="messages"/>
+                <p:commandButton style="width: 100%" value="Login" action="#{loginBean.login}"/>
 
             </p:panel>
-            <p:messages id="messages" showDetail="true" />
+            <p:messages id="messages" showDetail="true">
+                <p:autoUpdate/>
+            </p:messages>
         </h:form>
     </h:body>
 </html>

@@ -129,7 +129,6 @@ public class SeatSelectionBean {
     
     public void update(){
         PrimeFaces.current().executeScript("updatePlane()");
-        PrimeFaces.current().executeScript("updateMSG()");
     }
     
     public void selectLuggage() {

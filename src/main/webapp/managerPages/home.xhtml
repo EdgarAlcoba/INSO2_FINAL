@@ -37,7 +37,7 @@
                     </p:selectOneMenu>
                 </h:panelGrid>
                 <br/>
-                <p:commandButton value="Añadir" action="#{managerHomeBean.createFlight()}" onclick="PF('floatingDialog').hide()" type="submit" style="display:block; margin: 0 auto;width: 100%" update="messages"/>
+                <p:commandButton value="Añadir" action="#{managerHomeBean.createFlight()}" onclick="PF('floatingDialog').hide()" type="submit" style="display:block; margin: 0 auto;width: 100%" />
             </p:dialog>
 
             <!-- Panel de visualización de vuelos -->
@@ -109,7 +109,9 @@
                     </p:dialog>
                 </div>
             </p:panel>
-            <p:messages id="messages" showDetail="true" />
+            <p:messages id="messages" showDetail="true">
+                <p:autoUpdate/>
+            </p:messages>
             <p:remoteCommand name="updateTable" update="flightsTable"/>
         </h:form>
     </h:body>

@@ -33,7 +33,9 @@
             <p:password id="confirmPassword" value="#{modifyProfileBean.confirmPassword}"/>
 
         </h:panelGrid>
-        <p:commandButton value="Guardar datos" action="#{modifyProfileBean.saveData}" type="submit" update="messages"/>
-        <p:messages id="messages" showDetail="true" />
+        <p:commandButton value="Guardar datos" action="#{modifyProfileBean.saveData}" type="submit"/>
+        <p:messages id="messages" showDetail="true">
+            <p:autoUpdate/>
+        </p:messages>
     </p:panel>
 </ui:composition>

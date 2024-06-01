@@ -25,11 +25,12 @@
                     <br/>
                 </ui:repeat>
             </h:panelGrid>
-            <p:messages id="messages" showDetail="true">
-                <p:autoUpdate/>
-            </p:messages>
+
             <p:commandButton value="Seleccionar Equipaje" type="submit" action="#{seatSelectionBean.selectLuggage()}"/>
         </h:panelGrid>
+        <p:messages id="messages" showDetail="true">
+            <p:autoUpdate/>
+        </p:messages>
     </p:panel>
     <p:remoteCommand name="updatePlane" update="plane"/>
 </ui:composition>

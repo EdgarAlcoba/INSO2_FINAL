@@ -421,9 +421,12 @@ public class VueloFacade extends AbstractFacade<Vuelo> implements VueloFacadeLoc
                     return seat;
                 }
             } else {
-                if (seat.equals(preferredSeat) && reserved) {
-                    selectedFound = true;
-                    System.out.println("The selected seat was already occupied");
+                if (seat.getId() == preferredSeat.getId()) {
+                    if (reserved) {
+                        System.out.println("The selected seat was already occupied");
+                        return null;
+                    }
+                    return preferredSeat;
                 }
             }
         }

@@ -13,7 +13,7 @@
                         <h:panelGroup>
                             <h:outputText value="|---------|"  rendered="#{seat.key.tipo == 'Hallway'}" style="color: #fff"/>
                             <p:commandButton icon='fas fa-chair'
-                                             value="#{seat.key.id}"
+                                             value="#{seat.key.numero}"
                                              type="submit"
                                              disabled="#{(seat.value == 1) ? true : false}"
                                              rendered="#{seat.key.tipo == 'Seat'}"

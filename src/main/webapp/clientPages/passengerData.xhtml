@@ -10,16 +10,12 @@
                     <h:panelGrid columns="2" cellspacing="2" >
                         <h:outputLabel value="Nombre" />
                         <p:inputText id="passengerName#{loop.index}" value="#{pasajero.nombre}"/>
-                        <br/><br/>
                         <h:outputLabel value="Apellido 1" />
                         <p:inputText id="passengerSurname1#{loop.index}" value="#{pasajero.apellido1}"/>
-                        <br/><br/>
                         <h:outputLabel value="Apellido 2" />
                         <p:inputText id="passengerSurname2#{loop.index}" value="#{pasajero.apellido2}"/>
-                        <br/><br/>
                         <h:outputLabel value="DNI/NIF" />
                         <p:inputText id="passengerDNI#{loop.index}" value="#{pasajero.dniNIE}"/>
-                        <br/><br/>
                         <h:outputLabel value="Número de pasaporte" />
                         <p:inputText id="passengerPassport_#{loop.index}" value="#{pasajero.pasaporte}"/>
                     </h:panelGrid>

@@ -14,6 +14,7 @@ import com.google.zxing.client.j2se.MatrixToImageWriter;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.*;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
@@ -160,7 +161,7 @@ public class Billete implements Serializable {
                 contentStream.beginText();
                 contentStream.setFont(PDType1Font.HELVETICA, 12);
                 contentStream.newLineAtOffset(100, y);
-                contentStream.showText("Identificador del billete: " + id);
+                contentStream.showText("Precio: " + precio.setScale(2, RoundingMode.HALF_UP).toString() + "€");
                 contentStream.endText();
 
                 y -= 20;
@@ -218,6 +219,50 @@ public class Billete implements Serializable {
                 contentStream.newLineAtOffset(100, y);
                 contentStream.showText("Class: " + asiento.getSeccion().getClase());
                 contentStream.endText();
+
+                if (maletas != null) {
+                    if (!maletas.isEmpty()) {
+                        int maletas12 = 0;
+                        int maletas20 = 0;
+                        int maletas25 = 0;
+
+                        for (Maleta maleta: maletas) {
+                            if (maleta.getPesoKg() <= 12) {
+                                maletas12++;
+                                continue;
+                            }
+                            if (maleta.getPesoKg() <= 20) {
+                                maletas20++;
+                                continue;
+                            }
+                            if (maleta.getPesoKg() <= 25) {
+                               maletas25++;
+                            }
+                        }
+
+                        y -= 20;
+                        contentStream.beginText();
+                        contentStream.setFont(PDType1Font.HELVETICA, 12);
+                        contentStream.newLineAtOffset(100, y);
+                        contentStream.showText("Maleta facturada (12kg): " + maletas12 + " unidades");
+                        contentStream.endText();
+
+                        y -= 20;
+                        contentStream.beginText();
+                        contentStream.setFont(PDType1Font.HELVETICA, 12);
+                        contentStream.newLineAtOffset(100, y);
+                        contentStream.showText("Maleta mediana (20kg): " + maletas20 + " unidades");
+                        contentStream.endText();
+
+                        y -= 20;
+                        contentStream.beginText();
+                        contentStream.setFont(PDType1Font.HELVETICA, 12);
+                        contentStream.newLineAtOffset(100, y);
+                        contentStream.showText("Maleta facturada (25kg): " + maletas25 + " unidades");
+                        contentStream.endText();
+                    }
+                }
+
 
                 y -= 220;
 

@@ -1,28 +1,30 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-                xmlns:p="http://primefaces.org/ui"
-                xmlns:f="http://xmlns.jcp.org/jsf/core">
+                xmlns:p="http://primefaces.org/ui">
     <p:panel   header="Selección de equipaje">
         <h:panelGrid columns="1" cellspacing="5">
             <h:panelGrid columns="3" cellspacing="10" style="text-align: center">
                 <p:panel header="Maleta facturada 12kg">
                     <h:panelGrid columns="1" cellspacing="5">
+                        <h:graphicImage value="#{resource['/assets/travel-bag.png']}"/>
                     </h:panelGrid>
                 </p:panel>
                 <p:panel   header="Maleta facturada 20kg">
                     <h:panelGrid columns="1" cellspacing="5">
+                        <h:graphicImage value="#{resource['/assets/travel-bag.png']}"/>
                     </h:panelGrid>
                 </p:panel>
                 <p:panel   header="Maleta facturada 25kg">
                     <h:panelGrid columns="1" cellspacing="5">
+                        <h:graphicImage value="#{resource['/assets/travel-bag.png']}"/>
                     </h:panelGrid>
                 </p:panel>
                 <p:inputNumber id="lightInput" emptyValue="min" value="#{luggageSelectionBean.light}" minValue="0" decimalPlaces="0" />
                 <p:inputNumber id="normalInput" emptyValue="min" value="#{luggageSelectionBean.normal}" minValue="0" decimalPlaces="0" />
                 <p:inputNumber id="heavyInput" emptyValue="min" value="#{luggageSelectionBean.heavy}" minValue="0" decimalPlaces="0" />
             </h:panelGrid>
-            <p:button value='Revisar pedido'/>
+            <p:commandButton value='Introducir datos de los pasajeros' type="submit" action="#{luggageSelectionBean.passengerData()}"/>
         </h:panelGrid>
     </p:panel>
 </ui:composition>

@@ -31,7 +31,7 @@ public class OrderPreviewBean {
 
     private Billete selectedOrder;
 
-    private BigDecimal totalPrice = BigDecimal.ZERO;
+    private float totalPrice = 0;
 
     @ManagedProperty(value = "#{clientHomeBean}")
     private ClientHomeBean CHB;
@@ -67,10 +67,11 @@ public class OrderPreviewBean {
                 newBillete.addMaletas(this.LSB.getLuggage(), newBillete);
             }
             newBillete.setPrecio(this.BFL.getTotalPrice(newBillete));
-            this.totalPrice.add(newBillete.getPrecio());
+            this.totalPrice += newBillete.getPrecio().floatValue();
             this.order.add(newBillete);
         }
         PrimeFaces.current().executeScript("updateOrder()");
+        PrimeFaces.current().executeScript("updatePrecio()");
     }
 
     public ArrayList<Billete> getOrder() {
@@ -129,11 +130,11 @@ public class OrderPreviewBean {
         this.selectedOrder = selectedOrder;
     }
 
-    public BigDecimal getTotalPrice() {
+    public float getTotalPrice() {
         return totalPrice;
     }
 
-    public void setTotalPrice(BigDecimal totalPrice) {
+    public void setTotalPrice(float totalPrice) {
         this.totalPrice = totalPrice;
     }
 

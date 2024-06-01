@@ -1,8 +1,7 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-                xmlns:p="http://primefaces.org/ui"
-                xmlns:f="http://xmlns.jcp.org/jsf/core">
+                xmlns:p="http://primefaces.org/ui">
     <p:panel   header="Datos del pedido">
         <h:panelGrid columns="1" cellspacing="10" >
             <p:dataTable id="orderTable" var="order" value="#{orderPreviewBean.order}" rowKey="#{order.id}"
@@ -17,7 +16,7 @@
                     <h:outputText value="#{order.precio}" />
                 </p:column>
             </p:dataTable>
-            <p:outputLabel  id="precio" value="#{orderPreviewBean.totalPrice}"/>
+            <p:outputLabel  id="precio" value="Precio Total: #{orderPreviewBean.totalPrice}"/>
             <p:commandButton value="Pagar" action="#{orderPreviewBean.pay()}"/>
         </h:panelGrid>
         <p:remoteCommand name="updatePrice" update="precio"/>

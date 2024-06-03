@@ -6,12 +6,17 @@
 package ControllerClient;
 
 import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import modelo.Vuelo;
+import EJB.VueloFacadeLocal;
+
+import java.math.BigDecimal;
+import java.util.ArrayList;
 
 /**
  *
@@ -28,11 +33,18 @@ public class ClassSelectionBean {
     private boolean hasNor = true;
     private boolean hasPre = true;
 
+    private BigDecimal economyPrice = BigDecimal.ZERO;
+    private BigDecimal normalPrice = BigDecimal.ZERO;
+    private BigDecimal premiumPrice = BigDecimal.ZERO;
+
     @ManagedProperty(value = "#{clientHomeBean}")
     private ClientHomeBean CHB;
 
     @ManagedProperty(value = "#{foundFlightsBean}")
     private FoundFlightsBean FFB;
+
+    @EJB
+    private VueloFacadeLocal vueloFacadeLocal;
 
     @PostConstruct
     public void init() {
@@ -45,6 +57,16 @@ public class ClassSelectionBean {
         }
         if (vuelo.getAvion().getMapaAsientos().getSeccionPremium() == null) {
             hasPre = false;
+        }
+        ArrayList<BigDecimal> prices = vueloFacadeLocal.getPrices(vuelo);
+        if (!prices.isEmpty()) {
+            economyPrice = prices.get(0);
+        }
+        if (prices.size() > 1) {
+            normalPrice = prices.get(1);
+        }
+        if (prices.size() > 2) {
+            premiumPrice = prices.get(2);
         }
     }
 
@@ -94,6 +116,34 @@ public class ClassSelectionBean {
 
     public void setFFB(FoundFlightsBean FFB) {
         this.FFB = FFB;
+    }
+
+    public BigDecimal getEconomyPrice() {
+        return economyPrice;
+    }
+
+    public void setEconomyPrice(BigDecimal economyPrice) {
+        this.economyPrice = economyPrice;
+    }
+
+    public BigDecimal getNormalPrice() {
+        return normalPrice;
+    }
+
+    public void setNormalPrice(BigDecimal normalPrice) {
+        this.normalPrice = normalPrice;
+    }
+
+    public BigDecimal getPremiumPrice() {
+        return premiumPrice;
+    }
+
+    public void setPremiumPrice(BigDecimal premiumPrice) {
+        this.premiumPrice = premiumPrice;
+    }
+
+    public Vuelo getSelectedFlight() {
+        return vuelo;
     }
 
     public void selectSeats() {

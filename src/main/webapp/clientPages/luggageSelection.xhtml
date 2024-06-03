@@ -3,19 +3,20 @@
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui">
     <p:panel   header="Selección de equipaje">
+        <p:outputLabel>Agregue únicamente maletas adicionales, no incluidas con su tarifa</p:outputLabel>
         <h:panelGrid columns="1" cellspacing="5">
             <h:panelGrid columns="3" cellspacing="10" style="text-align: center">
-                <p:panel header="Maleta facturada 12kg">
+                <p:panel header="Maleta facturada 12kg (#{luggageSelectionBean.bag12kgPrice.doubleValue()}€)">
                     <h:panelGrid columns="1" cellspacing="5">
                         <h:graphicImage value="#{resource['/assets/travel-bag.png']}" style="width: 25vw"/>
                     </h:panelGrid>
                 </p:panel>
-                <p:panel   header="Maleta facturada 20kg">
+                <p:panel   header="Maleta facturada 20kg (#{luggageSelectionBean.bag20kgPrice.doubleValue()}€)">
                     <h:panelGrid columns="1" cellspacing="5">
                         <h:graphicImage value="#{resource['/assets/travel-bag.png']}" style="width: 25vw"/>
                     </h:panelGrid>
                 </p:panel>
-                <p:panel   header="Maleta facturada 25kg">
+                <p:panel   header="Maleta facturada 25kg (#{luggageSelectionBean.bag25kgPrice.doubleValue()}€)">
                     <h:panelGrid columns="1" cellspacing="5">
                         <h:graphicImage value="#{resource['/assets/travel-bag.png']}" style="width: 25vw"/>
                     </h:panelGrid>

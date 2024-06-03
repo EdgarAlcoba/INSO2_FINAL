@@ -7,7 +7,7 @@
     <p:panel   header="Selección de clase">
         <h:panelGrid columns="1" cellspacing="5">
             <h:panelGrid columns="3" cellspacing="10">
-                <p:panel header="Económico" rendered="#{classSelectionBean.hasEco}">
+                <p:panel header="Económico (#{classSelectionBean.economyPrice.doubleValue()}€)" rendered="#{classSelectionBean.hasEco}">
                     <h:panelGrid columns="1" cellspacing="5">
                         <p:outputLabel value='Nuestro mejor precio'/>
                         <br/>
@@ -18,7 +18,7 @@
                         <p:outputLabel value='- Equipaje de mano'/>
                     </h:panelGrid>
                 </p:panel>
-                <p:panel   header="Turista" rendered="#{classSelectionBean.hasNor}" >
+                <p:panel   header="Turista (#{classSelectionBean.normalPrice.doubleValue()}€)" rendered="#{classSelectionBean.hasNor}" >
                     <h:panelGrid columns="1" cellspacing="5">
                         <p:outputLabel value='Comodidad al mejor precio'/>
                         <br/>
@@ -29,7 +29,7 @@
                         <p:outputLabel value='- Equipaje facturado (hasta 10kg)'/>
                     </h:panelGrid>
                 </p:panel>
-                <p:panel   header="Premium" rendered="#{classSelectionBean.hasPre}">
+                <p:panel header="Premium (#{classSelectionBean.premiumPrice.doubleValue()}€)" rendered="#{classSelectionBean.hasPre}">
                     <h:panelGrid columns="1" cellspacing="5">
                         <p:outputLabel value='Máxima comodidad'/>
                         <p:outputLabel value='Prioridad de embarque'/>
@@ -44,13 +44,13 @@
 
             <p:selectOneRadio id="line" value="#{classSelectionBean.classType}" layout="pageDirection" columns="3">
                 <c:if test="#{classSelectionBean.hasEco}">
-                    <f:selectItem itemLabel="Económico" itemValue="Economy"/>
+                    <f:selectItem itemLabel="Económico (#{classSelectionBean.economyPrice.doubleValue()}€)" itemValue="Economy"/>
                 </c:if>
                 <c:if test="#{classSelectionBean.hasNor}">
-                    <f:selectItem itemLabel="Normal" itemValue="Normal"/>
+                    <f:selectItem itemLabel="Normal (#{classSelectionBean.normalPrice.doubleValue()}€)" itemValue="Normal"/>
                 </c:if>
-                <c:if test="#{classSelectionBean.hasPre}">z
-                    <f:selectItem itemLabel="Premium" itemValue="Premium"/>
+                <c:if test="#{classSelectionBean.hasPre}">
+                    <f:selectItem itemLabel="Premium (#{classSelectionBean.premiumPrice.doubleValue()}€)" itemValue="Premium"/>
                 </c:if>
             </p:selectOneRadio>
             <p:commandButton value='Seleccionar asientos' action="#{classSelectionBean.selectSeats}" type="submit"/>
